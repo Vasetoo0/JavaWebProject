@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="~{/fragment/head}"></th:block>
+</head>
+
+<body>
+
+<!-- Preloader -->
+<section id="preloader">
+    <div class="loader" id="loader">
+        <div class="loader-img"></div>
+    </div>
+</section>
+<!-- End Preloader -->
+
+<!-- Sidebar Menu -->
+<th:block th:include="~{/fragment/sidebar}"></th:block>
+<!-- End Sidebar Menu -->
+
+<!-- Site Wraper -->
+<div class="wrapper">
+
+    <!-- Header ("header--dark", "header-transparent", "header--sticky")-->
+    <header id="header" class="header header--dark header-transparent header--sticky">
+        <!-- Nav Bar -->
+        <th:block th:include="~{fragment/home-nav}"></th:block>
+        <!-- End Nav Bar -->
+    </header>
+    <!-- End Header -->
+
+    <!-- CONTENT --------------------------------------------------------------------------------->
+    <!-- Intro Section -->
+<!--    <section class="inner-intro" style="background-image: url('https://a2.espncdn.com/photo/2014/0404/WomenLeadSlide.jpg'); background-size: cover;" >-->
+<!--        <div class="container" >-->
+<!--            <div class="row title">-->
+<!--                <h2 class="h2">Register</h2>-->
+<!--                <div class="page-breadcrumb">-->
+<!--                    <a>Home</a>/<span>Register</span>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </section>-->
+    <!-- End Intro Section -->
+
+    <!-- Login Section -->
+    <section id="login-register" class="ptb ptb-sm-80"
+             style="background-color: #83687B">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 offset-md-3 col-sm-8 offset-sm-2">
+                    <div class="border-box">
+                        <h4 style="color: green; text-align: center">Create an Account</h4>
+                        <form th:action="@{/users/register}" th:method="POST"
+                              th:object="${userRegisterBindingModel}">
+                            <div class="form-field-wrapper">
+                                <label for="username">Choose Username</label>
+                                <input th:field="*{username}" type="text" required="" placeholder="Enter your Username" name="username"
+                                       id="username" class="input-sm form-full" aria-required="true">
+                            </div>
+                            <th:block th:each="e : ${#fields.errors('username')}">
+                                <label th:text="${e}" style="font-size: large"  class="error text-danger">Choose Username</label>
+                                <br/>
+                                <hr/>
+                            </th:block>
+                            <div class="form-field-wrapper">
+                                <label for="email">Email address</label>
+                                <input th:field="*{email}" type="email" required="" placeholder="Enter your Email" name="email"
+                                       id="email" class="input-sm form-full" aria-required="true">
+                            </div>
+                            <th:block th:each="e : ${#fields.errors('email')}">
+                                <label th:text="${e}" style="font-size: large" class="error text-danger">Choose Username</label>
+                                <br/>
+                                <hr/>
+                            </th:block>
+                            <div class="form-field-wrapper">
+                                <label for="password">Choose Password</label>
+                                <input th:field="*{password}" type="password" required="" placeholder="Enter Password" name="password"
+                                       id="password" class="input-sm form-full" aria-required="true">
+                            </div>
+                            <th:block th:each="e : ${#fields.errors('password')}">
+                                <label th:text="${e}" style="font-size: large" class="error text-danger">Choose Username</label>
+                                <br/>
+                                <hr/>
+                            </th:block>
+                            <div class="form-field-wrapper">
+                                <label for="confirmPassword">Re-enter Password</label>
+                                <input type="password" required="" placeholder="Enter Re-enter Password"
+                                       name="confirmPassword" id="confirmPassword" class="input-sm form-full"
+                                       aria-required="true">
+                            </div>
+                            <th:block th:if="${notMatch}">
+                                <label style="font-size: larger" class="error text-danger">Password not match!</label>
+                                <br/>
+                                <hr/>
+                            </th:block>
+                            <button name="submit" id="form-submit" type="submit" class="btn btn-md btn-color-a">Signup
+                                Now
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+    <!-- End Login Section -->
+
+    <!-- End CONTENT ------------------------------------------------------------------------------>
+
+    <th:block th:include="~{fragment/footer}"></th:block>
+
+</div>
+<!-- Site Wraper End -->
+
+
+<!-- JS -->
+<th:block th:include="~{fragment/JS}"></th:block>
+</body>
+</html>

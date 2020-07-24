@@ -1,0 +1,37 @@
+<!-- Nav Bar -->
+<th:block xmlns:th="http://www.thymeleaf.org">
+<nav id="navigation" class="header-nav">
+    <div class="container">
+        <div class="row d-flex flex-md-row align-items-center">
+            <div id="categoryNav" class="nav-menu ml-auto">
+                <a style="margin-right: 140px" href="/">Home</a>
+                <a th:href="@{/{sport}/stories(sport = ${#session.getAttribute('currSport')})}">Stories</a>
+                <a th:href="@{/{sport}/stories(sport = ${#session.getAttribute('currSport')})}">Videos</a>
+                <a th:href="@{/{sport}/stories(sport = ${#session.getAttribute('currSport')})}">Destinations</a>
+                <a th:href="@{/{sport}/stories(sport = ${#session.getAttribute('currSport')})}">Events</a>
+                <a th:href="@{/{sport}/stories(sport = ${#session.getAttribute('currSport')})}">Market</a>
+                <a th:href="@{/{sport}/stories(sport = ${#session.getAttribute('currSport')})}">Find Store</a>
+            </div>
+            <div class="nav-icons">
+                <div class="nav-icon-item d-lg-none">
+                    <span class="nav-icon-trigger menu-mobile-btn align-middle"><i class="ion"></i></span>
+                </div>
+                <div class="nav-icon-item">
+                            <span class="nav-icon-trigger search-menu_btn align-middle"><i
+                                    class="ion ion-ios-search"></i></span>
+                    <div class="search-menu-bar">
+                        <form>
+                            <input class="seach-input input--sm form-full" id="seach_input" name="seach_input"
+                                   placeholder="Please Enter Keywords" type="search"/>
+                        </form>
+                    </div>
+                </div>
+                <div class="nav-icon-item">
+                    <span class="nav-icon-trigger sidebar-menu_btn align-middle"><i class="ion ion-navicon"></i></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+</th:block>
+<!-- End Nav Bar -->

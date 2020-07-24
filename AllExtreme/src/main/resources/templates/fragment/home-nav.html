@@ -1,0 +1,72 @@
+<!-- Nav Bar -->
+<th:block xmlns:th="http://www.thymeleaf.org"
+          xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <nav id="navigation" class="header-nav">
+        <div class="container">
+            <div class="row d-flex flex-md-row align-items-center">
+                <div id="homeNav" class="nav-menu ml-auto">
+                    <ul class="">
+                        <li class="nav-menu-item">
+                            <a href="#">Extreme Sports</a>
+                            <div class="nav-dropdown">
+                                <ul>
+
+                                    <!--/*@thymesVar id="sports" type="java.util.List<java.lang.String>"*/-->
+                                    <th:block th:each="s : ${T(softuni.javaweb.springproject.enums.Sport).values()}">
+                                    <li><a th:href="@{/{name}/stories(name = ${s.name()})}"
+                                           th:text="${s.name().replace('_',' ').toLowerCase()}">Sport</a></li>
+                                    </th:block>
+                                </ul>
+                            </div>
+<!--                                                            <div class="logo mr-auto">-->
+<!--                                                                &lt;!&ndash;logo&ndash;&gt;-->
+<!--                                                                <a href="index.html">-->
+<!--                                                                    <img class="logo-dark" src="" alt=""/>-->
+<!--                                                                    <img class="logo-light" src="" alt=""/>-->
+<!--                                                                </a>-->
+<!--                                                                &lt;!&ndash;End logo&ndash;&gt;-->
+<!--                                                            </div>-->
+                        </li>
+                        <th:block sec:authorize="hasRole('ADMIN')">
+                            <li class="nav-menu-item">
+                                <a href="#">Admin</a>
+                                <div class="nav-dropdown">
+                                    <ul>
+                                        <li><a href="/admin/addDestination">Add Destination</a></li>
+                                        <li><a href="/admin/addStory">Add Story</a></li>
+                                        <li><a href="/admin/addEvent">Add Event</a></li>
+                                        <li><a href="/admin/addVideo">Add Video</a></li>
+                                        <li><a href="/admin/approve">Approve Offers</a></li>
+                                    </ul>
+                                </div>
+                            </li>
+                        </th:block>
+                    </ul>
+                </div>
+                <div class="nav-icons">
+                    <div class="nav-icon-item d-lg-none">
+                        <span class="nav-icon-trigger menu-mobile-btn align-middle"><i class="ion"></i></span>
+                    </div>
+<!--                    <div class="nav-icon-item">-->
+<!--                            <span class="nav-icon-trigger search-menu_btn align-middle"><i-->
+<!--                                    class="ion ion-ios-search"></i></span>-->
+<!--                        <div class="search-menu-bar">-->
+<!--                            <form>-->
+<!--                                <input class="seach-input input&#45;&#45;sm form-full" id="seach_input" name="seach_input"-->
+<!--                                       placeholder="Please Enter Keywords" type="search"/>-->
+<!--                            </form>-->
+<!--                        </div>-->
+<!--                    </div>-->
+                    <th:block sec:authorize="isAnonymous()">
+                    <a href="/users/login">Login</a>
+                    </th:block>
+                    <div class="nav-icon-item">
+                        <span class="nav-icon-trigger sidebar-menu_btn align-middle"><i
+                                class="ion ion-navicon"></i></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+</th:block>
+<!-- End Nav Bar -->

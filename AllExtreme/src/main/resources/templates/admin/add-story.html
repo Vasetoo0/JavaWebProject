@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="~{/fragment/head}"></th:block>
+</head>
+
+<body>
+
+<!-- Preloader -->
+<section id="preloader">
+    <div class="loader" id="loader">
+        <div class="loader-img"></div>
+    </div>
+</section>
+<!-- End Preloader -->
+
+<!-- Sidebar Menu -->
+<th:block th:include="~{/fragment/sidebar}"></th:block>
+<!-- End Sidebar Menu -->
+
+<!-- Site Wraper -->
+<div class="wrapper">
+
+    <!-- Header ("header--dark", "header-transparent", "header--sticky")-->
+    <header id="header" class="header header--dark header-transparent header--sticky">
+        <!-- Nav Bar -->
+        <th:block th:include="~{/fragment/category-nav}"></th:block>
+        <!-- End Nav Bar -->
+    </header>
+    <!-- End Header -->
+
+    <!-- CONTENT --------------------------------------------------------------------------------->
+    <!-- Intro Section -->
+    <!--    <section class="inner-intro bg-image overlay-light parallax parallax-background1" data-background-img="img/full/02.jpg">-->
+    <!--        <div class="container">-->
+    <!--            <div class="row title">-->
+    <!--                <h2 class="h2">Contact Us</h2>-->
+    <!--                <div class="page-breadcrumb">-->
+    <!--                    <a>Home</a>/<span>Contact</span>-->
+    <!--                </div>-->
+    <!--            </div>-->
+    <!--        </div>-->
+    <!--    </section>-->
+    <!--    <div class="clearfix"></div>-->
+    <!-- End Intro Section -->
+
+    <!-- Contact Section -->
+    <section class="ptb ptb-sm-80" style="background-color: #479860">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 offset-md-3 text-center">
+                    <h3>Add Story</h3>
+                </div>
+            </div>
+            <div class="spacer-15"></div>
+            <div class="row">
+                <div class="col-md-6 offset-md-3">
+                    <!-- Offer-add FORM -->
+                    <form th:action="@{/admin/addStory}" method="POST" class="contact-form" id="contact" role="form">
+                        <div class="form-field-wrapper">
+                            <label class="input-sm form-full" type="text">Title:</label>
+                            <input class="input-sm form-full" id="title" type="text" name="title"
+                                   placeholder="Title" required>
+                        </div>
+                        <div class="form-field-wrapper">
+                            <label class="input-sm form-full" type="text">Author:</label>
+                            <input class="input-sm form-full" id="creator" type="text" name="creator"
+                                   placeholder="Author" required>
+                        </div>
+                        <div class="form-field-wrapper">
+                            <label class="input-sm form-full" type="date">Created On:</label>
+                            <input class="input-sm form-full" id="createdOn" type="date" name="createdOn"
+                                   placeholder="Created On" required>
+                        </div>
+                        <div class="form-field-wrapper">
+                            <label class="input-sm form-full" type="text">Pictures:</label>
+                            <input class="input-sm form-full" style="margin-top: 12px" type="text" name="pictures"
+                                   placeholder="First picture link" required>
+                            <input class="input-sm form-full" style="margin-top: 12px" type="text" name="pictures"
+                                   placeholder="Second picture link" required>
+                            <input class="input-sm form-full" style="margin-top: 12px" type="text" name="pictures"
+                                   placeholder="Third picture link" required>
+                            <input class="input-sm form-full" style="margin-top: 12px" type="text" name="pictures"
+                                   placeholder="Forth picture link" required>
+                        </div>
+                        <div class="dropdown-container">
+                            <label for="sel1">Select sport:</label>
+                            <select class="form-control" id="sel1">
+                                <option value="none" selected disabled hidden>
+                                    Select sport
+                                </option>
+                                <th:block th:each="s : ${T(softuni.javaweb.springproject.enums.Sport).values()}">
+                                <option th:text="${s.name().replace('_',' ')}">Sport</option>
+                                </th:block>
+                            </select>
+                        </div>
+                        <div class="form-field-wrapper">
+                            <label class="input-sm form-full" type="email">Description:</label>
+                            <textarea class="form-full" id="form-message" rows="7" name="form-message"
+                                      placeholder="Description about item" required></textarea>
+                        </div>
+                        <!--File Upload-->
+                        <!--                        <form>-->
+                        <!--                            <div class="form-group">-->
+                        <!--                                <label for="exampleFormControlFile1">Add picture</label>-->
+                        <!--                                <input type="file" class="form-control-file" id="exampleFormControlFile1">-->
+                        <!--                                <input type="file" class="form-control-file" id="exampleFormControlFile2">-->
+                        <!--                                <input type="file" class="form-control-file" id="exampleFormControlFile3">-->
+                        <!--                            </div>-->
+                        <!--                        </form>-->
+                        <!--END File Upload-->
+                        <button class="btn btn-md btn-black form-full" type="submit" id="form-submit" name="submit">Add
+                            Story
+                        </button>
+                    </form>
+                    <!-- END Contact FORM -->
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Contact Section -->
+
+    <!-- End CONTENT ------------------------------------------------------------------------------>
+
+    <th:block th:include="~{/fragment/footer}"></th:block>
+</div>
+<!-- Site Wraper End -->
+
+
+<!-- JS -->
+<th:block th:include="~{/fragment/JS}"></th:block>
+</body>
+</html>

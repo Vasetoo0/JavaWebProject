@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="~{/fragment/head}"></th:block>
+</head>
+
+<body>
+
+<!-- Preloader -->
+<section id="preloader">
+    <div class="loader" id="loader">
+        <div class="loader-img"></div>
+    </div>
+</section>
+<!-- End Preloader -->
+
+<!-- Sidebar Menu -->
+<th:block th:include="~{/fragment/sidebar}"></th:block>
+<!-- End Sidebar Menu -->
+
+<!-- Site Wraper -->
+<div class="wrapper">
+
+    <!-- Header ("header--dark", "header-transparent", "header--sticky")-->
+    <header id="header" class="header header--dark header-transparent header--sticky">
+        <!-- Nav Bar -->
+        <th:block th:include="~{fragment/home-nav}"></th:block>
+        <!-- End Nav Bar -->
+    </header>
+    <!-- End Header -->
+
+    <!-- CONTENT --------------------------------------------------------------------------------->
+    <!-- Intro Section -->
+<!--    <section class="inner-intro bg-image overlay-light parallax parallax-background1" data-background-img="img/full/02.jpg">-->
+<!--        <div class="container">-->
+<!--            <div class="row title">-->
+<!--                <h2 class="h2">Faq</h2>-->
+<!--                <div class="page-breadcrumb">-->
+<!--                    <a>Home</a>/<span>Faq</span>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </section>-->
+    <!-- End Intro Section -->
+
+    <!-- Faq Section -->
+    <section class="ptb ptb-sm-80" style="background-color: #9DC199">
+        <div class="container">
+            <div class="container" style="text-align: center">
+                <h2 style="text-align: center" class="h2">FAQ</h2>
+            </div>
+            <div class="tabs b-lrb-none">
+                <ul>
+                    <li><a href="#tabs-1"><i class="ion ion-help-circled left"></i>Help</a></li>
+                    <li><a href="#tabs-2"><i class="ion ion-help-buoy left"></i>Question</a></li>
+<!--                    <li><a href="#tabs-3"><i class="ion ion-ios-list left"></i>Listing</a></li>-->
+                </ul>
+                <div class="ui-tab-content">
+                    <div id="tabs-1" class="plr-0">
+                        <!-- Accordion -->
+                        <div class="accordion">
+                            <div class="accordion-section">
+                                <h6 class="accordion-title">How tough is Kick Dummy? Will it split?</h6>
+                                <div class="accordion-content">
+                                    <p>Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel</p>
+                                </div>
+                            </div>
+                            <div class="accordion-section">
+                                <h6 class="accordion-title">Will the Kick Dummy fall over?</h6>
+                                <div class="accordion-content">
+                                    <p>Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel</p>
+                                </div>
+                            </div>
+                            <div class="accordion-section">
+                                <h6 class="accordion-title">Do I need a pump to inflate Kick Dummy?</h6>
+                                <div class="accordion-content">
+                                    <p>Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel</p>
+                                    <p>Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros.</p>
+                                </div>
+                            </div>
+                            <div class="accordion-section">
+                                <h6 class="accordion-title">How can I store away Kick Dummy?</h6>
+                                <div class="accordion-content">
+                                    <p>Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel</p>
+                                    <p>Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros.</p>
+                                </div>
+                            </div>
+                            <div class="accordion-section">
+                                <h6 class="accordion-title">What's on the DVD?</h6>
+                                <div class="accordion-content">
+                                    <p>Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel</p>
+                                    <p>Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros.</p>
+                                </div>
+                            </div>
+                            <div class="accordion-section">
+                                <h6 class="accordion-title">What should I wear when using Kick Dummy?</h6>
+                                <div class="accordion-content">
+                                    <p>Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel</p>
+                                    <p>Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros.</p>
+                                </div>
+                            </div>
+                            <div class="accordion-section">
+                                <h6 class="accordion-title">How do I put clothing on Kick Dummy?</h6>
+                                <div class="accordion-content">
+                                    <p>Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel</p>
+                                    <p>Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros.</p>
+                                </div>
+                            </div>
+                            <div class="accordion-section">
+                                <h6 class="accordion-title">But, WHY can't I find my own artist?</h6>
+                                <div class="accordion-content">
+                                    <p>Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel</p>
+                                    <p>Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros.</p>
+                                </div>
+                            </div>
+                            <div class="accordion-section">
+                                <h6 class="accordion-title">I'm a writer, not an illustrator. Do I need a dummy?</h6>
+                                <div class="accordion-content">
+                                    <p>Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel</p>
+                                    <p>Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End Accordion -->
+                    </div>
+                    <div id="tabs-2" class="plr-0">
+                        <!-- Accordion -->
+                        <div class="accordion">
+                            <div class="accordion-section">
+                                <h6 class="accordion-title">How long until I hear from the publisher?</h6>
+                                <div class="accordion-content">
+                                    <p>Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel</p>
+                                </div>
+                            </div>
+                            <div class="accordion-section">
+                                <h6 class="accordion-title">I'm an illustrator/writer with a picture book manuscript.</h6>
+                                <div class="accordion-content">
+                                    <p>Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel</p>
+                                </div>
+                            </div>
+                            <div class="accordion-section">
+                                <h6 class="accordion-title">What should my submission package include?</h6>
+                                <div class="accordion-content">
+                                    <p>Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel</p>
+                                    <p>Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros.</p>
+                                </div>
+                            </div>
+                            <div class="accordion-section">
+                                <h6 class="accordion-title">Speaking of copyright, how do I copyright my work so no one steals my idea?</h6>
+                                <div class="accordion-content">
+                                    <p>Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel</p>
+                                    <p>Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros.</p>
+                                </div>
+                            </div>
+                            <div class="accordion-section">
+                                <h6 class="accordion-title">I'm an illustrator, but don't feel confident in my writing skills. Should I do a dummy?</h6>
+                                <div class="accordion-content">
+                                    <p>Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel</p>
+                                    <p>Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros.</p>
+                                </div>
+                            </div>
+                            <div class="accordion-section">
+                                <h6 class="accordion-title">I'm a writer, not an illustrator. Do I need a dummy?</h6>
+                                <div class="accordion-content">
+                                    <p>Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel</p>
+                                    <p>Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros.</p>
+                                </div>
+                            </div>
+                            <div class="accordion-section">
+                                <h6 class="accordion-title">But, WHY can't I find my own artist?</h6>
+                                <div class="accordion-content">
+                                    <p>Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel</p>
+                                    <p>Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros.</p>
+                                </div>
+                            </div>
+                            <div class="accordion-section">
+                                <h6 class="accordion-title">How will I be able to direct the artist?</h6>
+                                <div class="accordion-content">
+                                    <p>Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel</p>
+                                    <p>Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros.</p>
+                                </div>
+                            </div>
+                            <div class="accordion-section">
+                                <h6 class="accordion-title">I've just written my first children's book. I can't draw?</h6>
+                                <div class="accordion-content">
+                                    <p>Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel</p>
+                                    <p>Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End Accordion -->
+                    </div>
+<!--                    <div id="tabs-3" class="plr-0">-->
+<!--                        <div class="row">-->
+<!--                            <div class="col-md-4 mt-30">-->
+<!--                                <h5>How do I find an artist?</h5>-->
+<!--                                <ul class="list-none">-->
+<!--                                    <li><a href=""><i class="ion ion-ios-circle-outline left"></i>But, WHY can't I find my own artist.</a></li>-->
+<!--                                    <li><a href=""><i class="ion ion-ios-circle-outline left"></i>After a publisher accepts your manuscript.</a></li>-->
+<!--                                    <li><a href=""><i class="ion ion-ios-circle-outline left"></i>Books published you may be able to suggest.</a></li>-->
+<!--                                    <li><a href=""><i class="ion ion-ios-circle-outline left"></i>Back their advances.</a></li>-->
+<!--                                </ul>-->
+<!--                            </div>-->
+<!--                            <div class="col-md-4 mt-30">-->
+<!--                                <h5>What is a picture book?</h5>-->
+<!--                                <ul class="list-none">-->
+<!--                                    <li><a href=""><i class="ion ion-ios-circle-outline left"></i>Believe it will make them money.</a></li>-->
+<!--                                    <li><a href=""><i class="ion ion-ios-circle-outline left"></i>Choose an illustrator for your book.</a></li>-->
+<!--                                    <li><a href=""><i class="ion ion-ios-circle-outline left"></i>Books published you may be able to suggest.</a></li>-->
+<!--                                    <li><a href=""><i class="ion ion-ios-circle-outline left"></i>Picture book dummies by illustrator.</a></li>-->
+<!--                                </ul>-->
+<!--                            </div>-->
+<!--                            <div class="col-md-4 mt-30">-->
+<!--                                <h5>I find my own artist?</h5>-->
+<!--                                <ul class="list-none">-->
+<!--                                    <li><a href=""><i class="ion ion-ios-circle-outline left"></i>But writer or artist's original.</a></li>-->
+<!--                                    <li><a href=""><i class="ion ion-ios-circle-outline left"></i>You just should hope you.</a></li>-->
+<!--                                    <li><a href=""><i class="ion ion-ios-circle-outline left"></i>Timely take on the idea!</a></li>-->
+<!--                                    <li><a href=""><i class="ion ion-ios-circle-outline left"></i>Similar publication so you know.</a></li>-->
+<!--                                </ul>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Faq Section -->
+
+
+    <!-- End CONTENT ------------------------------------------------------------------------------>
+
+    <th:block th:include="~{fragment/footer}"></th:block>
+
+</div>
+<!-- Site Wraper End -->
+
+
+<!-- JS -->
+<th:block th:include="~{fragment/JS}"></th:block>
+</body>
+</html>

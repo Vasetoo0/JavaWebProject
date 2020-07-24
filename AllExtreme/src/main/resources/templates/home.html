@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="~{/fragment/head}"></th:block>
+</head>
+<body>
+<!-- Preloader -->
+<section id="preloader">
+    <div class="loader" id="loader">
+        <div class="loader-img"></div>
+    </div>
+</section>
+<!-- End Preloader -->
+
+<!-- Sidebar Menu -->
+<th:block th:include="~{/fragment/sidebar}"></th:block>
+<!-- End Sidebar Menu -->
+
+<!-- Site Wraper -->
+<div class="wrapper">
+
+    <!-- Header ("header--dark", "header-transparent", "header--sticky")-->
+    <header id="header" class="header header-transparent header--sticky">
+        <!-- Nav Bar -->
+        <th:block th:include="~{fragment/home-nav}"></th:block>
+        <!-- End Nav Bar -->
+    </header>
+    <!-- End Header -->
+
+    <!-- CONTENT --------------------------------------------------------------------------------->
+
+    <!-- Intro Section -->
+    <section id="intro">
+        <!-- Hero Slider Section -->
+        <div class="flexslider fullscreen-carousel hero-slider-1 ">
+            <ul class="slides">
+                <!--Slide-->
+                <li data-slide="light-slide">
+                    <div class="slide-bg-image overlay-light parallax parallax-section1"
+                         data-background-img="https://i.insider.com/57d2dcb2077dcc39128b46cb?width=1100&format=jpeg&auto=webp">
+                        <div class="js-Slide-fullscreen-height container">
+                            <div class="intro-content">
+                                <div class="intro-content-inner">
+                                    <h2 class="h2">Just</h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <!--Slide-->
+                <li data-slide="dark-slide">
+                    <div class="slide-bg-image overlay-dark dark-bg parallax parallax-section1"
+                         data-background-img="https://r1.ilikewallpaper.net/ipad-air-wallpapers/download/24331/Ski-Extreme-Sports-ipad-air-wallpaper-ilikewallpaper_com.jpg">
+                        <div class="js-Slide-fullscreen-height container">
+                            <div class="intro-content">
+                                <div class="intro-content-inner">
+                                    <h2 class="h2">Be</h2>
+                                    <br/>
+<!--                                    <div><a class="btn btn-md btn-white-line xs-hidden">Read More</a><span-->
+<!--                                            class="btn-space-10 xs-hidden"></span><a class="btn btn-md btn-white">Learn-->
+<!--                                        More</a></div>-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <!--Slide-->
+                <li data-slide="light-slide">
+                    <div class="slide-bg-image overlay-light parallax parallax-section1"
+                         data-background-img="https://i.ytimg.com/vi/9qEbjw_I0-o/maxresdefault.jpg">
+                        <div class="js-Slide-fullscreen-height container">
+                            <div class="intro-content">
+                                <div class="intro-content-inner">
+                                    <h2 class="h2">Extreme</h2>
+                                    <br/>
+<!--                                    <div><a class="btn btn-md btn-black-line">Read More</a><span-->
+<!--                                            class="btn-space-10 xs-hidden"></span><a-->
+<!--                                            class="btn btn-md btn-black xs-hidden">Read More</a></div>-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <!-- End Hero Slider Section -->
+    </section>
+    <div class="clearfix"></div>
+    <!-- End Intro Section -->
+
+    <!-- END CONTENT ---------------------------------------------------------------------------->
+
+    <th:block th:include="~{fragment/footer}"></th:block>
+</div>
+<!-- Site Wraper End -->
+
+
+<!-- JS -->
+<th:block th:include="~{fragment/JS}"></th:block>
+</body>
+</html>
