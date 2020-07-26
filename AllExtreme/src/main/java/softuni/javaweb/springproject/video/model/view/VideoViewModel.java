@@ -1,10 +1,9 @@
 package softuni.javaweb.springproject.video.model.view;
 
-import softuni.javaweb.springproject.enums.Sport;
-
 public class VideoViewModel {
 
     private String id;
+    private String title;
     private String youTubeLink;
     private String description;
 
@@ -33,5 +32,13 @@ public class VideoViewModel {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 }

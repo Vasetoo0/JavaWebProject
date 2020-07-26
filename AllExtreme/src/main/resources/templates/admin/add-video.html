@@ -46,7 +46,7 @@
     <!-- End Intro Section -->
 
     <!-- Contact Section -->
-    <section class="ptb ptb-sm-80" style="background-color: #605C00">
+    <section class="ptb ptb-sm-80" style="background-color: #605C00" >
         <div class="container">
             <div class="row">
                 <div class="col-md-6 offset-md-3 text-center">
@@ -57,45 +57,50 @@
             <div class="row">
                 <div class="col-md-6 offset-md-3">
                     <!-- Offer-add FORM -->
-                    <form class="contact-form" id="contact" role="form">
-                        <!-- IF MAIL SENT SUCCESSFULLY -->
-                        <!--                        <h6 class="successContent">-->
-                        <!--                            <i class="fa fa-check left" style="color: #5cb45d;"></i>Your message has been sent successfully.-->
-                        <!--                        </h6>-->
-                        <!-- END IF MAIL SENT SUCCESSFULLY -->
-
-                        <!-- MAIL SENDING UNSUCCESSFULL -->
-                        <!--                        <h6 class="errorContent">-->
-                        <!--                            <i class="fa fa-exclamation-circle left" style="color: #e1534f;"></i>There was a problem validating the form please check!-->
-                        <!--                        </h6>-->
-                        <!-- END MAIL SENDING UNSUCCESSFULL -->
+                    <form class="contact-form" th:object="${videoAddBindingModel}"
+                          th:action="@{/admin/addVideo}" th:method="POST" id="contact" role="form">
                         <div class="form-field-wrapper">
                             <label class="input-sm form-full" type="text">Title:</label>
-                            <input class="input-sm form-full" id="form-title" type="text" name="form-name"
+                            <input th:field="*{title}" class="input-sm form-full" id="form-title" type="text" name="form-name"
                                    placeholder="Title" required>
                         </div>
+                        <th:block th:each="e : ${#fields.errors('title')}">
+                            <label th:text="${e}" style="font-size: large"  class="error text-danger">Choose Username</label>
+                            <br/>
+                            <hr/>
+                        </th:block>
                         <div class="form-field-wrapper">
-                            <label class="input-sm form-full" type="text">YouTube Link:</label>
-                            <input class="input-sm form-full" id="form-link" type="text" name="videoLink"
+                            <label class="input-sm form-full" type="text">youTubeLink Link:</label>
+                            <input th:field="*{youTubeLink}" class="input-sm form-full" id="youTubeLink" type="text" name="youTubeLink"
                                    placeholder="Link" required>
                         </div>
+                        <th:block th:each="e : ${#fields.errors('youTubeLink')}">
+                            <label th:text="${e}" style="font-size: large"  class="error text-danger">Choose Username</label>
+                            <br/>
+                            <hr/>
+                        </th:block>
                         <div class="dropdown-container">
-                            <label for="ex">Select sport:</label>
-                            <select class="form-control" id="sel2">
-                                <option value="none" selected disabled hidden>
+                            <label for="sel1">Select sport:</label>
+                            <select name="sport" th:field="*{sport}" class="form-control" id="sel1">
+                                <option value="none" selected>
                                     Select sport
                                 </option>
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
+                                <th:block th:each="s : ${T(softuni.javaweb.springproject.enums.Sport).values()}">
+                                    <option  th:value="${s}"
+                                             th:text="${s.name().replace('_',' ')}">Sport</option>
+                                </th:block>
                             </select>
                         </div>
                         <div class="form-field-wrapper">
                             <label class="input-sm form-full" type="email">Description:</label>
-                            <textarea class="form-full" id="form-message" rows="7" name="form-message"
+                            <textarea th:field="*{description}" class="form-full" id="form-message" rows="7" name="form-message"
                                       placeholder="Description about item" required></textarea>
                         </div>
+                        <th:block th:each="e : ${#fields.errors('description')}">
+                            <label th:text="${e}" style="font-size: large"  class="error text-danger">Choose Username</label>
+                            <br/>
+                            <hr/>
+                        </th:block>
                         <!--File Upload-->
                         <!--                        <form>-->
                         <!--                            <div class="form-group">-->

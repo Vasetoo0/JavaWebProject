@@ -10,6 +10,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import softuni.javaweb.springproject.story.model.binding.StoryAddBindingModel;
 import softuni.javaweb.springproject.story.service.StoryService;
 import softuni.javaweb.springproject.video.model.binding.VideoAddBindingModel;
+import softuni.javaweb.springproject.video.service.VideoService;
 
 import javax.validation.Valid;
 
@@ -19,10 +20,12 @@ import javax.validation.Valid;
 public class AdminController {
 
     private final StoryService storyService;
+    private final VideoService videoService;
     private final ModelMapper modelMapper;
 
-    public AdminController(StoryService storyService, ModelMapper modelMapper) {
+    public AdminController(StoryService storyService, VideoService videoService, ModelMapper modelMapper) {
         this.storyService = storyService;
+        this.videoService = videoService;
         this.modelMapper = modelMapper;
     }
 
@@ -63,5 +66,22 @@ public class AdminController {
         }
 
         return "admin/add-video";
+    }
+
+    @PostMapping("/addVideo")
+    public String addVideoConfirm(@Valid @ModelAttribute("videoAddBindingModel") VideoAddBindingModel videoAddBindingModel,
+                                  BindingResult bindingResult, RedirectAttributes redirectAttributes
+                                  ){
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("videoAddBindingModel", videoAddBindingModel);
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.videoAddBindingModel",
+                    bindingResult);
+
+            return "redirect:addVideo";
+        } else {
+            this.videoService.addVideo(videoAddBindingModel);
+
+            return "redirect:/";
+        }
     }
 }

@@ -9,6 +9,7 @@ import javax.persistence.*;
 @Table(name = "videos")
 public class Video extends BaseEntity {
 
+    private String title;
     private String youTubeLink;
     private String description;
     private Sport sport;
@@ -42,5 +43,14 @@ public class Video extends BaseEntity {
 
     public void setSport(Sport sport) {
         this.sport = sport;
+    }
+
+    @Column(nullable = false)
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 }

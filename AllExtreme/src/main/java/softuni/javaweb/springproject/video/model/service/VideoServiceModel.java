@@ -5,6 +5,7 @@ import softuni.javaweb.springproject.enums.Sport;
 public class VideoServiceModel {
 
     private String id;
+    private String title;
     private String youTubeLink;
     private String description;
     private Sport sport;
@@ -42,5 +43,13 @@ public class VideoServiceModel {
 
     public void setSport(Sport sport) {
         this.sport = sport;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 }

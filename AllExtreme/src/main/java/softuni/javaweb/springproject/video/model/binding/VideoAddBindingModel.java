@@ -8,6 +8,7 @@ import javax.validation.constraints.Pattern;
 
 public class VideoAddBindingModel {
 
+    private String title;
     private String youTubeLink;
     private String description;
     private Sport sport;
@@ -42,5 +43,14 @@ public class VideoAddBindingModel {
 
     public void setSport(Sport sport) {
         this.sport = sport;
+    }
+
+    @Length(min = 5, message = "Title must be at least 5 chars!")
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 }

@@ -68,10 +68,17 @@
                 <th:block th:each="v : ${videos}">
                 <div class="col-md-6 mb-30">
                     <div class="post-media">
-                        <h3 style="text-align: center">Title</h3>
-                        <iframe src="https://www.youtube.com/embed/S_kXyWhBB10" frameborder="0"
-                                allowfullscreen></iframe>
-                        <p style="text-align: center; color: black" >Text here for some info...</p>
+                        <h3 style="text-align: center" th:text="${v.title}"></h3>
+                        <iframe width="853" height="480" th:src="${v.youTubeLink}" frameborder="0"
+                                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        <p style="text-align: center; color: black; font-size: medium; margin-top: 20px"
+                           th:text="${v.description}">Text here for some info...</p>
+                        <th:block sec:authorize="hasRole('ADMIN')">
+                            <div style="float: left" class="post-more-link pull-right">
+                                <a style="float: left;" th:href="@{/{sport}/stories/delete/{id}(sport=${#session.getAttribute('selectedSport')},id = ${e.id})}">
+                                    Delete<i class="fa fa-remove right"></i></a>
+                            </div>
+                        </th:block>
                     </div>
                 </div>
                 </th:block>
