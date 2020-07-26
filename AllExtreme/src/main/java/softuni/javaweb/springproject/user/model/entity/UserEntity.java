@@ -17,8 +17,8 @@ public class UserEntity extends BaseEntity {
     private String email;
     private Set<Role> authorities;
     private Set<Offer> myOffers;
-    private Set<String> wishList = new HashSet<>();
-    private Set<Comment> comments;
+    private Set<String> wishList;
+//    private Set<Comment> comments;
 
     public UserEntity() {
     }
@@ -72,6 +72,7 @@ public class UserEntity extends BaseEntity {
     }
 
     @ElementCollection
+    @CollectionTable(name = "users_offers", joinColumns = @JoinColumn(name = "user_id"))
     public Set<String> getWishList() {
         return wishList;
     }
@@ -80,14 +81,16 @@ public class UserEntity extends BaseEntity {
         this.wishList = wishList;
     }
 
-    @OneToMany(mappedBy = "userEntity")
-    public Set<Comment> getComments() {
-        return comments;
-    }
 
-    public void setComments(Set<Comment> comments) {
-        this.comments = comments;
-    }
+    // If i need users to keep their comments in the future!
 
+//    @OneToMany(mappedBy = "userEntity")
+//    public Set<Comment> getComments() {
+//        return comments;
+//    }
+//
+//    public void setComments(Set<Comment> comments) {
+//        this.comments = comments;
+//    }
 
 }

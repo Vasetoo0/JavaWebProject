@@ -2,9 +2,13 @@ package softuni.javaweb.springproject.user.model.binding;
 
 
 import org.hibernate.validator.constraints.Length;
+import softuni.javaweb.springproject.common.validators.FieldMatch;
 
 import javax.validation.constraints.Email;
 
+@FieldMatch(first = "password",
+        second = "confirmPassword",
+        message = "The passwords do not match")
 public class UserRegisterBindingModel {
 
     private String username;

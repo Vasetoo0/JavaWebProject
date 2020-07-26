@@ -5,12 +5,12 @@
         <div class="row d-flex flex-md-row align-items-center">
             <div id="categoryNav" class="nav-menu ml-auto">
                 <a style="margin-right: 140px" href="/">Home</a>
-                <a th:href="@{/{sport}/stories(sport = ${#session.getAttribute('currSport')})}">Stories</a>
-                <a th:href="@{/{sport}/stories(sport = ${#session.getAttribute('currSport')})}">Videos</a>
-                <a th:href="@{/{sport}/stories(sport = ${#session.getAttribute('currSport')})}">Destinations</a>
-                <a th:href="@{/{sport}/stories(sport = ${#session.getAttribute('currSport')})}">Events</a>
-                <a th:href="@{/{sport}/stories(sport = ${#session.getAttribute('currSport')})}">Market</a>
-                <a th:href="@{/{sport}/stories(sport = ${#session.getAttribute('currSport')})}">Find Store</a>
+                <a th:href="@{/{sport}/stories(sport = ${#session.getAttribute('selectedSport')})}">Stories</a>
+                <a th:href="@{/{sport}/videos(sport = ${#session.getAttribute('selectedSport')})}">Videos</a>
+                <a th:href="@{/{sport}/destionations(sport = ${#session.getAttribute('selectedSport')})}">Destinations</a>
+                <a th:href="@{/{sport}/Events(sport = ${#session.getAttribute('selectedSport')})}">Events</a>
+                <a th:href="@{/{sport}/Market(sport = ${#session.getAttribute('selectedSport')})}">Market</a>
+                <a th:href="@{/{sport}/findStore(sport = ${#session.getAttribute('selectedSport')})}">Find Store</a>
             </div>
             <div class="nav-icons">
                 <div class="nav-icon-item d-lg-none">

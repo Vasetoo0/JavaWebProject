@@ -45,7 +45,7 @@
 
     <!-- Login Section -->
     <section id="login-register" class="ptb ptb-sm-80"
-             style="background-color: #83687B">
+             style="background-color: #c89666">
         <div class="container">
             <div class="row">
                 <div class="col-md-6 offset-md-3 col-sm-8 offset-sm-2">
@@ -55,17 +55,17 @@
                               th:object="${userRegisterBindingModel}">
                             <div class="form-field-wrapper">
                                 <label for="username">Choose Username</label>
-                                <input th:field="*{username}" type="text" required="" placeholder="Enter your Username" name="username"
+                                <input th:field="*{username}" th:value="*{username}" th:errorclass="error" type="text" required="" placeholder="Enter your Username" name="username"
                                        id="username" class="input-sm form-full" aria-required="true">
                             </div>
-                            <th:block th:each="e : ${#fields.errors('username')}">
+                            <th:block th:each="e : ${#fields.errors('username')}" th:if="${#fields.hasErrors('username')}">
                                 <label th:text="${e}" style="font-size: large"  class="error text-danger">Choose Username</label>
                                 <br/>
                                 <hr/>
                             </th:block>
                             <div class="form-field-wrapper">
                                 <label for="email">Email address</label>
-                                <input th:field="*{email}" type="email" required="" placeholder="Enter your Email" name="email"
+                                <input th:field="*{email}" th:value="*{email}" th:errorclass="error" type="email" required="" placeholder="Enter your Email" name="email"
                                        id="email" class="input-sm form-full" aria-required="true">
                             </div>
                             <th:block th:each="e : ${#fields.errors('email')}">
@@ -75,7 +75,7 @@
                             </th:block>
                             <div class="form-field-wrapper">
                                 <label for="password">Choose Password</label>
-                                <input th:field="*{password}" type="password" required="" placeholder="Enter Password" name="password"
+                                <input th:field="*{password}" th:errorclass="error" type="password" required="" placeholder="Enter Password" name="password"
                                        id="password" class="input-sm form-full" aria-required="true">
                             </div>
                             <th:block th:each="e : ${#fields.errors('password')}">
@@ -85,12 +85,12 @@
                             </th:block>
                             <div class="form-field-wrapper">
                                 <label for="confirmPassword">Re-enter Password</label>
-                                <input type="password" required="" placeholder="Enter Re-enter Password"
+                                <input type="password" th:errorclass="error" required="" placeholder="Enter Re-enter Password"
                                        name="confirmPassword" id="confirmPassword" class="input-sm form-full"
                                        aria-required="true">
                             </div>
-                            <th:block th:if="${notMatch}">
-                                <label style="font-size: larger" class="error text-danger">Password not match!</label>
+                            <th:block th:each="e : ${#fields.errors('password')}">
+                                <label th:text="${e}" style="font-size: large" class="error text-danger">Choose Username</label>
                                 <br/>
                                 <hr/>
                             </th:block>

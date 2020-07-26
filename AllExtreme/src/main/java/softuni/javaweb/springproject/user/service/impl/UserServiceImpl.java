@@ -18,7 +18,9 @@ import softuni.javaweb.springproject.user.repository.UserRepository;
 import softuni.javaweb.springproject.user.service.RoleService;
 import softuni.javaweb.springproject.user.service.UserService;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -41,11 +43,25 @@ public class UserServiceImpl implements UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
+    public boolean existsUser(String username) {
+        Objects.requireNonNull(username);
+
+        return userRepository.findByUsername(username).isPresent();
+    }
+    public boolean existsEmail(String email) {
+        Objects.requireNonNull(email);
+
+        return userRepository.findByEmail(email).isPresent();
+    }
+
+    @Override
+    public UserEntity getByUsername(String name) {
+        return this.userRepository.findByUsername(name)
+                .orElseThrow(() -> new EntityNotFoundException("User Dont Exist!"));
+    }
+
     @Override
     public UserServiceModel registerUser(UserServiceModel userServiceModel) {
-
-
-        //TODO: Validate service model!
 
             UserEntity userEntity = this.modelMapper.map(userServiceModel, UserEntity.class);
             if (this.userRepository.count() == 0) {

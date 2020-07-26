@@ -6,7 +6,6 @@ import softuni.javaweb.springproject.enums.Sport;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -15,7 +14,7 @@ import java.util.Set;
 public class Story extends BaseEntity {
 
     private String title;
-    private List<String> picturesLinks = new ArrayList<>();
+    private List<String> pictures;
     private String description;
     private LocalDateTime createdOn;
     private String creator;
@@ -35,13 +34,13 @@ public class Story extends BaseEntity {
         this.title = title;
     }
 
-    @ElementCollection
-    public List<String> getPicturesLinks() {
-        return picturesLinks;
+    @ElementCollection(fetch = FetchType.EAGER)
+    public List<String> getPictures() {
+        return pictures;
     }
 
-    public void setPicturesLinks(List<String> picturesLinks) {
-        this.picturesLinks = picturesLinks;
+    public void setPictures(List<String> picturesLinks) {
+        this.pictures = picturesLinks;
     }
 
     @Column(nullable = false,columnDefinition = "TEXT")
@@ -53,7 +52,7 @@ public class Story extends BaseEntity {
         this.description = description;
     }
 
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     public Sport getSport() {
         return sport;
@@ -81,7 +80,7 @@ public class Story extends BaseEntity {
         this.creator = creator;
     }
 
-    @OneToMany(mappedBy = "story")
+    @ElementCollection(fetch = FetchType.EAGER)
     public Set<Comment> getComments() {
         return comments;
     }

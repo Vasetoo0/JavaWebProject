@@ -3,14 +3,6 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <th:block th:include="~{/fragment/head}"></th:block>
-
-    <script>
-        // When the user clicks on div, open the popup
-        setTimeout(function myFunction() {
-            let popup = document.getElementById("myPopup");
-            popup.classList.toggle("show");
-        } , 2000);
-    </script>
 </head>
 
 <body>
@@ -51,7 +43,9 @@
 <!--        </div>-->
 <!--    </section>-->
     <!-- End Intro Section -->
-
+<!--    <label id="success" style="font-size: large; color: greenyellow; display: none" class="error text-success">You registered successfully!Please log in!</label>-->
+<!--    <br/>-->
+<!--    <hr/>-->
     <!-- Login Section -->
     <section id="Login" class="ptb ptb-sm-80"
              style="background-color: #A48807">
@@ -60,14 +54,21 @@
                 <div id="loginDiv"  class="col-md-6">
                     <div class="border-box">
                         <th:block th:if="${successRegister}">
-                            <label  style="font-size: large; color: greenyellow" class="error text-success">You registered successfully!Please log in!</label>
-                            <br/>
-                            <hr/>
+                            <div id="success" class="error"></div>
+                            <script>
+                                document.getElementById('success').innerHTML = '<b style="font-size: large; color: greenyellow">You registered successfully!Please log in!</b>';
+                                setTimeout(function () {
+                                    document.getElementById('success').innerHTML = '';
+                                }, 3000);
+                            </script>
+                        </th:block>
+                        <th:block th:if="${error}">
+                            <div  class="alert alert-danger" role="alert">
+                                <i th:text="|This username and password combination does not exist.|"
+                                   class="fa fa-exclamation-circle left" style="color: #e1534f; font-size: initial"></i>
+                            </div>
                         </th:block>
                         <h4 style="color: green; text-align: center">Log In :)</h4>
-                        <h6 class="errorContent" th:if="${notFound}">
-                            <i th:text="${error}" class="fa fa-exclamation-circle left" style="color: #e1534f;"></i>
-                        </h6>
                         <form role="search" id="loggedIn" th:action="@{/auth}" method="post" class="sign-in">
 <!--                            <input class="input-sm form-full" type="text" aria-required="true" id="username" name="username" placeholder="Username" value="" />-->
 <!--                            <input class="input-sm form-full" type="password" aria-required="true" id="password" name="password" placeholder="Password" value="" />-->
@@ -81,6 +82,7 @@
                                 <input type="password"  placeholder="Enter your Password" name="password" id="password" class="input-sm form-full" aria-required="true">
                             </div>
                             <button name="submit" id="form-submit" type="submit" class="btn btn-md btn-black">Sign In</button>
+                            <a href="/users/register" style="font-size: medium; float: right;">New Customer?</a>
                         </form>
                     </div>
                 </div>

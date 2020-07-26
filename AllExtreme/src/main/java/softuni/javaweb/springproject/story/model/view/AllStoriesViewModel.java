@@ -3,18 +3,17 @@ package softuni.javaweb.springproject.story.model.view;
 import softuni.javaweb.springproject.comment.model.view.CommentViewModel;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
 public class AllStoriesViewModel {
 
+    private String id;
     private String title;
-    private List<String> picturesLinks = new ArrayList<>();
+    private List<String> pictures;
     private String description;
     private LocalDateTime createdOn;
     private String creator;
-    private Set<CommentViewModel> comments;
 
     public AllStoriesViewModel() {
     }
@@ -27,12 +26,12 @@ public class AllStoriesViewModel {
         this.title = title;
     }
 
-    public List<String> getPicturesLinks() {
-        return picturesLinks;
+    public List<String> getPictures() {
+        return pictures;
     }
 
-    public void setPicturesLinks(List<String> picturesLinks) {
-        this.picturesLinks = picturesLinks;
+    public void setPictures(List<String> pictures) {
+        this.pictures = pictures;
     }
 
     public String getDescription() {
@@ -59,11 +58,11 @@ public class AllStoriesViewModel {
         this.creator = creator;
     }
 
-    public Set<CommentViewModel> getComments() {
-        return comments;
+    public String getId() {
+        return id;
     }
 
-    public void setComments(Set<CommentViewModel> comments) {
-        this.comments = comments;
+    public void setId(String id) {
+        this.id = id;
     }
 }

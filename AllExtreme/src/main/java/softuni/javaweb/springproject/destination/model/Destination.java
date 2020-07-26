@@ -4,7 +4,6 @@ import softuni.javaweb.springproject.base.BaseEntity;
 import softuni.javaweb.springproject.enums.Sport;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -14,7 +13,7 @@ public class Destination extends BaseEntity {
     private String title;
     private String mapsLink;
     private String iFrame;
-    private List<String> picturesLinks = new ArrayList<>();
+    private List<String> pictures;
     private String description;
     private Sport sport;
 
@@ -49,12 +48,12 @@ public class Destination extends BaseEntity {
     }
 
     @ElementCollection
-    public List<String> getPicturesLinks() {
-        return picturesLinks;
+    public List<String> getPictures() {
+        return pictures;
     }
 
-    public void setPicturesLinks(List<String> picturesLinks) {
-        this.picturesLinks = picturesLinks;
+    public void setPictures(List<String> picturesLinks) {
+        this.pictures = picturesLinks;
     }
 
     @Column(nullable = false,columnDefinition = "TEXT")

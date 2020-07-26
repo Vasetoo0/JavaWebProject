@@ -633,8 +633,10 @@ form label.error {
     margin-top: 3px;
     color: #e1534f;
     font-size: 12px;
-    font-weight: 400;
+    font-weight: bolder;
 }
+
+
 
 .successContent, .errorContent {
     margin-bottom: 20px;

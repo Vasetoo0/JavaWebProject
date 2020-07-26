@@ -6,7 +6,6 @@ import softuni.javaweb.springproject.user.model.entity.UserEntity;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -15,7 +14,7 @@ public class Offer extends BaseEntity {
 
     private String title;
     private String model;
-    private List<String> picturesLinks = new ArrayList<>();
+    private List<String> pictures;
     private String productCondition;
     private BigDecimal price;
     private LocalDateTime createdOn;
@@ -46,12 +45,12 @@ public class Offer extends BaseEntity {
     }
 
     @ElementCollection
-    public List<String> getPicturesLinks() {
-        return picturesLinks;
+    public List<String> getPictures() {
+        return pictures;
     }
 
-    public void setPicturesLinks(List<String> picturesLinks) {
-        this.picturesLinks = picturesLinks;
+    public void setPictures(List<String> picturesLinks) {
+        this.pictures = picturesLinks;
     }
 
     @Column(nullable = false)

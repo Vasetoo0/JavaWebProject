@@ -9,27 +9,19 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Entity
 @Table(name = "comments")
 public class Comment extends BaseEntity {
 
-    private UserEntity userEntity;
+    private String user;
     private String description;
     private LocalDateTime createdOn;
-    private Story story;
 
     public Comment() {
     }
 
-    @ManyToOne
-    public UserEntity getUserEntity() {
-        return userEntity;
-    }
-
-    public void setUserEntity(UserEntity userEntity) {
-        this.userEntity = userEntity;
-    }
 
     @Column(nullable = false,columnDefinition = "TEXT")
     public String getDescription() {
@@ -49,12 +41,12 @@ public class Comment extends BaseEntity {
         this.createdOn = createdOn;
     }
 
-    @ManyToOne
-    public Story getStory() {
-        return story;
+    @Column(nullable = false)
+    public String getUser() {
+        return user;
     }
 
-    public void setStory(Story story) {
-        this.story = story;
+    public void setUser(String user) {
+        this.user = user;
     }
 }

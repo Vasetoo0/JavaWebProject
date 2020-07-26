@@ -56,49 +56,83 @@
             <div class="row">
                 <div class="col-md-6 offset-md-3">
                     <!-- Offer-add FORM -->
-                    <form th:action="@{/admin/addStory}" method="POST" class="contact-form" id="contact" role="form">
+                    <form th:object="${storyAddBindingModel}" th:action="@{/admin/addStory}" method="POST"
+                          class="contact-form" id="contact" role="form">
                         <div class="form-field-wrapper">
                             <label class="input-sm form-full" type="text">Title:</label>
-                            <input class="input-sm form-full" id="title" type="text" name="title"
+                            <input th:field="*{title}" class="input-sm form-full" id="title" type="text" name="title"
                                    placeholder="Title" required>
                         </div>
+                        <th:block th:each="e : ${#fields.errors('title')}">
+                            <label th:text="${e}" style="font-size: large"  class="error text-danger">Choose Username</label>
+                            <br/>
+                            <hr/>
+                        </th:block>
                         <div class="form-field-wrapper">
                             <label class="input-sm form-full" type="text">Author:</label>
-                            <input class="input-sm form-full" id="creator" type="text" name="creator"
+                            <input th:field="*{creator}" class="input-sm form-full" id="creator" type="text" name="creator"
                                    placeholder="Author" required>
                         </div>
+                        <th:block th:each="e : ${#fields.errors('creator')}">
+                            <label th:text="${e}" style="font-size: large"  class="error text-danger">Choose Username</label>
+                            <br/>
+                            <hr/>
+                        </th:block>
                         <div class="form-field-wrapper">
                             <label class="input-sm form-full" type="date">Created On:</label>
-                            <input class="input-sm form-full" id="createdOn" type="date" name="createdOn"
+                            <input th:field="*{createdOn}" class="input-sm form-full" id="createdOn" type="datetime-local" name="createdOn"
                                    placeholder="Created On" required>
                         </div>
-                        <div class="form-field-wrapper">
+                        <th:block th:each="e : ${#fields.errors('createdOn')}">
+                            <label th:text="${e}" style="font-size: large"  class="error text-danger">Choose Username</label>
+                            <br/>
+                            <hr/>
+                        </th:block>
+                        <div class="form-field-wrapper" >
                             <label class="input-sm form-full" type="text">Pictures:</label>
+                            <input  class="input-sm form-full" style="margin-top: 12px" type="text" name="pictures"
+                                   placeholder="First picture link" >
+<!--                             Error BLOCK-->
+<!--                            <th:block th:each="e : ${#fields.errors('picture1')}">-->
+<!--                                <label th:text="${e}" style="font-size: large"  class="error text-danger">Choose Username</label>-->
+<!--                                <br/>-->
+<!--                                <hr/>-->
+<!--                            </th:block>-->
+<!--                            Error BLOCK-->
                             <input class="input-sm form-full" style="margin-top: 12px" type="text" name="pictures"
-                                   placeholder="First picture link" required>
+                                   placeholder="Second picture link" >
                             <input class="input-sm form-full" style="margin-top: 12px" type="text" name="pictures"
-                                   placeholder="Second picture link" required>
+                                   placeholder="Third picture link" >
                             <input class="input-sm form-full" style="margin-top: 12px" type="text" name="pictures"
-                                   placeholder="Third picture link" required>
-                            <input class="input-sm form-full" style="margin-top: 12px" type="text" name="pictures"
-                                   placeholder="Forth picture link" required>
+                                   placeholder="Forth picture link" >
                         </div>
                         <div class="dropdown-container">
                             <label for="sel1">Select sport:</label>
-                            <select class="form-control" id="sel1">
-                                <option value="none" selected disabled hidden>
+                            <select name="sport" th:field="*{sport}" class="form-control" id="sel1">
+                                <option value="none" selected>
                                     Select sport
                                 </option>
                                 <th:block th:each="s : ${T(softuni.javaweb.springproject.enums.Sport).values()}">
-                                <option th:text="${s.name().replace('_',' ')}">Sport</option>
+                                <option  th:value="${s}"
+                                        th:text="${s.name().replace('_',' ')}">Sport</option>
                                 </th:block>
                             </select>
                         </div>
+                        <th:block th:each="e : ${#fields.errors('sport')}">
+                            <label th:text="${e}" style="font-size: large"  class="error text-danger">Choose Username</label>
+                            <br/>
+                            <hr/>
+                        </th:block>
                         <div class="form-field-wrapper">
                             <label class="input-sm form-full" type="email">Description:</label>
-                            <textarea class="form-full" id="form-message" rows="7" name="form-message"
-                                      placeholder="Description about item" required></textarea>
+                            <textarea th:field="*{description}" class="form-full" id="description" rows="7" name="description"
+                                      placeholder="Story Description" required></textarea>
                         </div>
+                        <th:block th:each="e : ${#fields.errors('description')}">
+                            <label th:text="${e}" style="font-size: large"  class="error text-danger">Choose Username</label>
+                            <br/>
+                            <hr/>
+                        </th:block>
                         <!--File Upload-->
                         <!--                        <form>-->
                         <!--                            <div class="form-group">-->

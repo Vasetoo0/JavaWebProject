@@ -12,4 +12,10 @@ public interface UserService extends UserDetailsService {
 
     UserServiceModel registerUser(UserServiceModel userServiceModel);
 
+    boolean existsUser(String username);
+
+    boolean existsEmail(String email);
+
+
+    UserEntity getByUsername(String name);
 }

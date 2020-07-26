@@ -15,7 +15,7 @@ public class Event extends BaseEntity {
     private String destination;
     private LocalDateTime eventDate;
     private Double ticketPrice;
-    private List<String> picturesLinks;
+    private List<String> pictures;
     private String type;
     private String description;
     private Sport sport;
@@ -60,12 +60,12 @@ public class Event extends BaseEntity {
     }
 
     @ElementCollection
-    public List<String> getPicturesLinks() {
-        return picturesLinks;
+    public List<String> getPictures() {
+        return pictures;
     }
 
-    public void setPicturesLinks(List<String> picturesLinks) {
-        this.picturesLinks = picturesLinks;
+    public void setPictures(List<String> picturesLinks) {
+        this.pictures = picturesLinks;
     }
 
     @Column(nullable = false)

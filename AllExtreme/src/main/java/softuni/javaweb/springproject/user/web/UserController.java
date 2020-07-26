@@ -2,10 +2,12 @@ package softuni.javaweb.springproject.user.web;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import softuni.javaweb.springproject.user.model.binding.UserRegisterBindingModel;
 import softuni.javaweb.springproject.user.model.service.UserServiceModel;
@@ -27,17 +29,29 @@ public class UserController {
     }
 
     @GetMapping("/login")
-    public String login(){
+    public String login() {
 
         return "user/login";
     }
 
-    @GetMapping("/register")
-    public String register(Model model){
+    @PostMapping("/login-error")
+    public ModelAndView onLoginError(
+            @ModelAttribute(UsernamePasswordAuthenticationFilter.
+                    SPRING_SECURITY_FORM_USERNAME_KEY) String email
+    ) {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("error", "bad.credentials");
+        modelAndView.addObject("username", email);
+        modelAndView.setViewName("user/login");
 
-        if(!model.containsAttribute("userRegisterBindingModel")) {
-            model.addAttribute("userRegisterBindingModel",new UserRegisterBindingModel());
-            model.addAttribute( "notMatch",false);
+        return modelAndView;
+    }
+
+    @GetMapping("/register")
+    public String register(Model model) {
+
+        if (!model.containsAttribute("userRegisterBindingModel")) {
+            model.addAttribute("userRegisterBindingModel", new UserRegisterBindingModel());
         }
 
         return "user/register";
@@ -48,31 +62,29 @@ public class UserController {
                                           UserRegisterBindingModel userRegisterBindingModel,
                                   BindingResult bindingResult,
                                   RedirectAttributes redirectAttributes) {
-        if(bindingResult.hasErrors()) {
-            redirectAttributes.addFlashAttribute("userRegisterBindingModel",userRegisterBindingModel);
-            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.userRegisterBindingModel",
+        if (this.userService.existsUser(userRegisterBindingModel.getUsername())) {
+            bindingResult.rejectValue("username",
+                    "error.username",
+                    "An account with this username already exists.");
+        }
+        if (this.userService.existsEmail(userRegisterBindingModel.getEmail())) {
+            bindingResult.rejectValue("email",
+                    "error.email",
+                    "An account with this email already exists.");
+        }
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("userRegisterBindingModel", userRegisterBindingModel);
+            redirectAttributes.addFlashAttribute(BindingResult.MODEL_KEY_PREFIX + "userRegisterBindingModel",
                     bindingResult);
 
             return "redirect:register";
         } else {
-            if(!userRegisterBindingModel.getPassword().equals(userRegisterBindingModel.getConfirmPassword())) {
-                redirectAttributes.addFlashAttribute("userRegisterBindingModel",userRegisterBindingModel);
-                redirectAttributes.addFlashAttribute("notMatch",true);
+            this.userService.registerUser(
+                    this.modelMapper.map(userRegisterBindingModel, UserServiceModel.class)
+            );
+            redirectAttributes.addFlashAttribute("successRegister", true);
 
-                return "redirect:register";
-            } else {
-
-
-                this.userService.registerUser(
-                        this.modelMapper.map(userRegisterBindingModel, UserServiceModel.class)
-                );
-
-                redirectAttributes.addFlashAttribute("successRegister", true);
-
-                return "redirect:login";
-            }
+            return "redirect:login";
         }
-
     }
-
 }

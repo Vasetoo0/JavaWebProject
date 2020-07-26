@@ -6,19 +6,16 @@ import softuni.javaweb.springproject.enums.Sport;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PastOrPresent;
-import javax.validation.constraints.Pattern;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 public class StoryAddBindingModel {
 
     private String title;
-    private List<String> picturesLinks = new ArrayList<>();
     private String description;
     private LocalDateTime createdOn;
     private String creator;
     private Sport sport;
+    private String[] pictures;
 
     public StoryAddBindingModel() {
     }
@@ -30,16 +27,6 @@ public class StoryAddBindingModel {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    @NotNull
-    public List<@Pattern(regexp = "^https:\\/\\/.+\\.jpg$|^https:\\/\\/.+\\.png$",
-            message = "Invalid link!") String> getPicturesLinks() {
-        return picturesLinks;
-    }
-
-    public void setPicturesLinks(List<String> picturesLinks) {
-        this.picturesLinks = picturesLinks;
     }
 
     @Length(min = 200, message = "Story description ust be descriptive!Min 200 chars! :)")
@@ -70,12 +57,21 @@ public class StoryAddBindingModel {
         this.creator = creator;
     }
 
-    @NotNull
+    @NotNull(message = "Sport must not be null!")
     public Sport getSport() {
         return sport;
     }
 
     public void setSport(Sport sport) {
         this.sport = sport;
+    }
+
+
+    public String[] getPictures() {
+        return pictures;
+    }
+
+    public void setPictures(String[] pictures) {
+        this.pictures = pictures;
     }
 }

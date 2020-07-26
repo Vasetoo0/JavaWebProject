@@ -32,6 +32,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 authorizeRequests().
                 requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll().
                 antMatchers("/**").permitAll().
+                antMatchers("/users/profile/**").authenticated().
                 antMatchers("/admin/**").hasRole("ADMIN").
                 and().
                 formLogin().
@@ -39,7 +40,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 usernameParameter("username").
                 passwordParameter("password").
                 loginProcessingUrl("/auth").
-                failureForwardUrl("/users/login").
+                failureForwardUrl("/users/login-error").
                 defaultSuccessUrl("/",true).
                 permitAll().
                 and().
