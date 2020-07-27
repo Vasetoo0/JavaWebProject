@@ -21,7 +21,7 @@ public class Offer extends BaseEntity {
     private String description;
     private Boolean enabled = false;
     private Sport sport;
-    private UserEntity userEntity;
+    private UserEntity creator;
 
     public Offer() {
     }
@@ -81,12 +81,12 @@ public class Offer extends BaseEntity {
     }
 
     @ManyToOne()
-    public UserEntity getUserEntity() {
-        return userEntity;
+    public UserEntity getCreator() {
+        return creator;
     }
 
-    public void setUserEntity(UserEntity userEntity) {
-        this.userEntity = userEntity;
+    public void setCreator(UserEntity userEntity) {
+        this.creator = userEntity;
     }
 
     @Enumerated

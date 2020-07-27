@@ -1,11 +1,9 @@
 package softuni.javaweb.springproject.user.model.entity;
 
 import softuni.javaweb.springproject.base.BaseEntity;
-import softuni.javaweb.springproject.comment.model.entity.Comment;
 import softuni.javaweb.springproject.offer.model.Offer;
 
 import javax.persistence.*;
-import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -62,7 +60,7 @@ public class UserEntity extends BaseEntity {
         this.authorities = authorities;
     }
 
-    @OneToMany(mappedBy = "userEntity")
+    @OneToMany(mappedBy = "creator")
     public Set<Offer> getMyOffers() {
         return myOffers;
     }

@@ -75,7 +75,7 @@
                            th:text="${v.description}">Text here for some info...</p>
                         <th:block sec:authorize="hasRole('ADMIN')">
                             <div style="float: left" class="post-more-link pull-right">
-                                <a style="float: left;" th:href="@{/{sport}/stories/delete/{id}(sport=${#session.getAttribute('selectedSport')},id = ${e.id})}">
+                                <a style="float: left;" th:href="@{/{sport}/videos/delete/{id}(sport=${#session.getAttribute('selectedSport')},id = ${v.id})}">
                                     Delete<i class="fa fa-remove right"></i></a>
                             </div>
                         </th:block>

@@ -12,4 +12,6 @@ public interface VideoService {
     List<VideoViewModel> getBySport(String sport);
 
     VideoServiceModel addVideo(VideoAddBindingModel videoAddBindingModel);
+
+    void deleteById(String id);
 }

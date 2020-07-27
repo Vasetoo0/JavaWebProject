@@ -2183,9 +2183,10 @@ div #footerContact {
 /*==============================================================================================*/
 
 .footer {
+
     background-color: #f7f7f7;
     color: #323232;
-    position: relative;
+    position: absolute;
     width: 100%;
     display: block;
 }

@@ -1,5 +1,6 @@
 package softuni.javaweb.springproject.story.model.binding;
 
+import com.sun.xml.bind.v2.TODO;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.format.annotation.DateTimeFormat;
 import softuni.javaweb.springproject.enums.Sport;
@@ -67,6 +68,7 @@ public class StoryAddBindingModel {
     }
 
 
+    //TODO: Make validator for pictures!
     public String[] getPictures() {
         return pictures;
     }

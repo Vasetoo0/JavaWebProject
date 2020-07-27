@@ -44,4 +44,9 @@ public class VideoServiceImpl implements VideoService {
                 .map(this.videoRepository.save(this.modelMapper.map(videoServiceModel,Video.class)),
                 VideoServiceModel.class);
     }
+
+    @Override
+    public void deleteById(String id) {
+        this.videoRepository.deleteById(id);
+    }
 }

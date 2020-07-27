@@ -27,6 +27,14 @@ public class VideoController {
         return "videos/videos";
     }
 
+    @GetMapping("/delete/{id}")
+    public String deleteVideo(@PathVariable("id")String id,
+                              @PathVariable("sport") String sport) {
+        this.videoService.deleteById(id);
+
+        return "redirect:/" + sport + "/videos/";
+    }
+
 
 
 }

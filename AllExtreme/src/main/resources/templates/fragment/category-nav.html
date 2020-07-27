@@ -7,9 +7,9 @@
                 <a style="margin-right: 140px" href="/">Home</a>
                 <a th:href="@{/{sport}/stories(sport = ${#session.getAttribute('selectedSport')})}">Stories</a>
                 <a th:href="@{/{sport}/videos(sport = ${#session.getAttribute('selectedSport')})}">Videos</a>
-                <a th:href="@{/{sport}/destionations(sport = ${#session.getAttribute('selectedSport')})}">Destinations</a>
-                <a th:href="@{/{sport}/Events(sport = ${#session.getAttribute('selectedSport')})}">Events</a>
-                <a th:href="@{/{sport}/Market(sport = ${#session.getAttribute('selectedSport')})}">Market</a>
+                <a th:href="@{/{sport}/destinations(sport = ${#session.getAttribute('selectedSport')})}">Destinations</a>
+                <a th:href="@{/{sport}/events(sport = ${#session.getAttribute('selectedSport')})}">Events</a>
+                <a th:href="@{/{sport}/market(sport = ${#session.getAttribute('selectedSport')})}">Market</a>
                 <a th:href="@{/{sport}/findStore(sport = ${#session.getAttribute('selectedSport')})}">Find Store</a>
             </div>
             <div class="nav-icons">
