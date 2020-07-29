@@ -1,6 +1,5 @@
 package softuni.javaweb.springproject.story.service.impl;
 
-import org.hibernate.ObjectNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -18,7 +17,6 @@ import softuni.javaweb.springproject.user.service.UserService;
 import javax.persistence.EntityNotFoundException;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -74,11 +72,12 @@ public class StoryServiceImpl implements StoryService {
     }
 
     @Override
-    public List<AllStoriesViewModel> getRecentStories() {
+    public List<AllStoriesViewModel> getRecentStories(String sport) {
         return this.storyRepository.findAll()
                 .stream()
                 .filter(s -> s.getCreatedOn().
                         isAfter(s.getCreatedOn().minus(15, ChronoUnit.DAYS)))
+                .filter(s -> s.getSport().name().equals(sport))
                 .map(s -> this.modelMapper.map(s,AllStoriesViewModel.class))
                 .limit(5)
                 .collect(Collectors.toList());

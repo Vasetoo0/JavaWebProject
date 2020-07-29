@@ -1,7 +1,7 @@
 package softuni.javaweb.springproject.user.model.entity;
 
 import softuni.javaweb.springproject.base.BaseEntity;
-import softuni.javaweb.springproject.offer.model.Offer;
+import softuni.javaweb.springproject.offer.model.entity.Offer;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -60,7 +60,7 @@ public class UserEntity extends BaseEntity {
         this.authorities = authorities;
     }
 
-    @OneToMany(mappedBy = "creator")
+    @OneToMany(mappedBy = "creator",cascade = CascadeType.MERGE)
     public Set<Offer> getMyOffers() {
         return myOffers;
     }
@@ -70,7 +70,7 @@ public class UserEntity extends BaseEntity {
     }
 
     @ElementCollection
-    @CollectionTable(name = "users_offers", joinColumns = @JoinColumn(name = "user_id"))
+    @CollectionTable(name = "users_wish_list", joinColumns = @JoinColumn(name = "user_id"))
     public Set<String> getWishList() {
         return wishList;
     }

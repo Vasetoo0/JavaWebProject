@@ -11,6 +11,7 @@ import softuni.javaweb.springproject.destination.model.binding.DestinationAddBin
 import softuni.javaweb.springproject.destination.service.DestinationService;
 import softuni.javaweb.springproject.event.model.binding.EventAddBindingModel;
 import softuni.javaweb.springproject.event.service.EventService;
+import softuni.javaweb.springproject.offer.service.OfferService;
 import softuni.javaweb.springproject.story.model.binding.StoryAddBindingModel;
 import softuni.javaweb.springproject.story.service.StoryService;
 import softuni.javaweb.springproject.video.model.binding.VideoAddBindingModel;
@@ -26,13 +27,15 @@ public class AdminController {
     private final StoryService storyService;
     private final VideoService videoService;
     private final EventService eventService;
+    private final OfferService offerService;
     private final DestinationService destinationService;
     private final ModelMapper modelMapper;
 
-    public AdminController(StoryService storyService, VideoService videoService, EventService eventService, DestinationService destinationService, ModelMapper modelMapper) {
+    public AdminController(StoryService storyService, VideoService videoService, EventService eventService, OfferService offerService, DestinationService destinationService, ModelMapper modelMapper) {
         this.storyService = storyService;
         this.videoService = videoService;
         this.eventService = eventService;
+        this.offerService = offerService;
         this.destinationService = destinationService;
         this.modelMapper = modelMapper;
     }
@@ -148,5 +151,24 @@ public class AdminController {
             return "redirect:/";
         }
     }
+
+    @GetMapping("/approve")
+    public String approve(Model model){
+
+        model.addAttribute("unApproved", this.offerService.getUnApproved());
+
+        return "admin/approve-new-offer";
+    }
+
+    @GetMapping("/approve/{id}")
+    public String approveConfirm(@PathVariable("id")String id) {
+
+        this.offerService.approveOffer(id);
+
+        return "redirect:/admin/approve";
+    }
+
+
+
 
 }

@@ -27,16 +27,17 @@ public class StoryController {
                                  Model model) {
 
         httpSession.setAttribute("selectedSport", selectedSport);
-        model.addAttribute("sports", this.storyService.getAllBySport(selectedSport));
+        model.addAttribute("stories", this.storyService.getAllBySport(selectedSport));
 
         return "stories/stories";
     }
 
     @GetMapping("/{id}")
-    public String viewStory(@PathVariable("id") String id,Model model){
+    public String viewStory(@PathVariable("id") String id,Model model,
+                            @PathVariable("sport") String sport){
 
         model.addAttribute("story", this.storyService.getById(id));
-        model.addAttribute("recent", this.storyService.getRecentStories());
+        model.addAttribute("recent", this.storyService.getRecentStories(sport));
 
         return "stories/story-details";
     }

@@ -61,6 +61,11 @@
             <!--                </ul>-->
             <!--            </div>-->
             <!-- End work Filter -->
+            <th:block th:if="${events.size() == 0}">
+                <div class="container" style="text-align: center;margin-top: 100px">
+                    <h2 style="text-align: center;" class="h2">No Events Found</h2>
+                </div>
+            </th:block>
             <th:block th:each="e : ${events}">
                 <div class="row container-grid nf-col-2">
                     <div class="nf-item branding coffee spacing">

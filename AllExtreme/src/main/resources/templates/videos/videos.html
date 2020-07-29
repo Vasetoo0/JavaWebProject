@@ -52,6 +52,11 @@
             <div class="container" style="text-align: center">
                 <h2 style="text-align: center" class="h2">Videos</h2>
             </div>
+            <th:block th:if="${videos.size() == 0}">
+                <div class="container" style="text-align: center;margin-top: 100px">
+                    <h2 style="text-align: center;" class="h2">No Videos Found</h2>
+                </div>
+            </th:block>
             <div class="row">
                 <!-- Vimeo Player -->
 <!--                <div class="col-md-6 mb-30">-->

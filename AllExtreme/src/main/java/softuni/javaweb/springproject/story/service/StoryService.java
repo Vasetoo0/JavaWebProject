@@ -16,7 +16,7 @@ public interface StoryService {
 
     StoryViewModel getById(String id);
 
-    List<AllStoriesViewModel> getRecentStories();
+    List<AllStoriesViewModel> getRecentStories(String sport);
 
     void addCommentToStory(Comment savedComment, String storyId);
 

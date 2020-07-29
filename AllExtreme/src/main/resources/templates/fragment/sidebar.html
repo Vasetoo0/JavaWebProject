@@ -9,7 +9,7 @@
         <!--Sidebar Content-->
         <div class="sidebar-content">
             <th:block sec:authorize="isAuthenticated()">
-            <h5 class="white" style="text-align: center"><a th:href="@{/users/{id}(id=${id})}" th:text="|Hey ${#authentication.name}|"></a></h5>
+            <h5 class="white" style="text-align: center"><a th:href="@{/users/{name}(id=${#authentication.name})}" th:text="|Hey ${#authentication.name}|"></a></h5>
             <form role="search" id="sign-in" th:action="@{/logout}" method="post" class="sign-in">
                 <h5 sec:authorize="hasRole('ROLE_USER') && !hasRole('ADMIN')" ><img src="https://www.khanacademy.org/images/avatars/svg/aqualine-sapling.svg" alt=""></h5>
                 <h5 sec:authorize="hasRole('ROLE_ADMIN')"><img src="https://i.neoseeker.com/mgv/592156/156/86/ninja_admin_regular_size_display.png" alt=""></h5>
@@ -28,9 +28,9 @@
             </th:block>
             <ul>
                 <th:block sec:authorize="isAuthenticated()">
-                <li><a th:href="@{/users/{id}(id=${id})}">Profile</a></li>
-                <li><a th:href="@{/users/{id}(id=${id})/myOffers}">My Offers</a></li>
-                <li><a th:href="@{/users/{id}(id=${id})/wishList}">&hearts; Wish List &hearts;</a></li>
+                <li><a th:href="@{/users/{name}(name=${#authentication.name})}">Profile</a></li>
+                <li><a th:href="@{/users/{name}/myOffers(name=${#authentication.name})}">My Offers</a></li>
+                <li><a th:href="@{/users/{name}/wishList(name=${#authentication.name})}">&hearts; Wish List &hearts;</a></li>
                 </th:block>
                 <li><a href="/help/FAQ">FAQ</a></li>
                 <li><a href="/help/team">About Us</a></li>

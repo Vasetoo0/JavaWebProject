@@ -13,4 +13,10 @@ public class OfferController {
 
         return "market/market";
     }
+
+    @GetMapping("/offer/{id}")
+    public String viewOffer(){
+
+        return "market/offer-details";
+    }
 }

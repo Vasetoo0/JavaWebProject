@@ -52,6 +52,11 @@
                 <h2 style="text-align: center" class="h2">Destinations </h2>
             </div>
             <div class="row">
+                <th:block th:if="${destinations.size() == 0}">
+                    <div class="container" style="text-align: center;margin-top: 100px">
+                        <h2 style="text-align: center;" class="h2">No Destination Found</h2>
+                    </div>
+                </th:block>
                 <!-- Post Item -->
                 <th:block th:each="d : ${destinations}">
                 <div class="col-md-8 offset-md-2 blog-post-hr">

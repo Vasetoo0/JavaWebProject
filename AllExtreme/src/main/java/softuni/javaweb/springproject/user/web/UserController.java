@@ -2,6 +2,7 @@ package softuni.javaweb.springproject.user.web;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,11 +10,15 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import softuni.javaweb.springproject.offer.model.binding.OfferAddBindingModel;
+import softuni.javaweb.springproject.offer.service.OfferService;
 import softuni.javaweb.springproject.user.model.binding.UserRegisterBindingModel;
 import softuni.javaweb.springproject.user.model.service.UserServiceModel;
 import softuni.javaweb.springproject.user.service.UserService;
 
 import javax.validation.Valid;
+import java.security.Principal;
+import java.util.List;
 
 @Controller
 @RequestMapping("/users")
@@ -21,11 +26,13 @@ public class UserController {
 
     private final UserService userService;
     private final ModelMapper modelMapper;
+    private final OfferService offerService;
 
     @Autowired
-    public UserController(UserService userService, ModelMapper modelMapper) {
+    public UserController(UserService userService, ModelMapper modelMapper, OfferService offerService) {
         this.userService = userService;
         this.modelMapper = modelMapper;
+        this.offerService = offerService;
     }
 
     @GetMapping("/login")
@@ -87,4 +94,59 @@ public class UserController {
             return "redirect:login";
         }
     }
+
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/{name}")
+    public String profile(@PathVariable("name") String name, Model model) {
+
+        model.addAttribute("user", this.userService.getByUsername(name));
+
+        return "user/profile";
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/{name}/myOffers")
+    public String myOffers(@PathVariable("name") String name, Model model) {
+
+        model.addAttribute("myOffers", this.offerService.getByCreator(name));
+
+        return "user/my-offers";
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/{name}/addOffer")
+    public String addOffer(Model model) {
+
+        if(!model.containsAttribute("offerAddBindingModel")) {
+            model.addAttribute("offerAddBindingModel", new OfferAddBindingModel());
+        }
+
+        return "user/add-offer";
+    }
+
+    @PostMapping("/{name}/addOffer")
+    public String addOfferConfirm(@Valid @ModelAttribute("offerAddBindingModel")OfferAddBindingModel offerAddBindingModel,
+                                  BindingResult bindingResult, RedirectAttributes redirectAttributes,
+                                  @RequestParam("picture")String[] pictures, @PathVariable("name") String name,
+                                  Principal principal){
+
+
+
+        if(bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("offerAddBindingModel", offerAddBindingModel);
+            redirectAttributes.addFlashAttribute(redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.offerAddBindingModel",
+                    bindingResult));
+
+            return "redirect:addOffer";
+        } else {
+            offerAddBindingModel.setPictures(List.of(pictures));
+            offerAddBindingModel.setCreator(principal.getName());
+
+            this.offerService.addOffer(offerAddBindingModel);
+
+            return "redirect:myOffers";
+        }
+    }
+
+
 }

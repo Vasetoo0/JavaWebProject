@@ -49,9 +49,13 @@
                 <h2 style="text-align: center" class="h2">Stories</h2>
             </div>
             <!-- Post Item -->
-
+            <th:block th:if="${stories.size() == 0}">
+                <div class="container" style="text-align: center;margin-top: 100px">
+                    <h2 style="text-align: center;" class="h2">No Stories Found</h2>
+                </div>
+            </th:block>
             <div class="row masonry">
-                <th:block th:each="e : ${sports}">
+                <th:block th:each="e : ${stories}">
                     <div class="col-md-4 col-sm-6 nf-item spacing-grid">
                         <div class="blog-post">
                             <div class="post-media">
