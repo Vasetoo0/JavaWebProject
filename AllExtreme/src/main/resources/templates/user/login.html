@@ -56,7 +56,7 @@
                         <th:block th:if="${successRegister}">
                             <div id="success" class="error" style="border-style: solid; border-color: greenyellow"></div>
                             <script>
-                                document.getElementById('success').innerHTML = '<b style="font-size: large; color: greenyellow">You registered successfully!Please log in!</b>';
+                                document.getElementById('success').innerHTML = '<b style="font-size: large; color: greenyellow; margin: 10px;">You registered successfully!Please log in!</b>';
                                 setTimeout(function () {
                                     document.getElementById('success').innerHTML = '';
                                     document.getElementById('success').style.borderStyle = 'none';

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="~{/fragment/head}"></th:block>
+
+</head>
+
+<body>
+
+<!-- Preloader -->
+<section id="preloader">
+    <div class="loader" id="loader">
+        <div class="loader-img"></div>
+    </div>
+</section>
+<!-- End Preloader -->
+
+<!-- Sidebar Menu -->
+<th:block th:include="~{/fragment/sidebar}"></th:block>
+<!-- End Sidebar Menu -->
+
+<!-- Site Wraper -->
+<div class="wrapper">
+
+    <!-- Header ("header--dark", "header-transparent", "header--sticky")-->
+    <header id="header" class="header header-transparent header--sticky">
+        <!-- Nav Bar -->
+        <th:block th:include="~{fragment/home-nav}"></th:block>
+        <!-- End Nav Bar -->
+    </header>
+    <!-- End Header -->
+
+    <!-- CONTENT --------------------------------------------------------------------------------->
+    <!-- Intro Section -->
+    <!--    <section class="inner-intro dark-bg bg-image overlay-dark parallax parallax-background1" data-background-img="img/full/08.jpg">-->
+    <!--        <div class="container">-->
+    <!--            <div class="row title">-->
+    <!--                <h2 class="h2">Contact Us</h2>-->
+    <!--                <div class="page-breadcrumb">-->
+    <!--                    <a>Home</a>/<span>Contact</span>-->
+    <!--                </div>-->
+    <!--            </div>-->
+    <!--        </div>-->
+    <!--    </section>-->
+    <!-- End Intro Section -->
+
+    <!-- Contact Section -->
+    <section class="ptb ptb-sm-80" style="background-color: #9DC199">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 offset-md-2 text-center">
+                    <h3>Requests</h3>
+                </div>
+                <th:block th:if="${userRequests.size() == 0}">
+                    <div class="container" style="text-align: center;margin-top: 100px">
+                        <h2 style="text-align: center;" class="h2">No New Requests</h2>
+                    </div>
+                </th:block>
+            </div>
+            <div class="spacer-75">
+            </div>
+            <div class="row">
+                <!--                <div class="col-md-5 contact">-->
+                <!--                    <div class="contact-box-left mb-45">-->
+                <!--                        <div class="contact-icon-left"><i class="ion ion-ios-location"></i></div>-->
+                <!--                        <h6>Additional info</h6>-->
+                <!--                        <p>-->
+                <!--                            502, DieSachbearbeiter, Schönhauser Allee,<br />-->
+                <!--                            167c10435 Berlin,Germany.-->
+                <!--                        </p>-->
+                <!--                        <a href="mailto:yourname@domain.com"><i class="fa fa-envelope-o left"></i>yourname@domain.com</a><br />-->
+                <!--                        <a><i class="fa fa-phone left"></i>+40 (0) 012 345 6789</a>-->
+                <!--                    </div>-->
+                <!--                    <div class="contact-box-left mb-45">-->
+                <!--                        <div class="contact-icon-left"><i class="ion ion-ios-clock"></i></div>-->
+                <!--                        <h6>Business Hours</h6>-->
+                <!--                        <p>-->
+                <!--                            <span>Mon - Fri: 9am to 6pm</span>-->
+                <!--                            <br />-->
+                <!--                            <span>Sat : 9am to 1pm</span>-->
+                <!--                        </p>-->
+                <!--                    </div>-->
+                <!--                    <div class="contact-box-left mb-45">-->
+
+                <!--                        <h6>Follow Us</h6>-->
+                <!--                        <ul class="list-none social">-->
+                <!--                            <li><a href="https://www.twitter.com/" target="_blank"><i class="fa fa-twitter"></i></a></li>-->
+                <!--                            <li><a href="https://instagram.com/" target="_blank"><i class="fa fa-instagram"></i></a></li>-->
+                <!--                            <li><a href="https://www.facebook.com/" target="_blank"><i class="fa fa-facebook"></i></a></li>-->
+                <!--                            <li><a href="https://vimeo.com/" target="_blank"><i class="fa fa-vimeo-square"></i></a></li>-->
+                <!--                            <li><a href="https://www.behance.net/" target="_blank"><i class="fa fa-behance"></i></a></li>-->
+                <!--                        </ul>-->
+                <!--                    </div>-->
+                <!--                </div>-->
+                <div class="col-md-6 offset-md-1" style="float: right; right: -200px;">
+                    <!-- Contact FORM -->
+                    <th:block th:each="r : ${userRequests}">
+                        <form th:action="@{/admin/requests/delete/{id}(id = ${r.id})}" th:method="DELETE" class="contact-form" id="contact" role="form"
+                              style="margin-top: 55px">
+                            <h4 style="text-align: center">Request</h4>
+                            <div class="form-field-wrapper">
+                                <input th:placeholder="${r.name}" class="input-sm form-full" id="name" type="text" name="name"
+                                       placeholder="Your Name" disabled>
+                            </div>
+
+                            <div class="form-field-wrapper">
+                                <input th:placeholder="${r.email}" class="input-sm form-full" id="email" type="email"
+                                       name="email" placeholder="Email" disabled>
+                            </div>
+
+                            <div class="form-field-wrapper">
+                                <input th:placeholder="${r.subject}" class="input-sm form-full" id="subject" type="text"
+                                       name="subject" placeholder="Subject" disabled>
+                            </div>
+                            <div class="form-field-wrapper">
+                                <textarea th:text="${r.message}" class="form-full" id="message" rows="7" name="message"
+                                          placeholder="Your Message" disabled></textarea>
+                            </div>
+                            <button class="btn btn-md btn-black form-full" type="submit" id="form-submit" name="submit">Remove</button>
+                        </form>
+                        <hr/>
+                    </th:block>
+                    <!-- END Contact FORM -->
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Contact Section -->
+
+    <!-- Map Section -->
+    <!--    <section class="map">-->
+    <!--        <div id="map"></div>-->
+    <!--    </section>-->
+    <!-- Map Section -->
+
+    <!-- End CONTENT ------------------------------------------------------------------------------>
+
+    <th:block th:include="~{fragment/footer}"></th:block>
+
+</div>
+<!-- Site Wraper End -->
+
+
+<!-- JS -->
+<th:block th:include="~{fragment/JS}"></th:block>
+</body>
+</html>

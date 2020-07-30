@@ -50,10 +50,21 @@
             <div class="row">
                 <div class="col-md-8 offset-md-2 text-center">
                     <h3>Get In Touch</h3>
-                    <p class="lead">Nullam dictum felis eu pede mollis pretium leo eget bibendum sodales augue velit cursus. tellus eget condimentum rhoncus sem quam semper libero.</p>
+                    <p class="lead">Please write us what is on your mind :)</p>
                 </div>
             </div>
-            <div class="spacer-75"></div>
+            <div class="spacer-75">
+                <th:block th:if="${requestSend}">
+                    <div id="success" class="error" style="border-style: solid; border-color: greenyellow"></div>
+                    <script>
+                        document.getElementById('success').innerHTML = '<b style="font-size: large; color: greenyellow; margin: 10px;">Request send successfully!</b>';
+                        setTimeout(function () {
+                            document.getElementById('success').innerHTML = '';
+                            document.getElementById('success').style.borderStyle = 'none';
+                        }, 3000);
+                    </script>
+                </th:block>
+            </div>
             <div class="row">
 <!--                <div class="col-md-5 contact">-->
 <!--                    <div class="contact-box-left mb-45">-->
@@ -89,36 +100,50 @@
 <!--                </div>-->
                 <div class="col-md-6 offset-md-1">
                     <!-- Contact FORM -->
-                    <form class="contact-form" id="contact" role="form">
+                    <form th:object="${requestAddBindingModel}" th:action="@{/help/request}" th:method="POST" class="contact-form" id="contact" role="form">
+<!--                        &lt;!&ndash; IF MAIL SENT SUCCESSFULLY &ndash;&gt;-->
+<!--                        <h6 class="successContent">-->
+<!--                            <i class="fa fa-check left" style="color: #5cb45d;"></i>Your message has been sent successfully.-->
+<!--                        </h6>-->
+<!--                        &lt;!&ndash; END IF MAIL SENT SUCCESSFULLY &ndash;&gt;-->
 
-                        <!-- IF MAIL SENT SUCCESSFULLY -->
-                        <h6 class="successContent">
-                            <i class="fa fa-check left" style="color: #5cb45d;"></i>Your message has been sent successfully.
-                        </h6>
-                        <!-- END IF MAIL SENT SUCCESSFULLY -->
-
-                        <!-- MAIL SENDING UNSUCCESSFULL -->
-                        <h6 class="errorContent">
-                            <i class="fa fa-exclamation-circle left" style="color: #e1534f;"></i>There was a problem validating the form please check!
-                        </h6>
-                        <!-- END MAIL SENDING UNSUCCESSFULL -->
-
+<!--                        &lt;!&ndash; MAIL SENDING UNSUCCESSFULL &ndash;&gt;-->
+<!--                        <h6 class="errorContent">-->
+<!--                            <i class="fa fa-exclamation-circle left" style="color: #e1534f;"></i>There was a problem validating the form please check!-->
+<!--                        </h6>-->
+<!--                        &lt;!&ndash; END MAIL SENDING UNSUCCESSFULL &ndash;&gt;-->
                         <div class="form-field-wrapper">
-                            <input class="input-sm form-full" id="form-name" type="text" name="form-name" placeholder="Your Name" required>
+                            <input th:field="*{name}" class="input-sm form-full" id="name" type="text" name="name" placeholder="Your Name" required>
                         </div>
-
+                        <th:block th:each="e : ${#fields.errors('name')}">
+                            <label th:text="${e}" style="font-size: large"  class="error text-danger">Choose Username</label>
+                            <br/>
+                            <hr/>
+                        </th:block>
                         <div class="form-field-wrapper">
-                            <input class="input-sm form-full" id="form-email" type="email" name="form-email" placeholder="Email" required>
+                            <input th:field="*{email}" class="input-sm form-full" id="email" type="email" name="email" placeholder="Email" required>
                         </div>
-
+                        <th:block th:each="e : ${#fields.errors('email')}">
+                            <label th:text="${e}" style="font-size: large"  class="error text-danger">Choose Username</label>
+                            <br/>
+                            <hr/>
+                        </th:block>
                         <div class="form-field-wrapper">
-                            <input class="input-sm form-full" id="form-subject" type="text" name="form-subject" placeholder="Subject">
+                            <input th:field="*{subject}" class="input-sm form-full" id="subject" type="text" name="subject" placeholder="Subject">
                         </div>
-
+                        <th:block th:each="e : ${#fields.errors('subject')}">
+                            <label th:text="${e}" style="font-size: large"  class="error text-danger">Choose Username</label>
+                            <br/>
+                            <hr/>
+                        </th:block>
                         <div class="form-field-wrapper">
-                            <textarea class="form-full" id="form-message" rows="7" name="form-message" placeholder="Your Message" required></textarea>
+                            <textarea th:field="*{message}" class="form-full" id="message" rows="7" name="message" placeholder="Your Message" required></textarea>
                         </div>
-
+                        <th:block th:each="e : ${#fields.errors('message')}">
+                            <label th:text="${e}" style="font-size: large"  class="error text-danger">Choose Username</label>
+                            <br/>
+                            <hr/>
+                        </th:block>
                         <button class="btn btn-md btn-black form-full" type="submit" id="form-submit" name="submit">Send Message</button>
                     </form>
                     <!-- END Contact FORM -->

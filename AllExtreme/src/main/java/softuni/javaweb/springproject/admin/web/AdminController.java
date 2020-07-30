@@ -11,6 +11,7 @@ import softuni.javaweb.springproject.destination.model.binding.DestinationAddBin
 import softuni.javaweb.springproject.destination.service.DestinationService;
 import softuni.javaweb.springproject.event.model.binding.EventAddBindingModel;
 import softuni.javaweb.springproject.event.service.EventService;
+import softuni.javaweb.springproject.help.service.RequestService;
 import softuni.javaweb.springproject.offer.service.OfferService;
 import softuni.javaweb.springproject.story.model.binding.StoryAddBindingModel;
 import softuni.javaweb.springproject.story.service.StoryService;
@@ -25,14 +26,16 @@ import javax.validation.Valid;
 public class AdminController {
 
     private final StoryService storyService;
+    private final RequestService requestService;
     private final VideoService videoService;
     private final EventService eventService;
     private final OfferService offerService;
     private final DestinationService destinationService;
     private final ModelMapper modelMapper;
 
-    public AdminController(StoryService storyService, VideoService videoService, EventService eventService, OfferService offerService, DestinationService destinationService, ModelMapper modelMapper) {
+    public AdminController(StoryService storyService, RequestService requestService, VideoService videoService, EventService eventService, OfferService offerService, DestinationService destinationService, ModelMapper modelMapper) {
         this.storyService = storyService;
+        this.requestService = requestService;
         this.videoService = videoService;
         this.eventService = eventService;
         this.offerService = offerService;
@@ -166,6 +169,22 @@ public class AdminController {
         this.offerService.approveOffer(id);
 
         return "redirect:/admin/approve";
+    }
+
+    @GetMapping("/requests")
+    public String getRequests(Model model){
+
+        model.addAttribute("userRequests", this.requestService.getRequests());
+
+        return "admin/requests";
+    }
+
+    @DeleteMapping("/requests/delete/{id}")
+    public String deleteRequest(@PathVariable("id")String requestId) {
+
+        this.requestService.deleteRequest(requestId);
+
+        return "redirect:/admin/requests";
     }
 
 
