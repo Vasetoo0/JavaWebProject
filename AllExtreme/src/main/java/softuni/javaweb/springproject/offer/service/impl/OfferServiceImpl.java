@@ -8,6 +8,7 @@ import softuni.javaweb.springproject.offer.model.binding.OfferAddBindingModel;
 import softuni.javaweb.springproject.offer.model.entity.Offer;
 import softuni.javaweb.springproject.offer.model.service.OfferServiceModel;
 import softuni.javaweb.springproject.offer.model.view.AllOfferViewModel;
+import softuni.javaweb.springproject.offer.model.view.OfferViewModel;
 import softuni.javaweb.springproject.offer.model.view.UnApprovedOfferViewModel;
 import softuni.javaweb.springproject.offer.repository.OfferRepository;
 import softuni.javaweb.springproject.offer.service.OfferService;
@@ -53,7 +54,6 @@ public class OfferServiceImpl implements OfferService {
 
         return this.offerRepository.findAll()
                 .stream()
-                .filter(Offer::isEnabled)
                 .filter(o -> o.getCreator().getUsername().equals(name))
                 .map(o -> this.modelMapper.map(o,AllOfferViewModel.class))
                 .collect(Collectors.toList());
@@ -78,5 +78,33 @@ public class OfferServiceImpl implements OfferService {
         offerToApprove.setEnabled(true);
 
         this.offerRepository.saveAndFlush(offerToApprove);
+    }
+
+    @Override
+    public List<AllOfferViewModel> getAllBySport(String sport) {
+        return this.offerRepository.findAll()
+                .stream()
+                .filter(Offer::isEnabled)
+                .filter(o -> o.getSport().name().equals(sport))
+                .map(o -> this.modelMapper.map(o,AllOfferViewModel.class))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public OfferViewModel getById(String id) {
+
+        Offer o = this.offerRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("By some reason Offer was not found!We will check the problem!"));
+
+        OfferViewModel offerViewModel = this.modelMapper.map(o, OfferViewModel.class);
+
+        offerViewModel.setCreator(o.getCreator().getUsername());
+
+        return offerViewModel;
+    }
+
+    @Override
+    public void deleteOffer(String id) {
+        this.offerRepository.deleteById(id);
     }
 }

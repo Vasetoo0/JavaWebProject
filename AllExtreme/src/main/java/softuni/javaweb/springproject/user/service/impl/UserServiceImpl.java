@@ -4,6 +4,7 @@ import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -11,6 +12,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import softuni.javaweb.springproject.offer.model.view.AllOfferViewModel;
+import softuni.javaweb.springproject.offer.service.OfferService;
 import softuni.javaweb.springproject.user.model.entity.Role;
 import softuni.javaweb.springproject.user.model.entity.UserEntity;
 import softuni.javaweb.springproject.user.model.service.UserServiceModel;
@@ -19,10 +22,7 @@ import softuni.javaweb.springproject.user.service.RoleService;
 import softuni.javaweb.springproject.user.service.UserService;
 
 import javax.persistence.EntityNotFoundException;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -31,13 +31,15 @@ public class UserServiceImpl implements UserService {
     private static final Logger LOGGER = LoggerFactory.getLogger(UserServiceImpl.class);
 
     private final UserRepository userRepository;
+    private final OfferService offerService;
     private final RoleService roleService;
     private final ModelMapper modelMapper;
     private final BCryptPasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, RoleService roleService, ModelMapper modelMapper, BCryptPasswordEncoder passwordEncoder) {
+    public UserServiceImpl(UserRepository userRepository, @Lazy OfferService offerService, RoleService roleService, ModelMapper modelMapper, BCryptPasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.offerService = offerService;
         this.roleService = roleService;
         this.modelMapper = modelMapper;
         this.passwordEncoder = passwordEncoder;
@@ -58,6 +60,46 @@ public class UserServiceImpl implements UserService {
     public UserEntity getByUsername(String name) {
         return this.userRepository.findByUsername(name)
                 .orElseThrow(() -> new EntityNotFoundException("User Dont Exist!"));
+    }
+
+    @Override
+    public void addToWishList(String offerId, String userName) {
+        UserEntity userToAddOffer = this.getByUsername(userName);
+        userToAddOffer.getWishList().add(offerId);
+
+        this.userRepository.saveAndFlush(userToAddOffer);
+    }
+
+    @Override
+    public List<AllOfferViewModel> getWishList(String username) {
+
+        List<AllOfferViewModel> wishList = new ArrayList<>();
+
+        this.userRepository.findByUsername(username).orElseThrow(() -> new EntityNotFoundException("Such user not exist!"))
+                .getWishList().forEach(offerId -> {
+                    AllOfferViewModel offer;
+
+                    try {
+                        offer = this.modelMapper.map(this.offerService.getById(offerId),AllOfferViewModel.class);
+                    } catch (Exception e) {
+                        offer = null;
+                    }
+
+                    if(offer != null) {
+                        wishList.add(offer);
+                    }
+        });
+
+
+        return wishList;
+    }
+
+    @Override
+    public boolean checkIfExistInWishList(String name, String offerId) {
+
+        return this.userRepository.findByUsername(name)
+                .orElseThrow(() -> new EntityNotFoundException("No such user!"))
+                .getWishList().contains(offerId);
     }
 
     @Override

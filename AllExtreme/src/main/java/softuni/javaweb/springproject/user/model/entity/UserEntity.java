@@ -69,7 +69,7 @@ public class UserEntity extends BaseEntity {
         this.myOffers = myOffers;
     }
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "users_wish_list", joinColumns = @JoinColumn(name = "user_id"))
     public Set<String> getWishList() {
         return wishList;

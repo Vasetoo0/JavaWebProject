@@ -55,6 +55,11 @@
                     Add Offer
                 </button></a>
             </div>
+            <th:block th:if="${myOffers.size() == 0}">
+                <div class="container" style="text-align: center;margin-top: 100px">
+                    <h2 style="text-align: center;" class="h2">No Offers Added</h2>
+                </div>
+            </th:block>
             <!-- Shop Item -->
             <div class="row container-grid">
 
@@ -69,9 +74,10 @@
                             <div class="item-mask">
                                 <div class="item-mask-detail">
                                     <div class="item-mask-detail-ele">
-                                        <a class="btn btn-line-xs btn-white-line" th:href="@{/users/}">
-                                            <i class="fa fa-shopping-cart"></i>View
-                                            Item</a>
+                                        <a class="btn btn-line-xs btn-white-line"
+                                           th:href="@{/{sport}/market/{id}(sport = ${o.sport.name()},id = ${o.id})}">
+                                            <i class="fa fa-shopping-cart">
+                                            </i>View Item</a>
                                     </div>
                                 </div>
                             </div>

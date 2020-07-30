@@ -50,42 +50,51 @@
             <div class="container" style="text-align: center">
                 <h2 style="text-align: center" class="h2">Market</h2>
             </div>
-            <!-- Sort List -->
-            <div class="row ">
-                <div class="col-md-12">
-                    <div class="shop-filter mb-15">
-                        <div class="float-left float-none-xs">
-                            <form>
-                                <label class="inline">Sort By</label>
-                                <select class="input-md round">
-                                    <option>Default Sorting</option>
-                                    <option>Popular</option>
-                                    <option>Latest</option>
-                                    <option>Average Price</option>
-                                    <option>High Price</option>
-                                    <option>Low Price</option>
-                                </select>
-                            </form>
-                        </div>
-                    </div>
+            <th:block th:if="${offers.size() == 0}">
+                <div class="container" style="text-align: center;margin-top: 100px">
+                    <h2 style="text-align: center;" class="h2">No Offers Found</h2>
                 </div>
-            </div>
+            </th:block>
+            <!-- Sort List -->
+<!--            <div class="row ">-->
+<!--                <div class="col-md-12">-->
+<!--                    <div class="shop-filter mb-15">-->
+<!--                        <div class="float-left float-none-xs">-->
+<!--                            <form>-->
+<!--                                <label class="inline">Sort By</label>-->
+<!--                                <select class="input-md round">-->
+<!--                                    <option>Default Sorting</option>-->
+<!--                                    <option>Popular</option>-->
+<!--                                    <option>Latest</option>-->
+<!--                                    <option>Average Price</option>-->
+<!--                                    <option>High Price</option>-->
+<!--                                    <option>Low Price</option>-->
+<!--                                </select>-->
+<!--                            </form>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
             <!-- End Sort List -->
 
             <!-- Shop Item -->
             <div class="row container-grid">
 
+                <th:block th:each="o : ${offers}">
                 <div class="nf-item col-md-4 col-sm-6 mb-30">
                     <div class="item-box">
                         <!-- Shop item images -->
                         <div class="shop-item">
                             <div class="item-img">
-                                <img src="img/product/01.jpg" />
+                                <img th:src="${o.pictures.get(0)}" />
                             </div>
                             <div class="item-mask">
                                 <div class="item-mask-detail">
                                     <div class="item-mask-detail-ele">
-                                        <a class="btn btn-line-xs btn-white-line"><i class="fa fa-shopping-cart"></i>View Item</a>
+                                        <a class="btn btn-line-xs btn-white-line"
+                                           th:href="@{/{sport}/market/{id}(sport = ${#session.getAttribute('selectedSport')},id = ${o.id})}">
+                                            <i class="fa fa-shopping-cart"></i>
+                                            View Item</a>
                                     </div>
                                 </div>
                             </div>
@@ -95,13 +104,14 @@
                         <!-- Shop item info -->
                         <div class="shop-item-info">
                             <a href="shop-detail.html">
-                                <h6 class="shop-item-name">Sed fringilla mauris</h6>
+                                <h6 class="shop-item-name" th:text="${o.title}">Sed fringilla mauris</h6>
                             </a>
-                            <div class="shop-item-price"><span>$399.00</span></div>
+                            <div class="shop-item-price"><span th:text="|${o.price} lv.|"></span></div>
                         </div>
                         <!-- Shop item info -->
                     </div>
                 </div>
+                </th:block>
             </div>
             <!-- End Shop Item -->
 

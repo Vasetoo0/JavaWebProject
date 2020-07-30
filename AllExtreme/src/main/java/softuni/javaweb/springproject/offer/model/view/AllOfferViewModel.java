@@ -1,6 +1,8 @@
 package softuni.javaweb.springproject.offer.model.view;
 
 
+import softuni.javaweb.springproject.enums.Sport;
+
 import javax.validation.constraints.Pattern;
 import java.math.BigDecimal;
 import java.util.List;
@@ -11,6 +13,7 @@ public class AllOfferViewModel {
     private String title;
     private List<String> pictures;
     private BigDecimal price;
+    private Sport sport;
 
     public AllOfferViewModel() {
     }
@@ -45,5 +48,13 @@ public class AllOfferViewModel {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public Sport getSport() {
+        return sport;
+    }
+
+    public void setSport(Sport sport) {
+        this.sport = sport;
     }
 }

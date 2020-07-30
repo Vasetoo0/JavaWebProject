@@ -124,6 +124,7 @@ public class UserController {
         return "user/add-offer";
     }
 
+    @PreAuthorize("isAuthenticated()")
     @PostMapping("/{name}/addOffer")
     public String addOfferConfirm(@Valid @ModelAttribute("offerAddBindingModel")OfferAddBindingModel offerAddBindingModel,
                                   BindingResult bindingResult, RedirectAttributes redirectAttributes,
@@ -146,6 +147,15 @@ public class UserController {
 
             return "redirect:myOffers";
         }
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/{name}/wishList")
+    public String getWishList(@PathVariable("name")String username,Model model){
+
+        model.addAttribute("wishList", this.userService.getWishList(username));
+
+        return "user/wish-list";
     }
 
 
