@@ -11,6 +11,8 @@ import softuni.javaweb.springproject.destination.model.binding.DestinationAddBin
 import softuni.javaweb.springproject.destination.service.DestinationService;
 import softuni.javaweb.springproject.event.model.binding.EventAddBindingModel;
 import softuni.javaweb.springproject.event.service.EventService;
+import softuni.javaweb.springproject.findStore.model.binding.StoreAddBindingModel;
+import softuni.javaweb.springproject.findStore.service.FindStoreService;
 import softuni.javaweb.springproject.help.service.RequestService;
 import softuni.javaweb.springproject.offer.service.OfferService;
 import softuni.javaweb.springproject.story.model.binding.StoryAddBindingModel;
@@ -30,15 +32,17 @@ public class AdminController {
     private final VideoService videoService;
     private final EventService eventService;
     private final OfferService offerService;
+    private final FindStoreService findStoreService;
     private final DestinationService destinationService;
     private final ModelMapper modelMapper;
 
-    public AdminController(StoryService storyService, RequestService requestService, VideoService videoService, EventService eventService, OfferService offerService, DestinationService destinationService, ModelMapper modelMapper) {
+    public AdminController(StoryService storyService, RequestService requestService, VideoService videoService, EventService eventService, OfferService offerService, FindStoreService findStoreService, DestinationService destinationService, ModelMapper modelMapper) {
         this.storyService = storyService;
         this.requestService = requestService;
         this.videoService = videoService;
         this.eventService = eventService;
         this.offerService = offerService;
+        this.findStoreService = findStoreService;
         this.destinationService = destinationService;
         this.modelMapper = modelMapper;
     }
@@ -100,7 +104,7 @@ public class AdminController {
     }
 
     @GetMapping("/addDestination")
-    public String addDestination(Model model){
+    public String addDestination(Model model) {
 
 
         if (!model.containsAttribute("destinationAddBindingModel")) {
@@ -112,7 +116,7 @@ public class AdminController {
 
     @PostMapping("/addDestination")
     public String addDestinationConfirm(@Valid @ModelAttribute("destinationAddBindingModel") DestinationAddBindingModel destinationAddBindingModel,
-                                  BindingResult bindingResult, RedirectAttributes redirectAttributes
+                                        BindingResult bindingResult, RedirectAttributes redirectAttributes
     ) {
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("destinationAddBindingModel", destinationAddBindingModel);
@@ -128,7 +132,7 @@ public class AdminController {
     }
 
     @GetMapping("/addEvent")
-    public String addEvent(Model model){
+    public String addEvent(Model model) {
 
 
         if (!model.containsAttribute("eventAddBindingModel")) {
@@ -140,7 +144,7 @@ public class AdminController {
 
     @PostMapping("/addEvent")
     public String addEventConfirm(@Valid @ModelAttribute("eventAddBindingModel") EventAddBindingModel eventAddBindingModel,
-                                        BindingResult bindingResult, RedirectAttributes redirectAttributes
+                                  BindingResult bindingResult, RedirectAttributes redirectAttributes
     ) {
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("eventAddBindingModel", eventAddBindingModel);
@@ -156,15 +160,16 @@ public class AdminController {
     }
 
     @GetMapping("/approve")
-    public String approve(Model model){
+    public String approve(Model model) {
 
         model.addAttribute("unApproved", this.offerService.getUnApproved());
 
         return "admin/approve-new-offer";
     }
 
+    //TODO: Fix approve from get to post method!
     @GetMapping("/approve/{id}")
-    public String approveConfirm(@PathVariable("id")String id) {
+    public String approveConfirm(@PathVariable("id") String id) {
 
         this.offerService.approveOffer(id);
 
@@ -172,7 +177,7 @@ public class AdminController {
     }
 
     @GetMapping("/requests")
-    public String getRequests(Model model){
+    public String getRequests(Model model) {
 
         model.addAttribute("userRequests", this.requestService.getRequests());
 
@@ -180,14 +185,39 @@ public class AdminController {
     }
 
     @DeleteMapping("/requests/delete/{id}")
-    public String deleteRequest(@PathVariable("id")String requestId) {
+    public String deleteRequest(@PathVariable("id") String requestId) {
 
         this.requestService.deleteRequest(requestId);
 
         return "redirect:/admin/requests";
     }
 
+    @GetMapping("/addStore")
+    public String addStore(Model model) {
+
+        if (!model.containsAttribute("storeAddBindingModel")) {
+            model.addAttribute("storeAddBindingModel", new StoreAddBindingModel());
+        }
+
+        return "admin/add-store";
+    }
+
+    @PostMapping("/addStore")
+    public String addStoreConfirm(@Valid @ModelAttribute("storeAddBindingModel") StoreAddBindingModel storeAddBindingModel,
+                                  BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("storeAddBindingModel", storeAddBindingModel);
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.storeAddBindingModel",
+                    bindingResult);
+
+            return "redirect:addStore";
+        } else {
+
+            this.findStoreService.addStore(storeAddBindingModel);
 
 
-
+            return "redirect:/";
+        }
+    }
 }

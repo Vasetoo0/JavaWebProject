@@ -97,9 +97,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean checkIfExistInWishList(String name, String offerId) {
 
-        return this.userRepository.findByUsername(name)
-                .orElseThrow(() -> new EntityNotFoundException("No such user!"))
-                .getWishList().contains(offerId);
+        UserEntity user = this.userRepository.findByUsername(name)
+                .orElseThrow(() -> new EntityNotFoundException("No such user!"));
+
+
+        return  user.getWishList().contains(offerId);
     }
 
     @Override

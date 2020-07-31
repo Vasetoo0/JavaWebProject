@@ -25,7 +25,9 @@
     <!-- Header ("header--dark", "header-transparent", "header--sticky")-->
     <header id="header" class="header header--dark header-transparent header--sticky">
         <!-- Nav Bar -->
-        <th:block th:include="~{fragment/category-nav}"></th:block>
+
+        <th:block th:if="${#session.getAttribute('selectedSport') == null}" th:include="~{fragment/home-nav}"></th:block>
+        <th:block th:if="${#session.getAttribute('selectedSport') != null}" th:include="~{fragment/category-nav}"></th:block>
         <!-- End Nav Bar -->
     </header>
     <!-- End Header -->
@@ -55,11 +57,9 @@
                         <!--Item Images-->
                         <div class="post-media">
                             <div class="owl-carousel item1-carousel nf-carousel-theme">
-                                <th:block th:each="p : ${offer.pictures}">
-                                    <div class="item">
+                                    <div th:each="p : ${offer.pictures}" class="item">
                                         <img th:src="${p}" alt=""/>
                                     </div>
-                                </th:block>
                             </div>
                         </div>
                         <!-- End Item Images -->

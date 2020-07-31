@@ -5,10 +5,12 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import softuni.javaweb.springproject.offer.model.view.AllOfferViewModel;
 import softuni.javaweb.springproject.offer.service.OfferService;
 import softuni.javaweb.springproject.user.service.UserService;
 
 import java.security.Principal;
+import java.util.List;
 
 @Controller
 @RequestMapping("/{sport}/market")
@@ -26,20 +28,25 @@ public class OfferController {
     @GetMapping("")
     public String market(@PathVariable("sport")String sport, Model model){
 
-        model.addAttribute("offers",this.offerService.getAllBySport(sport));
+        List<AllOfferViewModel> off = this.offerService.getAllBySport(sport);
+
+        model.addAttribute("offers",off);
 
 
         return "market/market";
     }
 
+//    @PreAuthorize("isAuthenticated()")
     @GetMapping("/{id}")
     public String viewOffer(@PathVariable("id") String offerId, Model model,
                             Principal principal){
 
         model.addAttribute("offer",this.offerService.getById(offerId));
-        model.addAttribute("allReadyAdded",
-                this.userService.checkIfExistInWishList(principal.getName(),offerId));
-        
+        if(principal != null) {
+            model.addAttribute("allReadyAdded",
+                    this.userService.checkIfExistInWishList(principal.getName(),offerId));
+        }
+
         return "market/offer-details";
     }
 

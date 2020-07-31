@@ -37,7 +37,7 @@ public class EventServiceImpl implements EventService {
 
         eventServiceModel.setPictures(eventServiceModel.getPictures()
                 .stream()
-                .filter(p -> !p.isEmpty() || !p.isBlank())
+                .filter(p -> !p.isEmpty() && !p.isBlank())
                 .collect(Collectors.toList()));
 
         Event savedEvent = this.eventRepository.save(

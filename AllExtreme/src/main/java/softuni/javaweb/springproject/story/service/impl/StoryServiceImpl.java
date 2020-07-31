@@ -40,8 +40,10 @@ public class StoryServiceImpl implements StoryService {
                 storyAddBindingModel, StoryServiceModel.class
         );
 
-        storyServiceModel.setPictures(storyServiceModel.getPictures()
-                .stream().filter(p -> !p.isEmpty() && !p.isBlank()).collect(Collectors.toList()));
+        storyServiceModel.setPictures(storyAddBindingModel.getPictures()
+                .stream()
+                .filter(p -> !p.isEmpty() && !p.isBlank())
+                .collect(Collectors.toList()));
 
         Story story = this.modelMapper.map(
                 storyServiceModel, Story.class

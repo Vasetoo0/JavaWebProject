@@ -8,6 +8,7 @@ import softuni.javaweb.springproject.enums.Sport;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PastOrPresent;
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class StoryAddBindingModel {
 
@@ -16,7 +17,7 @@ public class StoryAddBindingModel {
     private LocalDateTime createdOn;
     private String creator;
     private Sport sport;
-    private String[] pictures;
+    private List<String> pictures;
 
     public StoryAddBindingModel() {
     }
@@ -67,13 +68,12 @@ public class StoryAddBindingModel {
         this.sport = sport;
     }
 
-
     //TODO: Make validator for pictures!
-    public String[] getPictures() {
+    public List<String> getPictures() {
         return pictures;
     }
 
-    public void setPictures(String[] pictures) {
+    public void setPictures(List<String> pictures) {
         this.pictures = pictures;
     }
 }
