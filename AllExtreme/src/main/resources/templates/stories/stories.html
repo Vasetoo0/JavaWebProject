@@ -75,7 +75,7 @@
                                 <p th:text="|${e.description.substring(0,100)}...|"></p>
                             </div>
                             <div class="post-more-link pull-right">
-                                <a th:href="@{/{sport}/stories/{id}(sport=${#session.getAttribute('selectedSport')},id = ${e.id})}">
+                                <a th:href="@{/{sport}/stories/read/{id}(sport=${#session.getAttribute('selectedSport')},id = ${e.id})}">
                                     Read More<i class="fa fa-long-arrow-right right"></i></a>
                             </div>
                             <th:block sec:authorize="hasRole('ADMIN')">

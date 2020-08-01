@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="~{/fragment/head}"></th:block>
+</head>
+
+<body>
+
+<!-- Preloader -->
+<section id="preloader">
+    <div class="loader" id="loader">
+        <div class="loader-img"></div>
+    </div>
+</section>
+<!-- End Preloader -->
+
+<!-- Sidebar Menu -->
+<th:block th:include="~{/fragment/sidebar}"></th:block>
+<!-- End Sidebar Menu -->
+
+<!-- Site Wraper -->
+<div class="wrapper">
+
+    <!-- Header ("header--dark", "header-transparent", "header--sticky")-->
+    <header id="header" class="header header--dark header-transparent header--sticky">
+        <!-- Nav Bar -->
+        <th:block th:include="~{fragment/home-nav}"></th:block>
+        <!-- End Nav Bar -->
+    </header>
+    <!-- End Header -->
+
+    <!-- CONTENT --------------------------------------------------------------------------------->
+    <!-- Intro Section -->
+<!--    <section class="inner-intro parallax parallax-background1">-->
+<!--        <div class="container">-->
+<!--            <div class="row title">-->
+<!--                <h2 class="h2">Blank</h2>-->
+<!--                <div class="page-breadcrumb">-->
+<!--                    <a>Home</a>/<span>Blank Page</span>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </section>-->
+<!--    <div class="clearfix"></div>-->
+    <!-- End Intro Section -->
+
+
+    <!-- Blank Section -->
+    <section class="ptb ptb-sm-80" style="background-color: #b1dfbb">
+
+        <div class="card text-white bg-info mb-3 " style="width: 840px; height: 200px;margin: 0 auto">
+            <div class="card-header" style="text-align: center">Offers Stats</div>
+            <div class="card-body">
+                <p class="home-paragraph">
+                    Total add offer attempts! <span th:text="${newOffersAttempt}">4</span>.
+                </p>
+
+                <p class="home-paragraph">
+                    Last added offer <span th:text="${#temporals.format(offerAddStartedOn,'dd-MM-yyyy HH:mm')}">2001-02-02</span>.
+                </p>
+
+                <p class="home-paragraph">
+                    Have fun!
+                </p>
+            </div>
+        </div>
+
+        <hr style=" margin-bottom: 15px;width: 70%; height:2px;color:gray;background-color:gray">
+
+        <div class="card text-white bg-info mb-3 " style="width: 840px; height: 200px;margin: 0 auto">
+            <div class="card-header" style="text-align: center">Stories Read Stats</div>
+            <div class="card-body">
+                <p class="home-paragraph">
+                    Total read story attempts! <span th:text="${storiesReadCount}">4</span>.
+                </p>
+
+                <p class="home-paragraph">
+                    Last story read on <span th:text="${#temporals.format(storyReadStartedOn,'dd-MM-yyyy HH:mm')}">2001-02-02</span>.
+                </p>
+
+                <p class="home-paragraph">
+                    Have fun!
+                </p>
+            </div>
+        </div>
+
+        <hr style="width: 70%; height:2px;color:gray;background-color:gray">
+
+
+    </section>
+    <!-- End Blank Section -->
+
+    <!-- End CONTENT ------------------------------------------------------------------------------>
+
+    <th:block th:include="~{fragment/footer}"></th:block>
+
+</div>
+<!-- Site Wraper End -->
+
+<!-- JS -->
+<th:block th:include="~{fragment/JS}"></th:block>
+
+</body>
+</html>

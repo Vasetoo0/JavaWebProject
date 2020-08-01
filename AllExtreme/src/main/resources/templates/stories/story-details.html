@@ -131,10 +131,10 @@
                             <th:block th:each="r : ${recent}">
                             <li>
                                 <a class="widget-post-media">
-                                    <img th:src="${r.pictures.get(0)}">
+                                    <img th:src="${r.pictures.get(0)}" alt="">
                                 </a>
                                 <div class="widget-post-info">
-                                    <h4><a th:href="@{/{sport}/stories/{id}(sport=${#session.getAttribute('selectedSport')},id = ${r.id})}"
+                                    <h4><a th:href="@{/{sport}/stories/read/{id}(sport=${#session.getAttribute('selectedSport')},id = ${r.id})}"
                                            th:text="${r.title}">Title</a></h4>
                                     <div class="post-meta"><span th:text="|By ${r.creator}, on ${#temporals.format(r.createdOn,'dd-MM-yyyy HH:mm')}|"></span></div>
                                 </div>

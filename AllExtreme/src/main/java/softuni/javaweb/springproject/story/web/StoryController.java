@@ -32,7 +32,7 @@ public class StoryController {
         return "stories/stories";
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/read/{id}")
     public String viewStory(@PathVariable("id") String id,Model model,
                             @PathVariable("sport") String sport){
 
