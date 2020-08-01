@@ -105,6 +105,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public Long getUsersCount() {
+        return this.userRepository.count();
+    }
+
+    @Override
     public UserServiceModel registerUser(UserServiceModel userServiceModel) {
 
             UserEntity userEntity = this.modelMapper.map(userServiceModel, UserEntity.class);

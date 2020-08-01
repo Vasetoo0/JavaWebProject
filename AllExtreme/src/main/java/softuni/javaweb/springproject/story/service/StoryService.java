@@ -21,4 +21,6 @@ public interface StoryService {
     void addCommentToStory(Comment savedComment, String storyId);
 
     void deleteById(String id);
+
+    Long getStoriesCount();
 }

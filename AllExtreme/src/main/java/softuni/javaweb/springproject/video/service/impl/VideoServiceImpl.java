@@ -49,4 +49,9 @@ public class VideoServiceImpl implements VideoService {
     public void deleteById(String id) {
         this.videoRepository.deleteById(id);
     }
+
+    @Override
+    public Long getVideosCount() {
+        return this.videoRepository.count();
+    }
 }

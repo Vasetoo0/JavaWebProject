@@ -99,4 +99,10 @@ public class StoryServiceImpl implements StoryService {
     public void deleteById(String id) {
         this.storyRepository.deleteById(id);
     }
+
+    @Override
+    public Long getStoriesCount() {
+
+        return this.storyRepository.count();
+    }
 }

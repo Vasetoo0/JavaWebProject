@@ -1,13 +1,10 @@
 package softuni.javaweb.springproject.user.service;
 
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.validation.BindingResult;
 import softuni.javaweb.springproject.offer.model.view.AllOfferViewModel;
-import softuni.javaweb.springproject.user.model.binding.UserRegisterBindingModel;
 import softuni.javaweb.springproject.user.model.entity.UserEntity;
 import softuni.javaweb.springproject.user.model.service.UserServiceModel;
 
-import javax.validation.Valid;
 import java.util.List;
 
 public interface UserService extends UserDetailsService {
@@ -27,4 +24,5 @@ public interface UserService extends UserDetailsService {
 
     boolean checkIfExistInWishList(String name, String offerId);
 
+    Long getUsersCount();
 }

@@ -16,6 +16,7 @@ import softuni.javaweb.springproject.user.model.binding.UserRegisterBindingModel
 import softuni.javaweb.springproject.user.model.service.UserServiceModel;
 import softuni.javaweb.springproject.user.service.UserService;
 
+import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
 import java.security.Principal;
 import java.util.List;
@@ -99,6 +100,7 @@ public class UserController {
     @GetMapping("/{name}")
     public String profile(@PathVariable("name") String name, Model model) {
 
+
         model.addAttribute("user", this.userService.getByUsername(name));
 
         return "user/profile";
@@ -108,6 +110,10 @@ public class UserController {
     @GetMapping("/{name}/myOffers")
     public String myOffers(@PathVariable("name") String name, Model model) {
 
+        if(!this.userService.existsUser(name)) {
+            throw new EntityNotFoundException("User not found!");
+        }
+
         model.addAttribute("myOffers", this.offerService.getByCreator(name));
 
         return "user/my-offers";
@@ -115,7 +121,11 @@ public class UserController {
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/{name}/addOffer")
-    public String addOffer(Model model) {
+    public String addOffer(@PathVariable("name")String name,Model model) {
+
+        if(!this.userService.existsUser(name)) {
+            throw new EntityNotFoundException("User not found!");
+        }
 
         if(!model.containsAttribute("offerAddBindingModel")) {
             model.addAttribute("offerAddBindingModel", new OfferAddBindingModel());

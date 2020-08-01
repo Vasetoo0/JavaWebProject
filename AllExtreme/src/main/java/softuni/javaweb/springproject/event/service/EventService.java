@@ -16,4 +16,6 @@ public interface EventService {
     EventViewModel getById(String id);
 
     List<AllEventViewModel> getRandomEvents(String sport);
+
+    Long getEventsCount();
 }

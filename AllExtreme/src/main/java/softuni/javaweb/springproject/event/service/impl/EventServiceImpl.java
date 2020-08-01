@@ -80,4 +80,9 @@ public class EventServiceImpl implements EventService {
 
         return List.of(firstRandomEvent,secondRandomEvent,thirdRandomEvent);
     }
+
+    @Override
+    public Long getEventsCount() {
+            return this.eventRepository.count();
+    }
 }

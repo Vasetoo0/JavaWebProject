@@ -123,7 +123,7 @@
                 <!-- End Post Bar -->
 
                 <!-- Sidebar -->
-                <div class="col-lg-3 col-md-3 mt-sm-30">
+                <div class="col-lg-3 col-md-3 mt-sm-30" style="width: 259px">
                     <div class="sidebar-widget">
                         <h5>Recent Post</h5>
                         <hr>
@@ -134,8 +134,8 @@
                                     <img th:src="${r.pictures.get(0)}">
                                 </a>
                                 <div class="widget-post-info">
-                                    <h6><a th:href="@{/{sport}/stories/{id}(sport=${#session.getAttribute('selectedSport')},id = ${r.id})}"
-                                           th:text="${r.title}">Title</a></h6>
+                                    <h4><a th:href="@{/{sport}/stories/{id}(sport=${#session.getAttribute('selectedSport')},id = ${r.id})}"
+                                           th:text="${r.title}">Title</a></h4>
                                     <div class="post-meta"><span th:text="|By ${r.creator}, on ${#temporals.format(r.createdOn,'dd-MM-yyyy HH:mm')}|"></span></div>
                                 </div>
                             </li>

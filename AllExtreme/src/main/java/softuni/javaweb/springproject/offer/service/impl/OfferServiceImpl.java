@@ -15,6 +15,9 @@ import softuni.javaweb.springproject.offer.service.OfferService;
 import softuni.javaweb.springproject.user.service.UserService;
 
 import javax.persistence.EntityNotFoundException;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -106,5 +109,16 @@ public class OfferServiceImpl implements OfferService {
     @Override
     public void deleteOffer(String id) {
         this.offerRepository.deleteById(id);
+    }
+
+    @Override
+    public void cleanUpOldOffer() {
+        LocalDateTime endTime = LocalDateTime.now().minus(30, ChronoUnit.DAYS);
+        this.offerRepository.deleteByCreatedOnBefore(endTime);
+    }
+
+    @Override
+    public Long getOffersCount() {
+        return this.offerRepository.count();
     }
 }

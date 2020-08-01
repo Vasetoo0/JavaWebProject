@@ -51,4 +51,10 @@ public class DestinationServiceImpl implements DestinationService {
                 .map(d -> this.modelMapper.map(d,DestinationViewModel.class))
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public Long getDestinationsCount() {
+
+        return this.destinationRepository.count();
+    }
 }

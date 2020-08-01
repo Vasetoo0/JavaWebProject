@@ -14,4 +14,6 @@ public interface VideoService {
     VideoServiceModel addVideo(VideoAddBindingModel videoAddBindingModel);
 
     void deleteById(String id);
+
+    Long getVideosCount();
 }

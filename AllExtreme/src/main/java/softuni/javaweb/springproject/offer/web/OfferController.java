@@ -58,7 +58,7 @@ public class OfferController {
         return "redirect:";
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("isAuthenticated()")
     @DeleteMapping("/{id}/delete")
     public String deleteOffer(@PathVariable("id")String id,
                               @PathVariable("sport")String sport) {

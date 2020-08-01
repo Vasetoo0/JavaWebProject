@@ -23,4 +23,8 @@ public interface OfferService {
     OfferViewModel getById(String id);
 
     void deleteOffer(String id);
+
+    void cleanUpOldOffer();
+
+    Long getOffersCount();
 }

@@ -33,9 +33,8 @@ spring:
         content:
           enabled: true
           paths: /css/**
-
 tabula:
-  clean-up: "0 0 2 ? * SUN"
+  clean-up: "0 0 0 L * ? *"
 server:
   compression:
     enabled: true

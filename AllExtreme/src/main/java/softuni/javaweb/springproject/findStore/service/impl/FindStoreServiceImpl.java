@@ -46,4 +46,9 @@ public class FindStoreServiceImpl implements FindStoreService {
                 .map(s -> this.modelMapper.map(s,StoreViewModel.class))
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public Long getStoresCount() {
+        return this.findStoreRepository.count();
+    }
 }

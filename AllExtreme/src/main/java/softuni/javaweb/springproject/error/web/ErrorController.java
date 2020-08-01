@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import java.security.Principal;
+
 @ControllerAdvice
 public class ErrorController {
 
@@ -24,10 +26,14 @@ public class ErrorController {
     }
     @ExceptionHandler(AccessDeniedException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public String loggetOutException(final Exception throwable, final Model model) {
+    public String loggetOutException(Principal principal, final Exception throwable, final Model model) {
         logger.error("Exception during execution of SpringSecurity application", throwable);
 //        String errorMessage = (throwable != null ? throwable.getMessage() : "Unknown error");
-        model.addAttribute("errorMessage", "Please log in first!");
+        if(principal == null) {
+            model.addAttribute("errorMessage", "Please log in first!");
+        } else {
+            model.addAttribute("errorMessage", "You are not admin!");
+        }
         return "error";
     }
 

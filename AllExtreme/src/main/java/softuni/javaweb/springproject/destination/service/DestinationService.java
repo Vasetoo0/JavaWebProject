@@ -11,4 +11,6 @@ public interface DestinationService {
     DestinationServiceModel addDestination(DestinationAddBindingModel destinationAddBindingModel);
 
     List<DestinationViewModel> getAllBySport(String sport);
+
+    Long getDestinationsCount();
 }
