@@ -134,6 +134,7 @@ public class UserController {
         return "user/add-offer";
     }
 
+    //TODO:Change to uploading picture files!
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/{name}/addOffer")
     public String addOfferConfirm(@Valid @ModelAttribute("offerAddBindingModel")OfferAddBindingModel offerAddBindingModel,

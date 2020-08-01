@@ -33,8 +33,12 @@ spring:
         content:
           enabled: true
           paths: /css/**
-tabula:
-  clean-up: "0 0 0 L * ? *"
+cloudinary:
+    cloud_name: "${CLOUD_NAME}"
+    api_key: "${API_KEY}"
+    api_secret: "${API_SECRET}"
+allExtreme:
+    clean-up: "0 0 0 L * ? *"
 server:
   compression:
     enabled: true

@@ -16,7 +16,7 @@ public class OfferCleanUpScheduler {
     }
 
     //cleans up old announcements.
-    @Scheduled(cron = "${tabula.clean-up}")
+    @Scheduled(cron = "${allExtreme.clean-up}")
     public void cleanUpOldAnnouncements() {
         this.offerService.cleanUpOldOffer();
     }

@@ -31,6 +31,7 @@ ext {
 	bootstrapVersion = '4.5.0'
 	modelmapperVersion = '2.3.2'
 	bouncyCastleVersion = '1.64'
+	cloudinaryVersion = '1.14.0'
 }
 
 repositories {
@@ -59,6 +60,10 @@ dependencies {
 
 	// https://mvnrepository.com/artifact/org.bouncycastle/bcprov-jdk15on
 	compileOnly "org.bouncycastle:bcprov-jdk15on:${bouncyCastleVersion}"
+
+	// https://mvnrepository.com/artifact/com.cloudinary/cloudinary-core
+	compileOnly "com.cloudinary:cloudinary-http44:${cloudinaryVersion}"
+
 
 
 	compileOnly 'org.projectlombok:lombok'

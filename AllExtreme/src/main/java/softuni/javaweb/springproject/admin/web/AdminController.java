@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import softuni.javaweb.springproject.destination.model.binding.DestinationAddBindingModel;
 import softuni.javaweb.springproject.destination.service.DestinationService;
@@ -17,10 +18,15 @@ import softuni.javaweb.springproject.help.service.RequestService;
 import softuni.javaweb.springproject.offer.service.OfferService;
 import softuni.javaweb.springproject.story.model.binding.StoryAddBindingModel;
 import softuni.javaweb.springproject.story.service.StoryService;
+import softuni.javaweb.springproject.utils.cloudinary.service.CloudinaryService;
 import softuni.javaweb.springproject.video.model.binding.VideoAddBindingModel;
 import softuni.javaweb.springproject.video.service.VideoService;
 
 import javax.validation.Valid;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 @PreAuthorize("hasRole('ROLE_ADMIN')")
 @Controller
@@ -32,16 +38,18 @@ public class AdminController {
     private final VideoService videoService;
     private final EventService eventService;
     private final OfferService offerService;
+    private final CloudinaryService cloudinaryService;
     private final FindStoreService findStoreService;
     private final DestinationService destinationService;
     private final ModelMapper modelMapper;
 
-    public AdminController(StoryService storyService, RequestService requestService, VideoService videoService, EventService eventService, OfferService offerService, FindStoreService findStoreService, DestinationService destinationService, ModelMapper modelMapper) {
+    public AdminController(StoryService storyService, RequestService requestService, VideoService videoService, EventService eventService, OfferService offerService, CloudinaryService cloudinaryService, FindStoreService findStoreService, DestinationService destinationService, ModelMapper modelMapper) {
         this.storyService = storyService;
         this.requestService = requestService;
         this.videoService = videoService;
         this.eventService = eventService;
         this.offerService = offerService;
+        this.cloudinaryService = cloudinaryService;
         this.findStoreService = findStoreService;
         this.destinationService = destinationService;
         this.modelMapper = modelMapper;
@@ -60,7 +68,8 @@ public class AdminController {
 
     @PostMapping("/addStory")
     public String addStoryConfirm(@Valid @ModelAttribute("storyAddBindingModel") StoryAddBindingModel storyAddBindingModel,
-                                  BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+                                  BindingResult bindingResult, RedirectAttributes redirectAttributes,
+                                  @RequestParam("picturesFiles") MultipartFile[] picturesFiles) {
 
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("storyAddBindingModel", storyAddBindingModel);
@@ -69,11 +78,28 @@ public class AdminController {
 
             return "redirect:addStory";
         } else {
-            this.storyService.addStory(storyAddBindingModel);
+            if (noAddedPictures(picturesFiles)) {
+                rejectBinding(bindingResult);
+                redirectAttributes.addFlashAttribute("storyAddBindingModel", storyAddBindingModel);
+                redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.storyAddBindingModel",
+                        bindingResult);
+                return "redirect:addStory";
+            } else {
+                List<String> pictureUrls = Arrays.stream(picturesFiles)
+                        .filter(p -> !Objects.requireNonNull(p.getOriginalFilename()).isBlank() ||
+                                        !p.getOriginalFilename().isEmpty())
+                        .map(this.cloudinaryService::uploadFile)
+                        .filter(p -> !p.isEmpty() || !p.isBlank())
+                        .collect(Collectors.toList());
 
-            return "redirect:/";
+                storyAddBindingModel.setPictures(pictureUrls);
+
+                this.storyService.addStory(storyAddBindingModel);
+                return "redirect:/";
+            }
         }
     }
+
 
     @GetMapping("/addVideo")
     public String addVideo(Model model) {
@@ -85,6 +111,7 @@ public class AdminController {
 
         return "admin/add-video";
     }
+
 
     @PostMapping("/addVideo")
     public String addVideoConfirm(@Valid @ModelAttribute("videoAddBindingModel") VideoAddBindingModel videoAddBindingModel,
@@ -114,6 +141,7 @@ public class AdminController {
         return "admin/add-destination";
     }
 
+    //TODO:Change to uploding picture files!
     @PostMapping("/addDestination")
     public String addDestinationConfirm(@Valid @ModelAttribute("destinationAddBindingModel") DestinationAddBindingModel destinationAddBindingModel,
                                         BindingResult bindingResult, RedirectAttributes redirectAttributes
@@ -142,6 +170,7 @@ public class AdminController {
         return "admin/add-event";
     }
 
+    //TODO:Change to uploding picture files!
     @PostMapping("/addEvent")
     public String addEventConfirm(@Valid @ModelAttribute("eventAddBindingModel") EventAddBindingModel eventAddBindingModel,
                                   BindingResult bindingResult, RedirectAttributes redirectAttributes
@@ -202,6 +231,7 @@ public class AdminController {
         return "admin/add-store";
     }
 
+    //TODO:Change to uploding picture files!
     @PostMapping("/addStore")
     public String addStoreConfirm(@Valid @ModelAttribute("storeAddBindingModel") StoreAddBindingModel storeAddBindingModel,
                                   BindingResult bindingResult, RedirectAttributes redirectAttributes) {
@@ -219,5 +249,17 @@ public class AdminController {
 
             return "redirect:/";
         }
+    }
+
+    private boolean noAddedPictures(MultipartFile[] picturesFiles) {
+        return Arrays.stream(picturesFiles)
+                .noneMatch(p -> !Objects.requireNonNull(p.getOriginalFilename()).isBlank() ||
+                        !p.getOriginalFilename().isEmpty());
+    }
+
+    private void rejectBinding(BindingResult bindingResult) {
+        bindingResult.rejectValue("pictures",
+                "error.pictures",
+                "Add at least one picture!");
     }
 }
