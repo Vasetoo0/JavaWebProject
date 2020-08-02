@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import softuni.javaweb.springproject.offer.model.binding.OfferAddBindingModel;
@@ -15,11 +16,15 @@ import softuni.javaweb.springproject.offer.service.OfferService;
 import softuni.javaweb.springproject.user.model.binding.UserRegisterBindingModel;
 import softuni.javaweb.springproject.user.model.service.UserServiceModel;
 import softuni.javaweb.springproject.user.service.UserService;
+import softuni.javaweb.springproject.utils.cloudinary.service.CloudinaryService;
 
 import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
 import java.security.Principal;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/users")
@@ -27,12 +32,14 @@ public class UserController {
 
     private final UserService userService;
     private final ModelMapper modelMapper;
+    private final CloudinaryService cloudinaryService;
     private final OfferService offerService;
 
     @Autowired
-    public UserController(UserService userService, ModelMapper modelMapper, OfferService offerService) {
+    public UserController(UserService userService, ModelMapper modelMapper, CloudinaryService cloudinaryService, OfferService offerService) {
         this.userService = userService;
         this.modelMapper = modelMapper;
+        this.cloudinaryService = cloudinaryService;
         this.offerService = offerService;
     }
 
@@ -134,13 +141,11 @@ public class UserController {
         return "user/add-offer";
     }
 
-    //TODO:Change to uploading picture files!
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/{name}/addOffer")
     public String addOfferConfirm(@Valid @ModelAttribute("offerAddBindingModel")OfferAddBindingModel offerAddBindingModel,
-                                  BindingResult bindingResult, RedirectAttributes redirectAttributes,
-                                  @RequestParam("picture")String[] pictures, @PathVariable("name") String name,
-                                  Principal principal){
+                                  BindingResult bindingResult, RedirectAttributes redirectAttributes, @PathVariable("name") String name,
+                                  Principal principal,@RequestParam("picturesFiles") MultipartFile[] picturesFiles){
 
 
 
@@ -151,12 +156,21 @@ public class UserController {
 
             return "redirect:addOffer";
         } else {
-            offerAddBindingModel.setPictures(List.of(pictures));
-            offerAddBindingModel.setCreator(principal.getName());
+            if (noAddedPictures(picturesFiles)) {
+                rejectBinding(bindingResult);
+                redirectAttributes.addFlashAttribute("offerAddBindingModel", offerAddBindingModel);
+                redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.offerAddBindingModel",
+                        bindingResult);
+                return "redirect:addOffer";
+            } else {
+                List<String> pictureUrls = savePicturesGetUrls(picturesFiles);
 
-            this.offerService.addOffer(offerAddBindingModel);
+                offerAddBindingModel.setPictures(pictureUrls);
+                offerAddBindingModel.setCreator(principal.getName());
 
-            return "redirect:myOffers";
+                this.offerService.addOffer(offerAddBindingModel);
+                return "redirect:myOffers";
+            }
         }
     }
 
@@ -169,5 +183,24 @@ public class UserController {
         return "user/wish-list";
     }
 
+    private boolean noAddedPictures(MultipartFile[] picturesFiles) {
+        return Arrays.stream(picturesFiles)
+                .noneMatch(p -> !Objects.requireNonNull(p.getOriginalFilename()).isBlank() ||
+                        !p.getOriginalFilename().isEmpty());
+    }
 
+    private void rejectBinding(BindingResult bindingResult) {
+        bindingResult.rejectValue("pictures",
+                "error.pictures",
+                "Add at least one picture!");
+    }
+
+    private List<String> savePicturesGetUrls(@RequestParam("picturesFiles") MultipartFile[] picturesFiles) {
+        return Arrays.stream(picturesFiles)
+                .filter(p -> !Objects.requireNonNull(p.getOriginalFilename()).isBlank() ||
+                        !p.getOriginalFilename().isEmpty())
+                .map(this.cloudinaryService::uploadFile)
+                .filter(p -> !p.isEmpty() || !p.isBlank())
+                .collect(Collectors.toList());
+    }
 }

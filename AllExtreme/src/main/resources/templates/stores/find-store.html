@@ -67,7 +67,7 @@
                                 <div class="post-meta"><span th:text="|City : ${s.city}|"></span></div>
                                 <div class="post-meta"><span th:text="|Name : ${s.name}|"></span></div>
                                 <div class="post-entry"> Description :
-                                    <p style="margin-top: 15px" th:text="${s.description}"></p>
+                                    <textarea th:text="${s.description}" class="form-full" id="description" rows="7"  disabled></textarea>
                                 </div>
                                 <div class="post-more-link pull-right"><a th:href="${s.mapsLink}">View on Google Maps<i
                                         class="fa fa-long-arrow-right right"></i></a></div>

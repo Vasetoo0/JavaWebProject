@@ -11,7 +11,7 @@ public class DestinationAddBindingModel {
     private String title;
     private String mapsLink;
     private String iFrameLink;
-    private String[] pictures;
+    private List<String> pictures;
     private String description;
     private Sport sport;
 
@@ -46,11 +46,11 @@ public class DestinationAddBindingModel {
         this.iFrameLink = iFrameLink;
     }
 
-    public String[] getPictures() {
+    public List<String> getPictures() {
         return pictures;
     }
 
-    public void setPictures(String[] pictures) {
+    public void setPictures(List<String> pictures) {
         this.pictures = pictures;
     }
 

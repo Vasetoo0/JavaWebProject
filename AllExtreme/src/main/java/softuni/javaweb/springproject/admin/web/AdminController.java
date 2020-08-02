@@ -85,12 +85,7 @@ public class AdminController {
                         bindingResult);
                 return "redirect:addStory";
             } else {
-                List<String> pictureUrls = Arrays.stream(picturesFiles)
-                        .filter(p -> !Objects.requireNonNull(p.getOriginalFilename()).isBlank() ||
-                                        !p.getOriginalFilename().isEmpty())
-                        .map(this.cloudinaryService::uploadFile)
-                        .filter(p -> !p.isEmpty() || !p.isBlank())
-                        .collect(Collectors.toList());
+                List<String> pictureUrls = savePicturesGetUrls(picturesFiles);
 
                 storyAddBindingModel.setPictures(pictureUrls);
 
@@ -116,6 +111,7 @@ public class AdminController {
     @PostMapping("/addVideo")
     public String addVideoConfirm(@Valid @ModelAttribute("videoAddBindingModel") VideoAddBindingModel videoAddBindingModel,
                                   BindingResult bindingResult, RedirectAttributes redirectAttributes
+
     ) {
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("videoAddBindingModel", videoAddBindingModel);
@@ -141,11 +137,10 @@ public class AdminController {
         return "admin/add-destination";
     }
 
-    //TODO:Change to uploding picture files!
     @PostMapping("/addDestination")
     public String addDestinationConfirm(@Valid @ModelAttribute("destinationAddBindingModel") DestinationAddBindingModel destinationAddBindingModel,
-                                        BindingResult bindingResult, RedirectAttributes redirectAttributes
-    ) {
+                                        BindingResult bindingResult, RedirectAttributes redirectAttributes,
+                                        @RequestParam("picturesFiles") MultipartFile[] picturesFiles) {
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("destinationAddBindingModel", destinationAddBindingModel);
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.destinationAddBindingModel",
@@ -153,9 +148,20 @@ public class AdminController {
 
             return "redirect:addDestination";
         } else {
-            this.destinationService.addDestination(destinationAddBindingModel);
+            if (noAddedPictures(picturesFiles)) {
+                rejectBinding(bindingResult);
+                redirectAttributes.addFlashAttribute("destinationAddBindingModel", destinationAddBindingModel);
+                redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.destinationAddBindingModel",
+                        bindingResult);
+                return "redirect:addDestination";
+            } else {
+                List<String> pictureUrls = savePicturesGetUrls(picturesFiles);
 
-            return "redirect:/";
+                destinationAddBindingModel.setPictures(pictureUrls);
+
+                this.destinationService.addDestination(destinationAddBindingModel);
+                return "redirect:/";
+            }
         }
     }
 
@@ -170,11 +176,10 @@ public class AdminController {
         return "admin/add-event";
     }
 
-    //TODO:Change to uploding picture files!
     @PostMapping("/addEvent")
     public String addEventConfirm(@Valid @ModelAttribute("eventAddBindingModel") EventAddBindingModel eventAddBindingModel,
-                                  BindingResult bindingResult, RedirectAttributes redirectAttributes
-    ) {
+                                  BindingResult bindingResult, RedirectAttributes redirectAttributes,
+                                  @RequestParam("picturesFiles") MultipartFile[] picturesFiles) {
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("eventAddBindingModel", eventAddBindingModel);
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.eventAddBindingModel",
@@ -182,9 +187,20 @@ public class AdminController {
 
             return "redirect:addEvent";
         } else {
-            this.eventService.addEvent(eventAddBindingModel);
+            if (noAddedPictures(picturesFiles)) {
+                rejectBinding(bindingResult);
+                redirectAttributes.addFlashAttribute("eventAddBindingModel", eventAddBindingModel);
+                redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.eventAddBindingModel",
+                        bindingResult);
+                return "redirect:addEvent";
+            }else {
+                List<String> pictureUrls = savePicturesGetUrls(picturesFiles);
 
-            return "redirect:/";
+                eventAddBindingModel.setPictures(pictureUrls);
+
+                this.eventService.addEvent(eventAddBindingModel);
+                return "redirect:/";
+            }
         }
     }
 
@@ -231,10 +247,10 @@ public class AdminController {
         return "admin/add-store";
     }
 
-    //TODO:Change to uploding picture files!
     @PostMapping("/addStore")
     public String addStoreConfirm(@Valid @ModelAttribute("storeAddBindingModel") StoreAddBindingModel storeAddBindingModel,
-                                  BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+                                  BindingResult bindingResult, RedirectAttributes redirectAttributes,
+                                  @RequestParam("pictureFile")MultipartFile pictureFile) {
 
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("storeAddBindingModel", storeAddBindingModel);
@@ -243,11 +259,20 @@ public class AdminController {
 
             return "redirect:addStore";
         } else {
+            if (Objects.requireNonNull(pictureFile.getOriginalFilename()).isEmpty() || pictureFile.getOriginalFilename().isEmpty()) {
+                rejectBinding(bindingResult);
+                redirectAttributes.addFlashAttribute("storeAddBindingModel", storeAddBindingModel);
+                redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.storeAddBindingModel",
+                        bindingResult);
+                return "redirect:addStore";
+            }else {
+                String pictureUrl = this.cloudinaryService.uploadFile(pictureFile);
 
-            this.findStoreService.addStore(storeAddBindingModel);
+                storeAddBindingModel.setPicture(pictureUrl);
 
-
-            return "redirect:/";
+                this.findStoreService.addStore(storeAddBindingModel);
+                return "redirect:/";
+            }
         }
     }
 
@@ -261,5 +286,14 @@ public class AdminController {
         bindingResult.rejectValue("pictures",
                 "error.pictures",
                 "Add at least one picture!");
+    }
+
+    private List<String> savePicturesGetUrls(@RequestParam("picturesFiles") MultipartFile[] picturesFiles) {
+        return Arrays.stream(picturesFiles)
+                .filter(p -> !Objects.requireNonNull(p.getOriginalFilename()).isBlank() ||
+                        !p.getOriginalFilename().isEmpty())
+                .map(this.cloudinaryService::uploadFile)
+                .filter(p -> !p.isEmpty() || !p.isBlank())
+                .collect(Collectors.toList());
     }
 }

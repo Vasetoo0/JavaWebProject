@@ -57,7 +57,7 @@
                 <div class="col-md-6 offset-md-3">
                     <!-- Offer-add FORM -->
                     <form th:object="${storeAddBindingModel}" th:action="@{/admin/addStore}" th:method="POST"
-                          class="contact-form" id="contact" role="form">
+                         enctype="multipart/form-data" class="contact-form" id="contact" role="form">
                         <div class="form-field-wrapper">
                             <label class="input-sm form-full" type="text">City :</label>
                             <input th:field="*{city}" class="input-sm form-full" id="city" type="text" name="city" placeholder="Title" required>
@@ -94,9 +94,9 @@
                             <br/>
                             <hr/>
                         </th:block>
-                        <div class="form-field-wrapper">
+                        <div th:field="*{picture}" class="form-field-wrapper">
                             <label class="input-sm form-full" type="text">Picture :</label>
-                            <input th:field="*{picture}" class="input-sm form-full" style="margin-top: 12px" type="text" name="picture" placeholder="First picture link" required>
+                            <input  class="input-sm form-full" style="margin-top: 12px" type="file" name="pictureFile" placeholder="First picture link" required>
                         </div>
                         <th:block th:each="e : ${#fields.errors('picture')}">
                             <label th:text="${e}" style="font-size: large"  class="error text-danger">Choose Username</label>

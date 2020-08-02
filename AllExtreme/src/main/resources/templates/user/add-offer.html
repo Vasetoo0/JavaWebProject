@@ -58,7 +58,7 @@
                 <div class="col-md-6 offset-md-3">
                     <!-- Offer-add FORM -->
                     <form th:object="${offerAddBindingModel}" th:action="@{/users/{name}/addOffer(name = ${#authentication.name})}"
-                          th:method="POST" class="contact-form" id="contact" role="form">
+                          th:method="POST" enctype="multipart/form-data" class="contact-form" id="contact" role="form">
                         <div class="form-field-wrapper">
                             <label class="input-sm form-full" type="text">Title:</label>
                             <input th:field="*{title}" class="input-sm form-full" id="title" type="text" name="title" placeholder="Title" required>
@@ -77,11 +77,11 @@
                             <br/>
                             <hr/>
                         </th:block>
-                        <div class="form-field-wrapper">
+                        <div th:field="pictures" class="form-field-wrapper">
                             <label class="input-sm form-full" type="text">Pictures:</label>
-                            <input class="input-sm form-full" style="margin-top: 12px" type="text" name="picture" placeholder="First picture link" required>
-                            <input class="input-sm form-full" style="margin-top: 12px" type="text" name="picture" placeholder="Second picture link" required>
-                            <input class="input-sm form-full" style="margin-top: 12px" type="text" name="picture" placeholder="Third picture link" required>
+                            <input class="input-sm form-full" style="margin-top: 12px" type="file" name="picturesFiles" placeholder="First picture link" >
+                            <input class="input-sm form-full" style="margin-top: 12px" type="file" name="picturesFiles" placeholder="Second picture link" >
+                            <input class="input-sm form-full" style="margin-top: 12px" type="file" name="picturesFiles" placeholder="Third picture link" >
                         </div>
                         <th:block th:each="e : ${#fields.errors('pictures')}">
                             <label th:text="${e}" style="font-size: large"  class="error text-danger">Choose Username</label>

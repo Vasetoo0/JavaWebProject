@@ -66,8 +66,8 @@
                     <h2 style="text-align: center;" class="h2">No Events Found</h2>
                 </div>
             </th:block>
-            <th:block th:each="e : ${events}">
-                <div class="row container-grid nf-col-2">
+            <div class="row container-grid nf-col-2">
+                <th:block th:each="e : ${events}">
                     <div class="nf-item branding coffee spacing">
                         <div class="item-box">
                             <a th:href="@{/{sport}/events/details/{id}(sport=${#session.getAttribute('selectedSport')},id=${e.id})}">
@@ -77,14 +77,15 @@
                                 <div class="item-mask">
                                     <div class="item-caption">
                                         <h5 class="white" th:text="${e.title}">Event Name</h5>
-                                        <p class="white" th:text="${#temporals.format(e.eventDate,'dd-MM-yyyy HH:mm')}">Event Date</p>
+                                        <p class="white" th:text="${#temporals.format(e.eventDate,'dd-MM-yyyy HH:mm')}">
+                                            Event Date</p>
                                     </div>
                                 </div>
                             </a>
                         </div>
                     </div>
-                </div>
-            </th:block>
+                </th:block>
+            </div>
         </div>
     </section>
     <!-- End Work Detail Section -->
