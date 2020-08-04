@@ -72,6 +72,7 @@ public class OfferServiceImpl implements OfferService {
                 .collect(Collectors.toList());
     }
 
+    //TODO: Test!
     @Override
     public void approveOffer(String id) {
 
@@ -106,11 +107,13 @@ public class OfferServiceImpl implements OfferService {
         return offerViewModel;
     }
 
+    //TODO: Test!
     @Override
     public void deleteOffer(String id) {
         this.offerRepository.deleteById(id);
     }
 
+    //TODO: Test!
     @Override
     public void cleanUpOldOffer() {
         LocalDateTime endTime = LocalDateTime.now().minus(30, ChronoUnit.DAYS);

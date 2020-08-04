@@ -30,10 +30,10 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public CommentServiceModel addComment(CommentAddBindingModel commentAddBindingModel, String storyId, String username) {
+    public CommentServiceModel addComment(CommentServiceModel CommentServiceModel, String storyId, String username) {
 
         Comment comment = this.modelMapper.map(
-                commentAddBindingModel, Comment.class
+                CommentServiceModel, Comment.class
         );
 
         comment.setUser(username);

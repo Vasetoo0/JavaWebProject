@@ -6,5 +6,5 @@ import softuni.javaweb.springproject.comment.model.service.CommentServiceModel;
 
 public interface CommentService {
 
-    CommentServiceModel addComment(CommentAddBindingModel commentAddBindingModel, String storyId, String username);
+    CommentServiceModel addComment(CommentServiceModel CommentServiceModel, String storyId, String username);
 }

@@ -38,7 +38,7 @@ cloudinary:
     api_key: "${API_KEY}"
     api_secret: "${API_SECRET}"
 allExtreme:
-    clean-up: "0 0 0 L * ? *"
+    clean-up: "0 0 2 ? * SUN"
 server:
   compression:
     enabled: true

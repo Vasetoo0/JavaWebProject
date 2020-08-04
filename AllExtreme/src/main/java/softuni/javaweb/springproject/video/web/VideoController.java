@@ -27,6 +27,7 @@ public class VideoController {
         return "videos/videos";
     }
 
+    //TODO: Test!
     @GetMapping("/delete/{id}")
     public String deleteVideo(@PathVariable("id")String id,
                               @PathVariable("sport") String sport) {

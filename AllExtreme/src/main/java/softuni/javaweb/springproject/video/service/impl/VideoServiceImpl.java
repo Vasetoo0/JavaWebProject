@@ -10,6 +10,7 @@ import softuni.javaweb.springproject.video.model.view.VideoViewModel;
 import softuni.javaweb.springproject.video.repository.VideoRepository;
 import softuni.javaweb.springproject.video.service.VideoService;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,10 +28,11 @@ public class VideoServiceImpl implements VideoService {
 
     @Override
     public List<VideoViewModel> getBySport(String sport) {
+
         return this.videoRepository.findAll()
                 .stream()
                 .filter(v -> v.getSport().name().equals(sport))
-                .map(v -> this.modelMapper.map(v,VideoViewModel.class))
+                .map(v -> this.modelMapper.map(v, VideoViewModel.class))
                 .collect(Collectors.toList());
     }
 
@@ -45,8 +47,12 @@ public class VideoServiceImpl implements VideoService {
                 VideoServiceModel.class);
     }
 
+    //TODO: Test!
     @Override
     public void deleteById(String id) {
+        this.videoRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Video not found"));
+
         this.videoRepository.deleteById(id);
     }
 

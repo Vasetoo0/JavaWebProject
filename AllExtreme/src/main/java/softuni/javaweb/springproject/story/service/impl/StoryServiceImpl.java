@@ -15,6 +15,7 @@ import softuni.javaweb.springproject.story.service.StoryService;
 import softuni.javaweb.springproject.user.service.UserService;
 
 import javax.persistence.EntityNotFoundException;
+import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -78,13 +79,15 @@ public class StoryServiceImpl implements StoryService {
         return this.storyRepository.findAll()
                 .stream()
                 .filter(s -> s.getCreatedOn().
-                        isAfter(s.getCreatedOn().minus(15, ChronoUnit.DAYS)))
+                        isAfter(LocalDateTime.now().minus(15, ChronoUnit.DAYS)))
                 .filter(s -> s.getSport().name().equals(sport))
                 .map(s -> this.modelMapper.map(s,AllStoriesViewModel.class))
                 .limit(5)
                 .collect(Collectors.toList());
     }
 
+
+    //TODO: Test!
     @Override
     public void addCommentToStory(Comment savedComment, String storyId) {
         Story storyById = this.storyRepository.findById(storyId)
@@ -95,6 +98,7 @@ public class StoryServiceImpl implements StoryService {
         this.storyRepository.saveAndFlush(storyById);
     }
 
+    //TODO: Test!
     @Override
     public void deleteById(String id) {
         this.storyRepository.deleteById(id);
