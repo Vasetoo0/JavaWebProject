@@ -10,6 +10,7 @@ import org.modelmapper.ModelMapper;
 import softuni.javaweb.springproject.enums.Sport;
 import softuni.javaweb.springproject.offer.model.binding.OfferAddBindingModel;
 import softuni.javaweb.springproject.offer.model.entity.Offer;
+import softuni.javaweb.springproject.offer.model.service.OfferServiceModel;
 import softuni.javaweb.springproject.offer.model.view.AllOfferViewModel;
 import softuni.javaweb.springproject.offer.model.view.OfferViewModel;
 import softuni.javaweb.springproject.offer.model.view.UnApprovedOfferViewModel;
@@ -22,6 +23,7 @@ import softuni.javaweb.springproject.user.service.UserService;
 import java.util.List;
 import java.util.Optional;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -148,5 +150,20 @@ public class OfferServiceTest {
     @Test
     public void testAddOffer(){
         OfferAddBindingModel offerAddBindingModel = new OfferAddBindingModel();
+        offerAddBindingModel.setTitle("Test");
+        offerAddBindingModel.setCreator("Test");
+
+        UserEntity userEntity = new UserEntity();
+        userEntity.setUsername("Test");
+
+        Offer offer = new Offer();
+        offer.setTitle("Test");
+        offer.setCreator(userEntity);
+
+        when(mockOfferRepository.saveAndFlush(any(Offer.class))).thenReturn(offer);
+
+        OfferServiceModel offerServiceModel = serviceToTest.addOffer(offerAddBindingModel);
+
+        Assertions.assertEquals(offerServiceModel.getClass(),OfferServiceModel.class);
     }
 }

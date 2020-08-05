@@ -1,7 +1,9 @@
-<!DOCTYPE html>
+    <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <th:block th:include="~{/fragment/head}"></th:block>
+
+    <meta th:name="${_csrf.parameterName}" th:content="${_csrf.token}"/>
 </head>
 
 <body>
@@ -55,7 +57,33 @@
             </div>
         </div>
 
-        <hr style="width: 70%; height:2px;color:gray;background-color:gray">
+        <hr style=" margin-bottom: 25px;width: 70%; height:2px;color:gray;background-color:gray">
+
+        <div class="card text-white bg-info mb-3 " style="width: 840px; height: 320px;margin: 0 auto">
+            <div class="card-header" style="text-align: center">User Search</div>
+            <div class="card-body">
+                <div id="feedback" class="textarea"></div>
+            </div>
+        </div>
+<!--        <div style="margin-left: 250px;margin-top: 25px"-->
+<!--             id="feedback"></div>-->
+
+        <form action="/statistics/search" method="post" style="margin-left: 200px" class="form-horizontal" id="search-form">
+            <div class="form-group form-group-lg">
+                <label class="col-sm-2 control-label">Username</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="username" name="username"/>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="submit" id="bth-search"
+                            class="btn btn-primary btn-lg" >Search
+                    </button>
+                </div>
+            </div>
+        </form>
 
 
     </section>
@@ -67,6 +95,12 @@
 
 </div>
 <!-- Site Wraper End -->
+<script type="text/javascript"
+        src="/webjars/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript" src="/js/AJAX-Call.js">
+
+</script>
+
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script type="text/javascript">
     google.charts.load('current', {'packages':['gauge']});

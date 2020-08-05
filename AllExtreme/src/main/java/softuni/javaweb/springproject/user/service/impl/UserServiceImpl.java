@@ -17,6 +17,7 @@ import softuni.javaweb.springproject.offer.service.OfferService;
 import softuni.javaweb.springproject.user.model.entity.Role;
 import softuni.javaweb.springproject.user.model.entity.UserEntity;
 import softuni.javaweb.springproject.user.model.service.UserServiceModel;
+import softuni.javaweb.springproject.user.model.view.UserViewModel;
 import softuni.javaweb.springproject.user.repository.UserRepository;
 import softuni.javaweb.springproject.user.service.RoleService;
 import softuni.javaweb.springproject.user.service.UserService;
@@ -107,6 +108,16 @@ public class UserServiceImpl implements UserService {
     @Override
     public Long getUsersCount() {
         return this.userRepository.count();
+    }
+
+    @Override
+    public List<UserViewModel> findByUserName(String username) {
+
+        return this.userRepository.findAll()
+                .stream()
+                .filter(u -> u.getUsername().equals(username))
+                .map(u -> this.modelMapper.map(u,UserViewModel.class))
+                .collect(Collectors.toList());
     }
 
     @Override

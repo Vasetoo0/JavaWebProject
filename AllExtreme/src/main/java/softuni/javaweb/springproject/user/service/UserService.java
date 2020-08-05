@@ -4,6 +4,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import softuni.javaweb.springproject.offer.model.view.AllOfferViewModel;
 import softuni.javaweb.springproject.user.model.entity.UserEntity;
 import softuni.javaweb.springproject.user.model.service.UserServiceModel;
+import softuni.javaweb.springproject.user.model.view.UserViewModel;
 
 import java.util.List;
 
@@ -25,4 +26,6 @@ public interface UserService extends UserDetailsService {
     boolean checkIfExistInWishList(String name, String offerId);
 
     Long getUsersCount();
+
+    List<UserViewModel> findByUserName(String username);
 }

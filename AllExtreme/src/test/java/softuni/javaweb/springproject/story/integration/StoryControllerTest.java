@@ -7,6 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
+import softuni.javaweb.springproject.comment.model.view.CommentViewModel;
 import softuni.javaweb.springproject.story.model.view.AllStoriesViewModel;
 import softuni.javaweb.springproject.story.model.view.StoryViewModel;
 import softuni.javaweb.springproject.story.service.StoryService;
@@ -14,12 +15,13 @@ import softuni.javaweb.springproject.story.web.StoryController;
 import softuni.javaweb.springproject.video.web.VideoController;
 
 import java.util.List;
+import java.util.Set;
 
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@SpringBootTest(classes = StoryController.class)
+@SpringBootTest
 @AutoConfigureMockMvc
 public class StoryControllerTest {
 
@@ -44,10 +46,15 @@ public class StoryControllerTest {
 
         StoryViewModel storyViewModel = new StoryViewModel();
         storyViewModel.setTitle("Test");
+        storyViewModel.setComments(Set.of(new CommentViewModel()));
+        storyViewModel.setPictures(List.of("pic","pic2"));
+
+        AllStoriesViewModel recent = new AllStoriesViewModel();
+        recent.setPictures(List.of("pic"));
 
         when(mockStoryService.getById("1234")).thenReturn(storyViewModel);
         when(mockStoryService.getRecentStories("CLIMBING"))
-                .thenReturn(List.of(new AllStoriesViewModel()));
+                .thenReturn(List.of(recent));
 
         mockMvc.perform(get("/CLIMBING/stories/read/1234"))
                 .andExpect(status().isOk())

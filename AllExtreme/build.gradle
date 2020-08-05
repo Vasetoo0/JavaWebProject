@@ -32,6 +32,7 @@ ext {
 	modelmapperVersion = '2.3.2'
 	bouncyCastleVersion = '1.64'
 	cloudinaryVersion = '1.14.0'
+	junit5Version = '5.0.0-ALPHA'
 }
 
 repositories {
@@ -47,8 +48,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'junit:junit:4.12'
-	implementation 'junit:junit:4.12'
+//    implementation 'junit:junit:4.12'
 //	implementation 'org.liquibase:liquibase-core'
 
 
@@ -60,26 +60,23 @@ dependencies {
 	// https://mvnrepository.com/artifact/org.modelmapper/modelmapper
 	compileOnly "org.modelmapper:modelmapper:${modelmapperVersion}"
 
-	// https://mvnrepository.com/artifact/org.bouncycastle/bcprov-jdk15on
-	compileOnly "org.bouncycastle:bcprov-jdk15on:${bouncyCastleVersion}"
-
 	// https://mvnrepository.com/artifact/com.cloudinary/cloudinary-core
 	compileOnly "com.cloudinary:cloudinary-http44:${cloudinaryVersion}"
 
-	compileOnly 'org.projectlombok:lombok'
+	// https://mvnrepository.com/artifact/org.junit/junit5-engine
+//	compileOnly "org.junit:junit5-engine:${junit5Version}"
 
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 
 	runtimeOnly 'mysql:mysql-connector-java'
 
-	annotationProcessor 'org.projectlombok:lombok'
 	annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
 
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
 	}
 
-	testImplementation('org.junit.jupiter:junit-jupiter:5.6.2')
+//	testImplementation('org.junit.jupiter:junit-jupiter:5.6.2')
 	testImplementation 'org.springframework.security:spring-security-test'
 	testImplementation "org.modelmapper:modelmapper:${modelmapperVersion}"
 	testImplementation "com.cloudinary:cloudinary-http44:${cloudinaryVersion}"

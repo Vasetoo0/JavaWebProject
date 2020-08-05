@@ -60,7 +60,7 @@ public class UserEntity extends BaseEntity {
         this.authorities = authorities;
     }
 
-    @OneToMany(mappedBy = "creator",cascade = CascadeType.MERGE)
+    @OneToMany(mappedBy = "creator",fetch = FetchType.EAGER,cascade = CascadeType.MERGE)
     public Set<Offer> getMyOffers() {
         return myOffers;
     }
