@@ -57,12 +57,14 @@ public class UserServiceImpl implements UserService {
         return userRepository.findByEmail(email).isPresent();
     }
 
+    //TODO: Test for error throw!
     @Override
     public UserEntity getByUsername(String name) {
         return this.userRepository.findByUsername(name)
                 .orElseThrow(() -> new EntityNotFoundException("User Dont Exist!"));
     }
 
+    //TODO: Test!
     @Override
     public void addToWishList(String offerId, String userName) {
         UserEntity userToAddOffer = this.getByUsername(userName);
@@ -95,6 +97,7 @@ public class UserServiceImpl implements UserService {
         return wishList;
     }
 
+    //TODO: Test for error throw!
     @Override
     public boolean checkIfExistInWishList(String name, String offerId) {
 
