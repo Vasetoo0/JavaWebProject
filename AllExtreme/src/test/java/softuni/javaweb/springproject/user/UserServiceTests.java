@@ -14,6 +14,7 @@ import softuni.javaweb.springproject.offer.model.view.OfferViewModel;
 import softuni.javaweb.springproject.offer.service.OfferService;
 import softuni.javaweb.springproject.user.model.entity.UserEntity;
 import softuni.javaweb.springproject.user.model.service.UserServiceModel;
+import softuni.javaweb.springproject.user.model.view.UserViewModel;
 import softuni.javaweb.springproject.user.repository.UserRepository;
 import softuni.javaweb.springproject.user.service.RoleService;
 import softuni.javaweb.springproject.user.service.UserService;
@@ -23,6 +24,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -43,8 +46,8 @@ public class UserServiceTests {
     BCryptPasswordEncoder mockPasswordEncoder;
 
     @BeforeEach
-    public void setUp(){
-        serviceToTest = new UserServiceImpl(mockUserRepository,mockOfferService,mockRoleService,new ModelMapper(),mockPasswordEncoder);
+    public void setUp() {
+        serviceToTest = new UserServiceImpl(mockUserRepository, mockOfferService, mockRoleService, new ModelMapper(), mockPasswordEncoder);
     }
 
     @Test
@@ -71,7 +74,7 @@ public class UserServiceTests {
         when(mockUserRepository.findByUsername("Test")).thenReturn(Optional.of(new UserEntity()));
 
         Assertions.assertNotNull(serviceToTest.getByUsername("Test"));
-        Assertions.assertSame(UserEntity.class,serviceToTest.getByUsername("Test").getClass());
+        Assertions.assertSame(UserEntity.class, serviceToTest.getByUsername("Test").getClass());
     }
 
     @Test
@@ -87,8 +90,8 @@ public class UserServiceTests {
 
         List<AllOfferViewModel> returned = serviceToTest.getWishList("Test");
 
-        Assertions.assertEquals(1,returned.size());
-        Assertions.assertEquals(offer.getTitle(),returned.get(0).getTitle());
+        Assertions.assertEquals(1, returned.size());
+        Assertions.assertEquals(offer.getTitle(), returned.get(0).getTitle());
     }
 
     @Test
@@ -98,14 +101,48 @@ public class UserServiceTests {
 
         when(mockUserRepository.findByUsername("Test")).thenReturn(Optional.of(user));
 
-        Assertions.assertTrue(serviceToTest.checkIfExistInWishList("Test","wish"));
-        Assertions.assertFalse(serviceToTest.checkIfExistInWishList("Test","wish1"));
+        Assertions.assertTrue(serviceToTest.checkIfExistInWishList("Test", "wish"));
+        Assertions.assertFalse(serviceToTest.checkIfExistInWishList("Test", "wish1"));
     }
 
     @Test
     public void testGetUsersCount() {
         when(mockUserRepository.count()).thenReturn(10L);
 
-        Assertions.assertEquals(10,serviceToTest.getUsersCount());
+        Assertions.assertEquals(10, serviceToTest.getUsersCount());
+    }
+
+    @Test
+    public void testFindByUsername() {
+        UserEntity user = new UserEntity();
+        user.setUsername("Test");
+        UserEntity user1 = new UserEntity();
+        user1.setUsername("Test1");
+        UserEntity user2 = new UserEntity();
+        user2.setUsername("Test2");
+
+        when(mockUserRepository.findAll()).thenReturn(List.of(user,user1,user2));
+
+        List<UserViewModel> returned = serviceToTest.findByUserName("Test");
+
+        Assertions.assertEquals(returned.size(),1);
+        Assertions.assertEquals(returned.get(0).getUsername(),user.getUsername());
+
+    }
+
+    @Test
+    public void testRegisterUser() {
+        UserServiceModel user = new UserServiceModel();
+        user.setUsername("Test");
+
+        UserEntity savedUser = new UserEntity();
+        savedUser.setUsername("Test");
+
+        when(mockUserRepository.save(any(UserEntity.class))).thenReturn(savedUser);
+
+        UserServiceModel returned = serviceToTest.registerUser(user);
+
+        Assertions.assertEquals(UserServiceModel.class,returned.getClass());
+        Assertions.assertEquals(savedUser.getUsername(),returned.getUsername());
     }
 }
