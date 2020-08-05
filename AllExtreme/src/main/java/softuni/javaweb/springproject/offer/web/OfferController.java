@@ -1,5 +1,6 @@
 package softuni.javaweb.springproject.offer.web;
 
+import org.hibernate.UnsupportedLockAttemptException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -63,9 +64,11 @@ public class OfferController {
     @PreAuthorize("isAuthenticated()")
     @DeleteMapping("/{id}/delete")
     public String deleteOffer(@PathVariable("id")String id,
-                              @PathVariable("sport")String sport) {
+                              @PathVariable("sport")String sport,
+                              Principal principal) {
 
-        this.offerService.deleteOffer(id);
+            this.offerService.deleteOffer(id);
+
 
         return "redirect:/" + sport + "/market";
     }

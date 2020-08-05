@@ -1,7 +1,9 @@
 package softuni.javaweb.springproject.error.web;
 
+import org.hibernate.exception.ConstraintViolationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.ui.Model;
@@ -34,6 +36,16 @@ public class ErrorController {
         } else {
             model.addAttribute("errorMessage", "You are not admin!");
         }
+        return "error";
+    }
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public String duplicateEntity(Principal principal, final Exception throwable, final Model model) {
+        logger.error("Exception during execution of SpringSecurity application", throwable);
+//        String errorMessage = (throwable != null ? throwable.getMessage() : "Unknown error");
+
+            model.addAttribute("errorMessage", "Entity all ready exist!");
+
         return "error";
     }
 

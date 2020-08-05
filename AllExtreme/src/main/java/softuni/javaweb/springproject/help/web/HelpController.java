@@ -45,6 +45,7 @@ public class HelpController {
         return "help/contact";
     }
 
+    //TODO: Test!
     @PostMapping("/request")
     public String request(@Valid @ModelAttribute("requestAddBindingModel")RequestAddBindingModel requestAddBindingModel,
                           BindingResult bindingResult, RedirectAttributes redirectAttributes) {

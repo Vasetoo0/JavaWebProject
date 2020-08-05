@@ -51,6 +51,11 @@
             <div class="container" style="text-align: center">
                 <h2 style="text-align: center" class="h2">Find Store</h2>
             </div>
+            <th:block th:if="${stores.size() == 0}">
+                <div class="container" style="text-align: center;margin-top: 100px">
+                    <h2 style="text-align: center;" class="h2">No Stores Found</h2>
+                </div>
+            </th:block>
             <div class="row">
                 <!-- Post Item -->
                 <div class="col-lg-9 col-md-9">
@@ -58,7 +63,6 @@
 
                         <div class="col-md-12 blog-post-hr">
 
-                            <hr />
                             <th:block th:each="s : ${stores}">
                             <div class="blog-post mb-30">
                                 <div class="post-media">

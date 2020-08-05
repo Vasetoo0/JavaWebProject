@@ -132,7 +132,7 @@
                             </div>
                         </div>
                         <!-- End Tab -->
-                        <th:block sec:authorize="isAuthenticated()">
+                        <th:block sec:authorize="isAuthenticated()" th:if="${offer.creator.equals(#authentication.getName()) || #authentication.authorities.contains('ADMIN')}">
                             <form th:action="@{/{sport}/market/{id}/delete(sport=*{sport.name()}, id=*{id})}" th:method="DELETE">
                                 <p style="text-align: center; background-color: #58B0C5; margin-top: 10px">
                                     <!--                            <button class="btn btn-lg bg-warning" href="">Edit Offer</button>-->
