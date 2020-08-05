@@ -13,4 +13,8 @@ cloudinary:
   api_key: "${API_KEY:}"
   api_secret: "${API_SECRET:}"
 allExtreme:
+<<<<<<< HEAD
   clean-up: "0 0 2 ? * SUN"
+=======
+  clean-up: "0 0 2 ? * SUN"
+>>>>>>> 43d7a112f4d45cb7772380b562991ae2ff7e0b89
