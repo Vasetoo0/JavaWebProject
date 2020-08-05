@@ -56,7 +56,7 @@ public class StoryControllerTest {
         when(mockStoryService.getRecentStories("CLIMBING"))
                 .thenReturn(List.of(recent));
 
-        mockMvc.perform(get("/CLIMBING/stories/read/1234"))
+        mockMvc.perform(get("/CLIMBING/stories/read/{id}","1234"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("stories/story-details"))
                 .andExpect(model().attributeExists("recent"))

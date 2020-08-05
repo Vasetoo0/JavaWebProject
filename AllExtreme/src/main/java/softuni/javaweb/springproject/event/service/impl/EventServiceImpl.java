@@ -57,6 +57,7 @@ public class EventServiceImpl implements EventService {
                 .collect(Collectors.toList());
     }
 
+    //TODO: Test throws error!
     @Override
     public EventViewModel getById(String id) {
 

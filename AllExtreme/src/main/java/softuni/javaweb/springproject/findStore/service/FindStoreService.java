@@ -10,7 +10,7 @@ public interface FindStoreService {
 
     StoreServiceModel addStore(StoreAddBindingModel storeAddBindingModel);
 
-    List<StoreViewModel> getStoreBySport(String sport);
+    List<StoreViewModel> getStoresBySport(String sport);
 
     Long getStoresCount();
 }

@@ -22,7 +22,7 @@ public class FindStoreController {
     @GetMapping("")
     public String findStore(@PathVariable("sport")String sport, Model model){
 
-        model.addAttribute("stores", this.findStoreService.getStoreBySport(sport));
+        model.addAttribute("stores", this.findStoreService.getStoresBySport(sport));
 
         return "stores/find-store";
     }

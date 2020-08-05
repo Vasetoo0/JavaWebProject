@@ -28,9 +28,9 @@ public class OfferController {
     @GetMapping("")
     public String market(@PathVariable("sport")String sport, Model model){
 
-        List<AllOfferViewModel> off = this.offerService.getAllBySport(sport);
+        List<AllOfferViewModel> offers = this.offerService.getAllBySport(sport);
 
-        model.addAttribute("offers",off);
+        model.addAttribute("offers",offers);
 
 
         return "market/market";
@@ -50,6 +50,7 @@ public class OfferController {
         return "market/offer-details";
     }
 
+    //TODO: Test!
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/{id}/addToWishList")
     public String addTOWishList(@PathVariable("id")String offerId, Principal principal,
@@ -58,6 +59,7 @@ public class OfferController {
         return "redirect:";
     }
 
+    //TODO: Test!
     @PreAuthorize("isAuthenticated()")
     @DeleteMapping("/{id}/delete")
     public String deleteOffer(@PathVariable("id")String id,

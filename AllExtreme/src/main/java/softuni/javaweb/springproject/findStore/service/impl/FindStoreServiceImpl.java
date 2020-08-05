@@ -38,7 +38,7 @@ public class FindStoreServiceImpl implements FindStoreService {
     }
 
     @Override
-    public List<StoreViewModel> getStoreBySport(String sport) {
+    public List<StoreViewModel> getStoresBySport(String sport) {
 
         return this.findStoreRepository.findAll()
                 .stream()

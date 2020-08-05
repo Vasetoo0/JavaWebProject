@@ -66,6 +66,7 @@ public class AdminController {
         return "admin/add-story";
     }
 
+    //TODO: Test!!
     @PostMapping("/addStory")
     public String addStoryConfirm(@Valid @ModelAttribute("storyAddBindingModel") StoryAddBindingModel storyAddBindingModel,
                                   BindingResult bindingResult, RedirectAttributes redirectAttributes,
@@ -107,7 +108,7 @@ public class AdminController {
         return "admin/add-video";
     }
 
-
+    //TODO: Test!!
     @PostMapping("/addVideo")
     public String addVideoConfirm(@Valid @ModelAttribute("videoAddBindingModel") VideoAddBindingModel videoAddBindingModel,
                                   BindingResult bindingResult, RedirectAttributes redirectAttributes
@@ -137,6 +138,7 @@ public class AdminController {
         return "admin/add-destination";
     }
 
+    //TODO: Test!!
     @PostMapping("/addDestination")
     public String addDestinationConfirm(@Valid @ModelAttribute("destinationAddBindingModel") DestinationAddBindingModel destinationAddBindingModel,
                                         BindingResult bindingResult, RedirectAttributes redirectAttributes,
@@ -176,6 +178,7 @@ public class AdminController {
         return "admin/add-event";
     }
 
+    //TODO: Test!!
     @PostMapping("/addEvent")
     public String addEventConfirm(@Valid @ModelAttribute("eventAddBindingModel") EventAddBindingModel eventAddBindingModel,
                                   BindingResult bindingResult, RedirectAttributes redirectAttributes,
@@ -193,7 +196,7 @@ public class AdminController {
                 redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.eventAddBindingModel",
                         bindingResult);
                 return "redirect:addEvent";
-            }else {
+            } else {
                 List<String> pictureUrls = savePicturesGetUrls(picturesFiles);
 
                 eventAddBindingModel.setPictures(pictureUrls);
@@ -212,7 +215,8 @@ public class AdminController {
         return "admin/approve-new-offer";
     }
 
-    //TODO: Fix approve from get to post method!
+
+    //TODO: Fix approve from get to post method! AND Test!
     @GetMapping("/approve/{id}")
     public String approveConfirm(@PathVariable("id") String id) {
 
@@ -229,6 +233,7 @@ public class AdminController {
         return "admin/requests";
     }
 
+    //TODO: Test!!
     @DeleteMapping("/requests/delete/{id}")
     public String deleteRequest(@PathVariable("id") String requestId) {
 
@@ -247,10 +252,11 @@ public class AdminController {
         return "admin/add-store";
     }
 
+    //TODO: Test!!
     @PostMapping("/addStore")
     public String addStoreConfirm(@Valid @ModelAttribute("storeAddBindingModel") StoreAddBindingModel storeAddBindingModel,
                                   BindingResult bindingResult, RedirectAttributes redirectAttributes,
-                                  @RequestParam("pictureFile")MultipartFile pictureFile) {
+                                  @RequestParam("pictureFile") MultipartFile pictureFile) {
 
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("storeAddBindingModel", storeAddBindingModel);
@@ -265,7 +271,7 @@ public class AdminController {
                 redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.storeAddBindingModel",
                         bindingResult);
                 return "redirect:addStore";
-            }else {
+            } else {
                 String pictureUrl = this.cloudinaryService.uploadFile(pictureFile);
 
                 storeAddBindingModel.setPicture(pictureUrl);
@@ -276,18 +282,22 @@ public class AdminController {
         }
     }
 
+    //TODO: Test!!
     private boolean noAddedPictures(MultipartFile[] picturesFiles) {
         return Arrays.stream(picturesFiles)
                 .noneMatch(p -> !Objects.requireNonNull(p.getOriginalFilename()).isBlank() ||
                         !p.getOriginalFilename().isEmpty());
     }
 
+    //TODO: Test!!
     private void rejectBinding(BindingResult bindingResult) {
         bindingResult.rejectValue("pictures",
                 "error.pictures",
                 "Add at least one picture!");
     }
 
+
+    //TODO: Test!!
     private List<String> savePicturesGetUrls(@RequestParam("picturesFiles") MultipartFile[] picturesFiles) {
         return Arrays.stream(picturesFiles)
                 .filter(p -> !Objects.requireNonNull(p.getOriginalFilename()).isBlank() ||
