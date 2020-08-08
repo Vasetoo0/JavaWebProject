@@ -27,7 +27,7 @@ public class VideoAddBindingModel {
         this.youTubeLink = youTubeLink;
     }
 
-    @Length(min = 10, message = "Video must have description!")
+    @Length(min = 10, message = "Video must have description ata least 10 chars!")
     public String getDescription() {
         return description;
     }

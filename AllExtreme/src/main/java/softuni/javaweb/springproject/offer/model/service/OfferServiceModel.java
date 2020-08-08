@@ -14,6 +14,7 @@ public class OfferServiceModel {
     private String model;
     private List<String> pictures;
     private String productCondition;
+    private String telContact;
     private BigDecimal price;
     private LocalDateTime createdOn = LocalDateTime.now();
     private String description;
@@ -110,5 +111,13 @@ public class OfferServiceModel {
 
     public void setCreator(String creator) {
         this.creator = creator;
+    }
+
+    public String getTelContact() {
+        return telContact;
+    }
+
+    public void setTelContact(String telContact) {
+        this.telContact = telContact;
     }
 }

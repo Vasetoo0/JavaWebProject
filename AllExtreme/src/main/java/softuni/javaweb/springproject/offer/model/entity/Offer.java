@@ -17,6 +17,7 @@ public class Offer extends BaseEntity {
     private List<String> pictures;
     private String productCondition;
     private BigDecimal price;
+    private String telContact;
     private LocalDateTime createdOn;
     private String description;
     private Boolean enabled = false;
@@ -115,5 +116,14 @@ public class Offer extends BaseEntity {
 
     public void setProductCondition(String productCondition) {
         this.productCondition = productCondition;
+    }
+
+    @Column(name = "tel_contact",nullable = false)
+    public String getTelContact() {
+        return telContact;
+    }
+
+    public void setTelContact(String telContact) {
+        this.telContact = telContact;
     }
 }

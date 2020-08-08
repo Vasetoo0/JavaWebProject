@@ -98,6 +98,11 @@
                             </li>
                             <li>
                                 <p>
+                                    <strong class="dark-color">Contact :</strong><span th:text="*{telContact}"></span>
+                                </p>
+                            </li>
+                            <li>
+                                <p>
                                     <strong class="dark-color">Created on :</strong><span
                                         th:text="${#temporals.format(offer.createdOn,'dd-MM-yyyy HH:mm')}"></span>
                                 </p>

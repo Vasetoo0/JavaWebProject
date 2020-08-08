@@ -77,6 +77,15 @@
                             <br/>
                             <hr/>
                         </th:block>
+                        <div class="form-field-wrapper">
+                            <label class="input-sm form-full" type="text">Tel number :</label>
+                            <input th:field="*{telContact}" class="input-sm form-full" id="telContact" type="text" name="telContact" placeholder="Tel Contact" required>
+                        </div>
+                        <th:block th:each="e : ${#fields.errors('telContact')}">
+                            <label th:text="${e}" style="font-size: large"  class="error text-danger">Choose Username</label>
+                            <br/>
+                            <hr/>
+                        </th:block>
                         <div th:field="pictures" class="form-field-wrapper">
                             <label class="input-sm form-full" type="text">Pictures:</label>
                             <input class="input-sm form-full" style="margin-top: 12px" type="file" name="picturesFiles" placeholder="First picture link" >

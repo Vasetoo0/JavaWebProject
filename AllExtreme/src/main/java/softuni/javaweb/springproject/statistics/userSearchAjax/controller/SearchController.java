@@ -34,7 +34,6 @@ public class SearchController {
 
         AjaxResponseBody result = new AjaxResponseBody();
 
-        //If error, just return a 400 bad request, along with the error message
         if (errors.hasErrors()) {
 
             result.setMsg(errors.getAllErrors()

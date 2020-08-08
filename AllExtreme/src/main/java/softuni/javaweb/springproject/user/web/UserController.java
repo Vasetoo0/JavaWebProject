@@ -49,6 +49,7 @@ public class UserController {
         return "user/login";
     }
 
+    //TODO: Test!
     @PostMapping("/login-error")
     public ModelAndView onLoginError(
             @ModelAttribute(UsernamePasswordAuthenticationFilter.
@@ -107,8 +108,7 @@ public class UserController {
     @GetMapping("/{name}")
     public String profile(@PathVariable("name") String name, Model model) {
 
-
-        model.addAttribute("user", this.userService.getByUsername(name));
+        model.addAttribute("user", this.userService.getUserViewByUsername(name));
 
         return "user/profile";
     }

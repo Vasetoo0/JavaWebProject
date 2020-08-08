@@ -14,6 +14,7 @@ public class OfferViewModel {
     private String model;
     private List<String> pictures;
     private String productCondition;
+    private String telContact;
     private BigDecimal price;
     private LocalDateTime createdOn;
     private String description;
@@ -101,5 +102,13 @@ public class OfferViewModel {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getTelContact() {
+        return telContact;
+    }
+
+    public void setTelContact(String telContact) {
+        this.telContact = telContact;
     }
 }

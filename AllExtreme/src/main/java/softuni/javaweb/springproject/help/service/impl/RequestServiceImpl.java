@@ -43,7 +43,6 @@ public class RequestServiceImpl implements RequestService {
                 .collect(Collectors.toList());
     }
 
-    //TODO: Test!
     @Override
     public void deleteRequest(String requestId) {
         this.requestRepository.deleteById(requestId);

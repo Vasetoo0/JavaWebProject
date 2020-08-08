@@ -5,6 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
 import softuni.javaweb.springproject.help.model.binding.RequestAddBindingModel;
@@ -18,7 +19,8 @@ import softuni.javaweb.springproject.help.service.impl.RequestServiceImpl;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
+import static org.mockito.ArgumentMatchers.nullable;
+import static org.mockito.Mockito.*;
 
 @ExtendWith({MockitoExtension.class})
 public class RequestServiceTests {
@@ -58,5 +60,12 @@ public class RequestServiceTests {
 
         Assertions.assertSame(returned.getClass(),RequestServiceModel.class);
         Assertions.assertEquals(returned.getName(),savedRequest.getName());
+    }
+
+    @Test
+    public void testDeleteRequest() {
+        serviceToTest.deleteRequest("1");
+
+        Mockito.verify(mockRequestRepository,times(1)).deleteById("1");
     }
 }

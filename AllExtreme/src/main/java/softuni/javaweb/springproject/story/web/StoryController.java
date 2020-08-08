@@ -42,8 +42,6 @@ public class StoryController {
         return "stories/story-details";
     }
 
-
-    //TODO: Test!
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/delete/{id}")
     public String deleteStory(@PathVariable("id")String id,

@@ -1,6 +1,7 @@
 package softuni.javaweb.springproject.story.integration;
 
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -17,7 +18,7 @@ import softuni.javaweb.springproject.video.web.VideoController;
 import java.util.List;
 import java.util.Set;
 
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -62,5 +63,16 @@ public class StoryControllerTest {
                 .andExpect(model().attributeExists("recent"))
                 .andExpect(model().attributeExists("story"));
 
+    }
+
+    @Test
+    @WithMockUser(roles = {"ADMIN"})
+    public void testDeleteStory() throws Exception {
+
+        mockMvc.perform(get("/CLIMBING/stories/delete/{id}","Test"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:/CLIMBING/stories/"));
+
+        Mockito.verify(mockStoryService,times(1)).deleteById("Test");
     }
 }

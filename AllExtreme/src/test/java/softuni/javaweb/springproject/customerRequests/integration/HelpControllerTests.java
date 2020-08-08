@@ -8,7 +8,9 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 import softuni.javaweb.springproject.help.service.RequestService;
 
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
@@ -44,5 +46,33 @@ public class HelpControllerTests {
                 .andExpect(view().name("help/contact"))
                 .andExpect(model().attributeExists("requestAddBindingModel"))
                 .andExpect(status().isOk());
+    }
+
+    @Test
+    public void testContactUsConfirmFailed() throws Exception {
+
+        mockMvc.perform(post("/help/request")
+        .with(csrf())
+        .param("name", "")
+        .param("email","")
+        .param("subject", "")
+        .param("message",""))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:contact"));
+
+    }
+
+    @Test
+    public void testContactUsConfirm() throws Exception {
+
+        mockMvc.perform(post("/help/request")
+                .with(csrf())
+                .param("name", "Vaseto")
+                .param("email","asdaa@asdasd.asd")
+                .param("subject", "Asdkafklasdfkladsklfskl")
+                .param("message","sdfafdasljadsjkdsfjkadsfkjdsfjkkjldskjlfsjkl"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:contact"));
+
     }
 }

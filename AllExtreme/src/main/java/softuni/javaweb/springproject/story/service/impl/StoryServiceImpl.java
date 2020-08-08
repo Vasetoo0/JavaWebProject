@@ -86,8 +86,6 @@ public class StoryServiceImpl implements StoryService {
                 .collect(Collectors.toList());
     }
 
-
-    //TODO: Test!
     @Override
     public void addCommentToStory(Comment savedComment, String storyId) {
         Story storyById = this.storyRepository.findById(storyId)
@@ -98,7 +96,6 @@ public class StoryServiceImpl implements StoryService {
         this.storyRepository.saveAndFlush(storyById);
     }
 
-    //TODO: Test!
     @Override
     public void deleteById(String id) {
         this.storyRepository.deleteById(id);

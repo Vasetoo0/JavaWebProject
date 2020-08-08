@@ -20,6 +20,7 @@ public class OfferAddBindingModel {
     private List<@Pattern(regexp = LINK_PATTERN,message = "One or more links are invalid!")String> pictures;
     private String productCondition;
     private BigDecimal price;
+    private String telContact;
     private LocalDateTime createdOn = LocalDateTime.now();
     private String description;
     private Sport sport;
@@ -107,5 +108,14 @@ public class OfferAddBindingModel {
 
     public void setCreator(String creator) {
         this.creator = creator;
+    }
+
+    @NotNull(message = "Enter telephone for contact!")
+    public String getTelContact() {
+        return telContact;
+    }
+
+    public void setTelContact(String telContact) {
+        this.telContact = telContact;
     }
 }

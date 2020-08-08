@@ -64,6 +64,14 @@ public class UserServiceImpl implements UserService {
                 .orElseThrow(() -> new EntityNotFoundException("User Dont Exist!"));
     }
 
+    @Override
+    public UserViewModel getUserViewByUsername(String name) {
+
+        return this.userRepository.findByUsername(name)
+                .map(u -> this.modelMapper.map(u,UserViewModel.class))
+                .orElseThrow(() -> new EntityNotFoundException("User not found!"));
+    }
+
     //TODO: Test!
     @Override
     public void addToWishList(String offerId, String userName) {

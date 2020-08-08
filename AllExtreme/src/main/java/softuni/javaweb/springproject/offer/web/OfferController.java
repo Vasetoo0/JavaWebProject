@@ -51,7 +51,7 @@ public class OfferController {
         return "market/offer-details";
     }
 
-    //TODO: Test!
+
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/{id}/addToWishList")
     public String addTOWishList(@PathVariable("id")String offerId, Principal principal,
@@ -60,7 +60,6 @@ public class OfferController {
         return "redirect:";
     }
 
-    //TODO: Test!
     @PreAuthorize("isAuthenticated()")
     @DeleteMapping("/{id}/delete")
     public String deleteOffer(@PathVariable("id")String id,

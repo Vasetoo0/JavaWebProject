@@ -19,6 +19,8 @@ public interface UserService extends UserDetailsService {
 
     UserEntity getByUsername(String name);
 
+    UserViewModel getUserViewByUsername(String name);
+
     void addToWishList(String offerId, String userName);
 
     List<AllOfferViewModel> getWishList(String username);

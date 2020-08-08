@@ -5,6 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
 import softuni.javaweb.springproject.enums.Sport;
@@ -20,10 +21,14 @@ import softuni.javaweb.springproject.offer.service.impl.OfferServiceImpl;
 import softuni.javaweb.springproject.user.model.entity.UserEntity;
 import softuni.javaweb.springproject.user.service.UserService;
 
+import javax.persistence.EntityNotFoundException;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -65,6 +70,15 @@ public class OfferServiceTest {
         Assertions.assertSame(returnedOffer.getClass(),OfferViewModel.class);
         Assertions.assertEquals(offer.getTitle(),returnedOffer.getTitle());
         Assertions.assertEquals(offer.getCreator().getUsername(),returnedOffer.getCreator());
+    }
+
+    @Test
+    public void testGetByIdThrowsError() {
+        when(mockOfferRepository.findById("Test")).thenReturn(Optional.empty());
+
+        Assertions.assertThrows(EntityNotFoundException.class, () -> {
+            serviceToTest.getById("Test");
+        });
     }
 
     @Test
@@ -165,5 +179,32 @@ public class OfferServiceTest {
         OfferServiceModel offerServiceModel = serviceToTest.addOffer(offerAddBindingModel);
 
         Assertions.assertEquals(offerServiceModel.getClass(),OfferServiceModel.class);
+    }
+
+    @Test
+    public void testCleanUpOldOffer() {
+
+        serviceToTest.cleanUpOldOffer();
+
+        Mockito.verify(mockOfferRepository, times(1))
+                .deleteByCreatedOnBefore(any(LocalDateTime.class));
+    }
+
+    @Test
+    public void testDeleteOffer() {
+
+        serviceToTest.deleteOffer("Test");
+
+        Mockito.verify(mockOfferRepository, times(1))
+                .deleteById("Test");
+    }
+
+    @Test
+    public void testApproveOfferThrowsIfNoOffer() {
+        when(mockOfferRepository.findById("Test")).thenReturn(Optional.empty());
+
+        Assertions.assertThrows(EntityNotFoundException.class, () -> {
+            serviceToTest.approveOffer("Test");
+        });
     }
 }

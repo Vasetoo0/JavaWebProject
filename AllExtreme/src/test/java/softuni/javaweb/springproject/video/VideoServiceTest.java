@@ -7,6 +7,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,9 +21,12 @@ import softuni.javaweb.springproject.video.repository.VideoRepository;
 import softuni.javaweb.springproject.video.service.VideoService;
 import softuni.javaweb.springproject.video.service.impl.VideoServiceImpl;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
+import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
@@ -87,6 +91,24 @@ public class VideoServiceTest {
 
         Assertions.assertSame(videoServiceModel.getClass(),VideoServiceModel.class);
         Assertions.assertEquals(videoServiceModel.getTitle(),videoBinding.getTitle());
+    }
+
+    @Test
+    public void testDeleteVideoThrows() {
+        when(mockVideoRepository.findById("1")).thenReturn(Optional.empty());
+
+        Assertions.assertThrows(EntityNotFoundException.class, () -> {
+            serviceToTest.deleteById("1");
+        });
+    }
+
+    @Test
+    public void testDeleteVideo() {
+        when(mockVideoRepository.findById("1")).thenReturn(Optional.of(new Video()));
+
+        serviceToTest.deleteById("1");
+
+        Mockito.verify(mockVideoRepository,times(1)).deleteById("1");
     }
 
 

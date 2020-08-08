@@ -86,11 +86,12 @@
                                     <strong class="dark-color">Condition :</strong><span th:text="${o.productCondition}"></span>
                                 </p>
                             </li>
+                            <li>
+                                <p>
+                                    <strong class="dark-color">Price :</strong><span th:text="${o.price}"></span>
+                                </p>
+                            </li>
                             </ul>
-                        <div class="post-entry">
-                            <p th:text="${o.price}"></p>
-                        </div>
-                        <div class="post-tag pull-left"><span>Price : </span></div>
                         <div class="post-more-link pull-right"><a th:href="@{/admin/approve/{id}(id = ${o.id})}">Approve<i class="fa fa-check-circle-o right"></i></a></div>
                     </div>
                 </div>

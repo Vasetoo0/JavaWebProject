@@ -5,12 +5,14 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.event.annotation.BeforeTestMethod;
 import softuni.javaweb.springproject.comment.model.entity.Comment;
 import softuni.javaweb.springproject.enums.Sport;
+import softuni.javaweb.springproject.findStore.model.entity.Store;
 import softuni.javaweb.springproject.story.model.binding.StoryAddBindingModel;
 import softuni.javaweb.springproject.story.model.entity.Story;
 import softuni.javaweb.springproject.story.model.service.StoryServiceModel;
@@ -24,6 +26,7 @@ import softuni.javaweb.springproject.user.service.UserService;
 import javax.persistence.EntityNotFoundException;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 
@@ -88,6 +91,15 @@ public class StoryServiceTest {
     }
 
     @Test
+    public void testGetByIdShouldThrows() {
+        when(mockStoryRepository.findById("Test")).thenReturn(Optional.empty());
+
+        Assertions.assertThrows(EntityNotFoundException.class, () -> {
+            serviceToTest.getById("Test");
+        });
+    }
+
+    @Test
     public void testGetAllBySport(){
         Story story = new Story();
         story.setTitle("Test");
@@ -128,13 +140,41 @@ public class StoryServiceTest {
         Assertions.assertEquals(2,storyServiceModel.getPictures().size());
     }
 
-//    @Test()
-//    public void addCommentToStoryShouldThrowIfNoStory(){
-//        willThrow(new EntityNotFoundException("Invalid")).given(mockStoryRepository).deleteById("1234");
-//
-//        Assertions.assertThrows(EntityNotFoundException.class,
-//                () -> serviceToTest.addCommentToStory(any(Comment.class),"1234"));
-//    }
+    @Test
+    public void testAddCommentToStory(){
+        Comment commentToSave = new Comment();
+        commentToSave.setUser("Test");
+
+        Story storyToAdd = new Story();
+        storyToAdd.setComments(new HashSet<>());
+
+        when(mockStoryRepository.findById("Test")).thenReturn(Optional.of(storyToAdd));
+
+        serviceToTest.addCommentToStory(commentToSave,"Test");
+
+        Assertions.assertTrue(storyToAdd.getComments().contains(commentToSave));
+        Mockito.verify(mockStoryRepository,times(1)).saveAndFlush(storyToAdd);
+    }
+
+    @Test
+    public void testAddCommentToStoryShouldThrowIfNoStory(){
+        Comment commentToSave = new Comment();
+        commentToSave.setUser("Test");
+
+        when(mockStoryRepository.findById("Test")).thenReturn(Optional.empty());
+
+        Assertions.assertThrows(EntityNotFoundException.class,() -> {
+            serviceToTest.addCommentToStory(commentToSave,"Test");
+        });
+    }
+
+    @Test
+    public void testDeleteStory() {
+
+        serviceToTest.deleteById("Test");
+
+        Mockito.verify(mockStoryRepository,times(1)).deleteById("Test");
+    }
 
 
 

@@ -16,10 +16,17 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.servlet.View;
+import softuni.javaweb.springproject.comment.model.entity.Comment;
 import softuni.javaweb.springproject.comment.model.service.CommentServiceModel;
+import softuni.javaweb.springproject.comment.repository.CommentRepository;
 import softuni.javaweb.springproject.comment.service.CommentService;
 import softuni.javaweb.springproject.comment.web.CommentController;
 import softuni.javaweb.springproject.home.HomeController;
+import softuni.javaweb.springproject.story.model.entity.Story;
+import softuni.javaweb.springproject.story.repository.StoryRepository;
+import softuni.javaweb.springproject.story.service.StoryService;
+
+import java.util.Optional;
 
 import static org.mockito.Mockito.*;
 import static org.mockito.MockitoAnnotations.*;
@@ -37,35 +44,26 @@ public class CommentControllerTest {
     MockMvc mockMvc;
 
     @MockBean
-    private CommentService commentService;
+    CommentService commentService;
+
 
     @MockBean
-    ModelMapper modelMapper;
+    CommentRepository mockCommentRepository;
 
     @MockBean
-    CommentController commentController;
-
-    ObjectMapper objectMapper = new ObjectMapper();
-
-    @BeforeEach
-    public void SetUp() {
-
-        initMocks(this);
-    }
+    StoryRepository mockStoryRepository;
 
 //    @Test
-//    @WithMockUser(username = "Vas",roles = {"ADMIN","USER"})
+//    @WithMockUser
 //    public void testAddComment() throws Exception {
-//        CommentServiceModel cm = new CommentServiceModel();
-//        cm.setUsername("Test");
+//        when(mockCommentRepository.saveAndFlush(any(Comment.class))).thenReturn(new Comment());
+//        when(mockStoryRepository.findById("Test")).thenReturn(Optional.of(new Story()));
 //
-//        when(commentService.addComment(new CommentServiceModel(), "1", "Test"))
-//                .thenReturn(cm);
-//
-//        mockMvc.perform(post("/CLIMBING/story/{id}/addComment", "1")
-//                .with(csrf())
-//                .accept(MediaType.ALL).content(objectMapper.writeValueAsString(cm)).contentType(MediaType.ALL))
-//        .andExpect(status().isOk());
-//
+//        mockMvc.perform(post("/story/{id}/addComment","Test")
+//        .with(csrf())
+//        .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+//        .param("description", "Yupiiiii!"))
+//                .andExpect(status().is3xxRedirection())
+//                .andExpect(view().name("redirect:/CLIMBING/stories/read/Test"));
 //    }
 }
