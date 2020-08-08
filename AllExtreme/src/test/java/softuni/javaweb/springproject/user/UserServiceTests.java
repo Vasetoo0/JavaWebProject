@@ -5,8 +5,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import softuni.javaweb.springproject.offer.model.entity.Offer;
 import softuni.javaweb.springproject.offer.model.view.AllOfferViewModel;
@@ -20,12 +23,15 @@ import softuni.javaweb.springproject.user.service.RoleService;
 import softuni.javaweb.springproject.user.service.UserService;
 import softuni.javaweb.springproject.user.service.impl.UserServiceImpl;
 
+import javax.persistence.EntityNotFoundException;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -78,6 +84,16 @@ public class UserServiceTests {
     }
 
     @Test
+    public void testGetByUsernameThrowsError() {
+
+        when(mockUserRepository.findByUsername("Test")).thenReturn(Optional.empty());
+
+        Assertions.assertThrows(EntityNotFoundException.class,() -> {
+            serviceToTest.getByUsername("Test");
+        });
+    }
+
+    @Test
     public void testGetWishList() {
         UserEntity userEntity = new UserEntity();
         userEntity.setWishList(Set.of("wish"));
@@ -103,6 +119,17 @@ public class UserServiceTests {
 
         Assertions.assertTrue(serviceToTest.checkIfExistInWishList("Test", "wish"));
         Assertions.assertFalse(serviceToTest.checkIfExistInWishList("Test", "wish1"));
+    }
+
+    @Test
+    public void testCheckIfExistInWishListThrowsError() {
+
+
+        when(mockUserRepository.findByUsername("Test")).thenReturn(Optional.empty());
+
+        Assertions.assertThrows(EntityNotFoundException.class,() -> {
+            serviceToTest.addToWishList("123","Test");
+        });
     }
 
     @Test
@@ -144,5 +171,38 @@ public class UserServiceTests {
 
         Assertions.assertEquals(UserServiceModel.class,returned.getClass());
         Assertions.assertEquals(savedUser.getUsername(),returned.getUsername());
+    }
+
+    @Test
+    public void testAddToWishList() {
+        UserEntity user = new UserEntity();
+        user.setWishList(new HashSet<>());
+        when(mockUserRepository.findByUsername("Test")).thenReturn(Optional.of(user));
+
+        serviceToTest.addToWishList("123","Test");
+
+        Mockito.verify(mockUserRepository,times(1)).saveAndFlush(user);
+    }
+
+    @Test
+    public void testLoadUserByUsername(){
+        UserEntity userEntity = new UserEntity();
+        userEntity.setUsername("Test");
+        userEntity.setAuthorities(new HashSet<>());
+
+        when(mockUserRepository.findByUsername("Test")).thenReturn(Optional.of(userEntity));
+
+        UserDetails user = serviceToTest.loadUserByUsername("Test");
+
+        Assertions.assertEquals(user.getUsername(),userEntity.getUsername());
+    }
+
+    @Test
+    public void testLoadUserByUsernameThrowsError(){
+
+        when(mockUserRepository.findByUsername("Test")).thenReturn(Optional.empty());
+
+       Assertions.assertThrows(UsernameNotFoundException.class, () -> serviceToTest.loadUserByUsername("Test"));
+
     }
 }

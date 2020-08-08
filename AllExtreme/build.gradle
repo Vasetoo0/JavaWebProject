@@ -29,7 +29,7 @@ ext {
 	jQueryVersion = '3.5.1'
 	popperJsVersion = '2.0.2'
 	bootstrapVersion = '4.5.0'
-	modelmapperVersion = '2.3.2'
+	modelmapperVersion = '2.3.8'
 	bouncyCastleVersion = '1.64'
 	cloudinaryVersion = '1.14.0'
 	junit5Version = '5.0.0-ALPHA'

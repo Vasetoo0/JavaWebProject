@@ -57,7 +57,6 @@ public class UserServiceImpl implements UserService {
         return userRepository.findByEmail(email).isPresent();
     }
 
-    //TODO: Test for error throw!
     @Override
     public UserEntity getByUsername(String name) {
         return this.userRepository.findByUsername(name)
@@ -72,7 +71,6 @@ public class UserServiceImpl implements UserService {
                 .orElseThrow(() -> new EntityNotFoundException("User not found!"));
     }
 
-    //TODO: Test!
     @Override
     public void addToWishList(String offerId, String userName) {
         UserEntity userToAddOffer = this.getByUsername(userName);
@@ -105,7 +103,6 @@ public class UserServiceImpl implements UserService {
         return wishList;
     }
 
-    //TODO: Test for error throw!
     @Override
     public boolean checkIfExistInWishList(String name, String offerId) {
 
@@ -168,7 +165,7 @@ public class UserServiceImpl implements UserService {
                 map(r -> new SimpleGrantedAuthority(r.getAuthority())).
                 collect(Collectors.toList());
 
-        User result = new org.springframework.security.core.userdetails.User(
+        User result = new User(
                 userEntity.getUsername(),
                 userEntity.getPassword() != null ? userEntity.getPassword() : "",
                 authorities);
