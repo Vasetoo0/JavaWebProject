@@ -14,7 +14,9 @@ import softuni.javaweb.springproject.user.service.UserService;
 import softuni.javaweb.springproject.utils.cloudinary.service.CloudinaryService;
 
 import static org.mockito.Mockito.when;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
@@ -42,11 +44,86 @@ public class UserControllerTests {
     }
 
     @Test
+    public void testLoginError() throws Exception {
+
+        mockMvc.perform(post("/users/login-error")
+        .with(csrf()))
+                .andExpect(status().isOk())
+                .andExpect(view().name("user/login"))
+                .andExpect(model().attributeExists("error"))
+                .andExpect(model().attributeExists("username"));
+    }
+
+    @Test
     public void testRegisterView() throws Exception {
 
         mockMvc.perform(get("/users/register"))
                 .andExpect(view().name("user/register"))
                 .andExpect(status().isOk());
+    }
+
+    @Test
+    public void testRegisterConfirm() throws Exception {
+        when(userService.existsUser("Test")).thenReturn(false);
+        when(userService.existsEmail("Test")).thenReturn(false);
+
+        mockMvc.perform(post("/users/register")
+        .with(csrf())
+        .param("username","Test")
+        .param("email", "asd@asd.asd")
+        .param("password","12345")
+        .param("confirmPassword","12345"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:login"));
+
+    }
+
+    @Test
+    public void testRegisterConfirmShouldRedirectBackIfUserExist() throws Exception {
+        when(userService.existsUser("Test")).thenReturn(true);
+        when(userService.existsEmail("Test")).thenReturn(false);
+
+        mockMvc.perform(post("/users/register")
+                .with(csrf())
+                .param("username","Test")
+                .param("email", "asd@asd.asd")
+                .param("password","12345")
+                .param("confirmPassword","12345"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:register"));
+
+    }
+
+    @Test
+    public void testRegisterConfirmShouldRedirectBackIfEmailExist() throws Exception {
+        when(userService.existsUser("Test")).thenReturn(false);
+        when(userService.existsEmail("asd@asd.asd")).thenReturn(true);
+
+        mockMvc.perform(post("/users/register")
+                .with(csrf())
+                .param("username","Test")
+                .param("email", "asd@asd.asd")
+                .param("password","12345")
+                .param("confirmPassword","12345"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:register"));
+
+    }
+
+    @Test
+    public void testRegisterConfirmShouldRedirectBackIfInvalidInput() throws Exception {
+        when(userService.existsUser("Test")).thenReturn(false);
+        when(userService.existsEmail("asd@asd.asd")).thenReturn(false);
+
+        mockMvc.perform(post("/users/register")
+                .with(csrf())
+                .param("username","T")
+                .param("email", "asdasd.asd")
+                .param("password","12345")
+                .param("confirmPassword","12"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:register"));
+
     }
 
     @Test
@@ -61,5 +138,45 @@ public class UserControllerTests {
                 .andExpect(view().name("user/profile"))
                 .andExpect(model().attributeExists("user"))
                 .andExpect(status().isOk());
+    }
+
+    @Test
+    @WithMockUser
+    public void testMyOffersView() throws Exception {
+        when(userService.existsUser("Test")).thenReturn(true);
+
+        mockMvc.perform(get("/users/{name}/myOffers","Test"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("user/my-offers"))
+                .andExpect(model().attributeExists("myOffers"));
+    }
+
+    @Test
+    @WithMockUser
+    public void testMyOffersViewShouldThrowIfNoUser() throws Exception {
+        when(userService.existsUser("Test")).thenReturn(false);
+
+        mockMvc.perform(get("/users/{name}/myOffers","Test"))
+                .andExpect(status().isInternalServerError());
+    }
+
+    @Test
+    @WithMockUser
+    public void testAddOfferView() throws Exception {
+        when(userService.existsUser("Test")).thenReturn(true);
+
+        mockMvc.perform(get("/users/{name}/addOffer","Test"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("user/add-offer"))
+                .andExpect(model().attributeExists("offerAddBindingModel"));
+    }
+
+    @Test
+    @WithMockUser
+    public void testAddOfferViewShouldThrow() throws Exception {
+        when(userService.existsUser("Test")).thenReturn(false);
+
+        mockMvc.perform(get("/users/{name}/addOffer","Test"))
+                .andExpect(status().isInternalServerError());
     }
 }

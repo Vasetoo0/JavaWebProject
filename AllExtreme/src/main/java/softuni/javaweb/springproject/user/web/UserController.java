@@ -49,7 +49,6 @@ public class UserController {
         return "user/login";
     }
 
-    //TODO: Test!
     @PostMapping("/login-error")
     public ModelAndView onLoginError(
             @ModelAttribute(UsernamePasswordAuthenticationFilter.
@@ -141,6 +140,7 @@ public class UserController {
         return "user/add-offer";
     }
 
+    //TODO: Test!
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/{name}/addOffer")
     public String addOfferConfirm(@Valid @ModelAttribute("offerAddBindingModel")OfferAddBindingModel offerAddBindingModel,
