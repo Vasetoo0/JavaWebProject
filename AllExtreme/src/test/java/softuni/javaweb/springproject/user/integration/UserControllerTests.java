@@ -8,10 +8,15 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
+import softuni.javaweb.springproject.enums.Sport;
+import softuni.javaweb.springproject.offer.model.view.AllOfferViewModel;
 import softuni.javaweb.springproject.offer.service.OfferService;
 import softuni.javaweb.springproject.user.model.view.UserViewModel;
 import softuni.javaweb.springproject.user.service.UserService;
 import softuni.javaweb.springproject.utils.cloudinary.service.CloudinaryService;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
@@ -178,5 +183,20 @@ public class UserControllerTests {
 
         mockMvc.perform(get("/users/{name}/addOffer","Test"))
                 .andExpect(status().isInternalServerError());
+    }
+
+    @Test
+    @WithMockUser
+    public void testGetWishList() throws Exception {
+        AllOfferViewModel allOfferViewModel = new AllOfferViewModel();
+        allOfferViewModel.setPictures(List.of("Pic"));
+        allOfferViewModel.setSport(Sport.CLIMBING);
+
+        when(userService.getWishList("Test")).thenReturn(List.of(allOfferViewModel));
+
+        mockMvc.perform(get("/users/{name}/wishList","Test"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("user/wish-list"))
+                .andExpect(model().attributeExists("wishList"));
     }
 }
